@@ -4,6 +4,7 @@ define(function(require) {
       Config = require('lavaca/util/Config'),
       Promise = require('lavaca/util/Promise'),
       Connectivity = require('lavaca/net/Connectivity'),
+      hash = require('app/misc/util/hash'),
       $ = require('jquery'),
       StringUtils = require('lavaca/util/StringUtils');
 
@@ -94,6 +95,8 @@ define(function(require) {
         return promise.reject();
       }
 
+      var dataHash;
+
       var ajax = $.ajax({
         url: url,
         dataType: 'json',
@@ -108,16 +111,17 @@ define(function(require) {
           if (data === '' && type === 'json') {
             return 'null';
           }
+          dataHash = hash(data);
           return data;
         },
         success: function(response, status) {
           if (status === 'success') {
             if (useMock && artificialDelay) {
               setTimeout(function() {
-                promise.resolve(response);
+                promise.resolve(response, dataHash);
               }, artificialDelay);
             } else {
-              promise.resolve(response);
+              promise.resolve(response, dataHash);
             }
           } else {
             promise.reject(response);

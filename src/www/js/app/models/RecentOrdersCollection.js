@@ -1,23 +1,47 @@
 define(function(require) {
   var Collection = require('lavaca/mvc/Collection'),
-      Promise = require('lavaca/util/Promise'),
-      OrdersService = require('app/data/OrdersService');
+      OrdersService = require('app/data/OrdersService'),
+      moment = require('moment');
 
   var RecentOrdersCollection = Collection.extend(function RecentOrdersCollection() {
     Collection.apply(this, arguments);
     _fetch.call(this);
+    this.apply({
+      totalRevenue: _totalRevenue
+    });
   });
 
+  // Private functions
   function _fetch() {
-    OrdersService.getOrdersForToday().then(function(data) {
-      this.clearModels();
-      if (data && data.orders && data.orders.length) {
-        this.add(data.orders);
-      } else {
-        this.set('empty', true);
-      }
-    }.bind(this));
+    var startTime = moment().subtract('days', 1),
+        endTime = moment();
+    this.set('startTime', startTime);
+    this.set('endTime', endTime);
+    OrdersService.getOrdersForDateRange(startTime, endTime)
+      .then(function(data, hash) {
+        if (data && data.orders && data.orders.length) {
+          if (!this._lastHash || this._lastHash !== hash) {
+            this.clearModels();
+            this.add(data.orders);
+            this._lastHash = hash;
+          }
+        } else {
+          this.set('empty', true);
+        }
+      }.bind(this))
+      .always(function() {
+        setTimeout(_fetch.bind(this), 5000);
+      }.bind(this));
   }
 
-  return RecentOrdersCollection;
+  // Computed Properties
+  function _totalRevenue() {
+    var total = 0;
+    this.each(function(index, order) {
+      total += order.get('paid');
+    });
+    return total;
+  }
+
+  return new RecentOrdersCollection();
 });

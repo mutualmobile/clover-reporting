@@ -1,8 +1,8 @@
 define(function(require) {
 
   var BaseController = require('app/net/BaseController'),
-      RecentOrdersCollection = require('app/models/RecentOrdersCollection'),
-      RecentOrdersView = require('app/ui/pageviews/RecentOrdersView');
+      RecentOrdersView = require('app/ui/pageviews/RecentOrdersView'),
+      recentOrdersCollection = require('app/models/RecentOrdersCollection');
 
   /**
    * Orders controller
@@ -20,7 +20,7 @@ define(function(require) {
      */
     recentOrders: function(params, model) {
       return this
-        .view(null, RecentOrdersView, new RecentOrdersCollection())
+        .view(null, RecentOrdersView, recentOrdersCollection)
         .then(this.updateState(model, 'Home Page', params.url));
     }
   });
