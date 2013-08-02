@@ -13,11 +13,13 @@ define(function(require) {
   var RecentOrdersView = BasePageView.extend(function() {
     BasePageView.apply(this, arguments);
 
-    var debouncedModelChange = debounce(_onModelChange.bind(this), 0);
+    var debouncedChangeOrder = debounce(_onChangeOrders.bind(this), 0),
+        debouncedChangeTime = debounce(_onChangeTime.bind(this), 0);
     this.mapEvent({
       model: {
-        addItem: debouncedModelChange,
-        removeItem: debouncedModelChange
+        addItem: debouncedChangeOrder,
+        removeItem: debouncedChangeOrder,
+        'change.startTime': debouncedChangeTime
       }
     });
   }, {
@@ -36,7 +38,11 @@ define(function(require) {
 
   });
 
-  function _onModelChange() {
+  function _onChangeTime() {
+    this.redraw('.date-range');
+  }
+
+  function _onChangeOrders() {
     this.redraw();
   }
 
