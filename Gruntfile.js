@@ -200,9 +200,12 @@ module.exports = function( grunt ) {
           vhost: 'localhost',
           base: 'src/www',
           apiPrefix: '/api',
-          apiBaseUrl: 'configure-to-specific-api',
-          proxyPort: '80',// change to 443 for https
-          proxyProtocol: 'http'//change to https if ssl is required
+          apiBaseUrl: 'api.clover.com',
+          proxyPort: '443',// change to 443 for https
+          proxyProtocol: 'https', //change to https if ssl is required
+          additionalParams: {  // URL params appendended to all api requests
+            access_token: '8b8a19c5-1b13-dcbd-c9b3-36e3b24eccea'
+          }
         }
       },
       prod: {

@@ -1,3 +1,5 @@
 {
-  "example": "value - local"
+  "api_url": "/api/v2/merchant/RZC2F4FMKFJ12/{0}",
+  "mock_url": "/assets/mock/{0}.json",
+  "artificial_network_delay": 1000
 }

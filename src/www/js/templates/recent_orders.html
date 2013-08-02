@@ -1,0 +1,13 @@
+{?items}
+  <ul>
+    {#items}
+      <li>{$idx}</li>
+    {/items}
+  </ul>
+{:else}
+  {?empty}
+    No Results
+  {:else}
+    <div class="loading-spinner center"></div>
+  {/empty}
+{/items}

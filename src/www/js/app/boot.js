@@ -12,6 +12,9 @@ require.config({
     'dust-helpers': 'libs/dust-helpers-1.1.1',
     'rdust': 'libs/require-dust',
     'iScroll': 'libs/iscroll-lite-4.1.6',
+    'spin': 'libs/spin',
+    'jquery-spin': 'libs/jquery.spin',
+    'moment': 'libs/moment',
     'lavaca': 'lavaca'
   },
   shim: {

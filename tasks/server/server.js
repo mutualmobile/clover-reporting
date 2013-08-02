@@ -15,7 +15,8 @@ module.exports = function(grunt) {
         port = config.port,
         host = config.host,
         apiPrefix = config.apiPrefix || '/api',
-        basicAuth = config.basicAuth;
+        basicAuth = config.basicAuth,
+        additionalParams = config.additionalParams || {};
 
     function proxyRequest(request, response) {
       var postData = request.body;
@@ -33,6 +34,12 @@ module.exports = function(grunt) {
       }
       if ('POST' === request.method && typeof postData === 'object') {
         postData = JSON.stringify(postData);
+      }
+      for (var param in additionalParams) {
+        options.path += options.path.indexOf('?') > -1 ? '&' : '?';
+        if (additionalParams.hasOwnProperty(param)) {
+          options.path += encodeURIComponent(param) + '=' + encodeURIComponent(additionalParams[param]);
+        }
       }
       var req = requester.request(options, function(res) {
         var output = '';
@@ -73,8 +80,10 @@ module.exports = function(grunt) {
     server.use(express.bodyParser());
     server.use(express.errorHandler({dumpExceptions: true, showStack: true}));
 
+    server.use(express.basicAuth('test', 'test'));
+
     server.all(apiPrefix + '*', proxyRequest);
- 
+
     server.get('/*', function(req, res) {
       res.redirect(util.format('/#%s#', req.originalUrl));
     });
@@ -99,7 +108,8 @@ module.exports = function(grunt) {
         port: options.port,
         apiPrefix: options.apiPrefix,
         proxyPort: options.proxyPort || '80',
-        proxyProtocol: options.proxyProtocol || 'http'
+        proxyProtocol: options.proxyProtocol || 'http',
+        additionalParams: options.additionalParams || {}
     }),
     args = this.args,
     done = args[args.length-1] === 'watch' ? function() {} : this.async();
