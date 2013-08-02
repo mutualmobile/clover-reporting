@@ -143,6 +143,17 @@ module.exports = function( grunt ) {
             dest: '<%= paths.tmp.www %>/<%= paths.out.css %>'
           }
         ]
+      },
+      src: {
+        options: {
+          compress: false
+        },
+        files: [
+          {
+            src: '<%= paths.src.www %>/css/app/app.less',
+            dest: '<%= paths.src.www %>/<%= paths.out.css %>'
+          }
+        ]
       }
     },
 
@@ -391,6 +402,10 @@ module.exports = function( grunt ) {
       scripts: {
         files: ['src/www/**/*.js'],
         tasks: ['yuidoc']
+      },
+      css: {
+        files: ['!<%= paths.src.www %>/<%= paths.out.css %>','src/www/css/**/*.less'],
+        tasks: ['less:src']
       }
     },
 
@@ -436,8 +451,16 @@ module.exports = function( grunt ) {
         },
         src: ['build/**/*']
       }
-    }
+    },
 
+    concurrent: {
+      target: {
+        tasks: ['server', 'watch:css'],
+        options: {
+          logConcurrentOutput: false
+        }
+      }
+    }
 
   });
 
@@ -466,8 +489,9 @@ module.exports = function( grunt ) {
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-chmod');
+  grunt.loadNpmTasks('grunt-concurrent');
 
-  grunt.registerTask('default', 'runs the tests and starts local server', ['amd-test', 'jasmine', 'server']);
+  grunt.registerTask('default', 'starts local server and watches', ['concurrent']);
 
   grunt.registerTask('test', 'generates runner and runs the tests', ['amd-test', 'jasmine']);
 

@@ -12,6 +12,7 @@
 /src/ios/App.xcodeproj/xcuserdata
 /src/ios/CordovaLib/CordovaLib.xcodeproj/xcuserdata
 
+/src/www/css/app/app.min.css
 /node_modules
 /docs
 /doc
