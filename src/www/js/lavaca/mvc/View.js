@@ -289,6 +289,7 @@ define(function(require) {
         self.createWidgets();
         self.createChildViews();
         self.applyChildViewEvents();
+        self.trigger('redrawsuccess');
       }
       templateRenderPromise
         .success(function(html) {
