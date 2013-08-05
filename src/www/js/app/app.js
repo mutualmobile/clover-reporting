@@ -1,6 +1,6 @@
 define(function(require) {
   var History = require('lavaca/net/History'),
-      OrdersController = require('app/net/OrdersController'),
+      DashboardController = require('app/net/DashboardController'),
       Connectivity = require('lavaca/net/Connectivity'),
       Application = require('lavaca/mvc/Application'),
       Translation = require('lavaca/util/Translation'),
@@ -23,7 +23,7 @@ define(function(require) {
   var app = new Application(function() {
     // Initialize the routes
     this.router.add({
-      '/': [OrdersController, 'recentOrders']
+      '/': [DashboardController, 'dashboard']
     });
 
     // Initialize translations

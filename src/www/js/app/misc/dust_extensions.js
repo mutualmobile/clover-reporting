@@ -2,6 +2,31 @@ define(function(require) {
   var dust = require('dust'),
       moment = require('moment');
 
+  require('dust-helpers');
+
+  var _UNDEFINED;
+
+  dust.helpers.loop = function(chunk, context, bodies, params) {
+    var times = parseInt(dust.helpers.tap(params.times, chunk, context), 10) || 0;
+
+    if (context.stack.head) {
+      context.stack.head['$len'] = times;
+    }
+
+    for (var i = 0; i < times; i++) {
+      if (context.stack.head) {
+        context.stack.head['$idx'] = i;
+      }
+      chunk.render(bodies.block, context);
+    }
+    if (context.stack.head) {
+      context.stack.head['$len'] = _UNDEFINED;
+      context.stack.head['$idx'] = _UNDEFINED;
+    }
+
+    return chunk;
+  };
+
   dust.filters.commas = function(value) {
     return _addCommas(value, 0);
   };

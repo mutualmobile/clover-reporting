@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var BasePageView = require('./BasePageView'),
+  var BaseView = require('./BaseView'),
       debounce = require('mout/function/debounce');
 
   require('rdust!templates/recent_orders');
@@ -8,10 +8,10 @@ define(function(require) {
   /**
    * Recent Orders View
    * @class app.ui.views.RecentOrdersView
-   * @extends app.ui.views.BasePageView
+   * @extends app.ui.views.BaseView
    */
-  var RecentOrdersView = BasePageView.extend(function() {
-    BasePageView.apply(this, arguments);
+  var RecentOrdersView = BaseView.extend(function() {
+    BaseView.apply(this, arguments);
 
     var debouncedRedraw = debounce(_onChange.bind(this), 0);
     this.mapEvent({
@@ -21,6 +21,7 @@ define(function(require) {
         change: debouncedRedraw
       }
     });
+    this.render();
   }, {
     /**
      * The name of the template used by the view

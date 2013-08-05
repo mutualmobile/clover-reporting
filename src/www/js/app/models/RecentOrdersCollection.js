@@ -27,6 +27,7 @@ define(function(require) {
             this._lastHash = hash;
           }
         }
+        this.set('error', false);
       }.bind(this), function() {
         this.set('error', true);
       }.bind(this))
