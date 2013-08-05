@@ -23,17 +23,7 @@ define(function(require) {
     });
     this.render();
   }, {
-    /**
-     * The name of the template used by the view
-     * @property {String} template
-     * @default 'example'
-     */
     template: 'templates/recent_orders',
-    /**
-     * A class name added to the view container
-     * @property {String} className
-     * @default 'example'
-     */
     className: 'recent_orders'
 
   });

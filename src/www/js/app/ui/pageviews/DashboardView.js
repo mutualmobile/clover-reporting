@@ -3,7 +3,8 @@ define(function(require) {
   var BasePageView = require('./BasePageView'),
       Scrollable = require('lavaca/ui/Scrollable'),
       RecentOrdersView = require('app/ui/views/RecentOrdersView'),
-      recentOrdersCollection = require('app/models/recentOrdersCollection');
+      recentOrdersCollection = require('app/models/recentOrdersCollection'),
+      RevenueByCustomerView = require('app/ui/views/RevenueByCustomerView');
 
   require('rdust!templates/dashboard');
 
@@ -27,7 +28,7 @@ define(function(require) {
         model: recentOrdersCollection
       },
       '.widget-2': {
-        TView: RecentOrdersView,
+        TView: RevenueByCustomerView,
         model: recentOrdersCollection
       },
       '.widget-3': {

@@ -35,8 +35,12 @@ require.config({
     templates: {
       deps: ['dust']
     },
+    d3: {
+      exports: 'd3'
+    },
     nv: {
-      deps: ['d3']
+      deps: ['d3'],
+      exports: 'nv'
     }
   }
 });
