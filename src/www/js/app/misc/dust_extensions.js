@@ -18,6 +18,13 @@ define(function(require) {
     return value.format('hh:mm A dddd, MMMM DD YYYY');
   };
 
+  dust.filters.timestamp = function(value) {
+    if (!moment.isMoment(value)) {
+      value = moment(value);
+    }
+    return value.toISOString();
+  };
+
   // Private functions
   function _addCommas(value, decimalDigits) {
     var output = '',
