@@ -6,6 +6,7 @@ define(function(require) {
   var RecentOrdersCollection = Collection.extend(function RecentOrdersCollection() {
     Collection.apply(this, arguments);
     _fetch.call(this);
+    this.set('loading', true);
     this.apply({
       totalRevenue: _totalRevenue
     });
@@ -25,11 +26,12 @@ define(function(require) {
             this.add(data.orders);
             this._lastHash = hash;
           }
-        } else {
-          this.set('empty', true);
         }
+      }.bind(this), function() {
+        this.set('error', true);
       }.bind(this))
       .always(function() {
+        this.set('loading', false);
         setTimeout(_fetch.bind(this), 5000);
       }.bind(this));
   }
