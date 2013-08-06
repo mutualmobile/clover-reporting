@@ -5,7 +5,7 @@ define(function(require) {
       RecentOrdersView = require('app/ui/views/RecentOrdersView'),
       recentOrdersCollection = require('app/models/recentOrdersCollection'),
       RevenueByCustomerView = require('app/ui/views/RevenueByCustomerView'),
-      SimpleLineGraphView = require('app/ui/views/SimpleLineGraphView');
+      RevenueOverTimeView = require('app/ui/views/RevenueOverTimeView');
 
   require('rdust!templates/dashboard');
 
@@ -25,7 +25,7 @@ define(function(require) {
         model: recentOrdersCollection
       },
       '.widget-1': {
-        TView: SimpleLineGraphView,
+        TView: RevenueOverTimeView,
         model: recentOrdersCollection
       },
       '.widget-2': {
