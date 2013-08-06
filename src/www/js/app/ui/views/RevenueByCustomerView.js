@@ -15,44 +15,45 @@ define(function(require) {
    */
   var RevenueByCustomerView = BaseView.extend(function RevenueByCustomerView() {
     BaseView.apply(this, arguments);
-    var debouncedRedraw = debounce(_onChange.bind(this), 0);
+
+    var debouncedChangeHandler = debounce(_updateChart.bind(this), 0);
     this.mapEvent({
       model: {
-        addItem: debouncedRedraw,
-        removeItem: debouncedRedraw
+        addItem: debouncedChangeHandler,
+        removeItem: debouncedChangeHandler
       }
     });
-    this.chart = _getChart();
+    this.chart = _createChart();
     this.on('rendersuccess', _onRenderSuccess);
-    this.on('redrawsuccess', _onRenderSuccess);
     this.render();
   }, {
     template: 'templates/revenue_by_customer',
-    className: 'revenue_by_customer'
+    className: 'revenue_by_customer',
+    dispose: function() {
+      var chartIndex = nv.graphs.indexOf(this.chart);
+      if (chartIndex > -1) {
+        nv.graphs.splice(chartIndex, 1);
+      }
+      return BaseView.prototype.dispose.apply(this, arguments);
+    }
   });
 
-  function _onChange() {
-    this.redraw();
-  }
-
+  // Event listeners
   function _onRenderSuccess() {
-    if (this.model.count()) {
-      nv.addGraph(function() {
-        var chart = _getChart();
-
-        d3.select('.revenue_by_customer svg')
-            .datum(_getData.call(this))
-          .transition().duration(500)
-            .call(chart);
-
-        nv.utils.windowResize(chart.update);
-
-        return chart;
-      }.bind(this));
-    }
+    nv.addGraph(function() {
+      _updateChart.call(this);
+      return this.chart;
+    }.bind(this));
   }
 
   // Private functions
+  function _updateChart() {
+    d3.select('.revenue_by_customer svg')
+        .datum(_getData.call(this))
+      .transition().duration(500)
+        .call(this.chart);
+  }
+
   function _getData() {
     var data = {
           key: 'Revenue By Customer',
@@ -81,17 +82,14 @@ define(function(require) {
   }
 
   // Utility functions
-  var _chart;
-  function _getChart() {
-    if (!_chart) {
-      _chart = nv.models.discreteBarChart()
+  function _createChart() {
+    var chart = nv.models.discreteBarChart()
         .x(function(d) { return d.label; })
         .y(function(d) { return d.value; })
         .staggerLabels(true)
         .tooltips(false)
         .showValues(true);
-    }
-    return _chart;
+    return chart;
   }
 
   return RevenueByCustomerView;
