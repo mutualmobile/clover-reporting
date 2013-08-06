@@ -3,7 +3,8 @@ define(function(require) {
   var BaseChartView = require('./BaseChartView'),
       debounce = require('mout/function/debounce'),
       d3 = require('d3'),
-      nv = require('nv');
+      nv = require('nv'),
+      moment = require('moment');
   require('rdust!templates/revenue_over_time');
 
   /**
@@ -43,7 +44,27 @@ define(function(require) {
     },
     getData: function() {
       var models = this.model.toObject().items;
-      var total = 0;
+      return _getRevenueOverTimeByOrder.call(this, models);
+    },
+    createChart: function() {
+      var chart = nv.models.lineChart()
+        .x(function(d) { return d[0]; })
+        .y(function(d) { return d[1] / 100; })
+        .clipEdge(true);
+
+      chart.xAxis
+        .tickFormat(function(d) { return d3.time.format('%I:%M:%S %p')(new Date(d)); });
+
+      chart.yAxis
+        .tickFormat(d3.format(',.2f'));
+
+      return chart;
+    }
+
+  });
+
+  function _getRevenueOverTimeByOrder(models) {
+    var total = 0;
       models.sort(function(a, b) {
         return a.modified - b.modified;
       });
@@ -56,22 +77,7 @@ define(function(require) {
             ];
           })
         }];
-    },
-    createChart: function() {
-      var chart = nv.models.lineChart()
-        .x(function(d) { return d[0]; })
-        .y(function(d) { return d[1] / 100; })
-        .clipEdge(true);
-      chart.xAxis
-         .tickFormat(function(d) { return d3.time.format('%I:%M:%S %p')(new Date(d)); });
-
-      chart.yAxis
-         .tickFormat(d3.format(',.2f'));
-
-      return chart;
-    }
-
-  });
+  }
 
   return RevenueOverTimeView;
 
