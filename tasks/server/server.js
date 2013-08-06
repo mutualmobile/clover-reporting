@@ -1,3 +1,5 @@
+var api = require('./api');
+
 module.exports = function(grunt) {
   'use strict';
 
@@ -81,6 +83,9 @@ module.exports = function(grunt) {
     server.use(express.errorHandler({dumpExceptions: true, showStack: true}));
 
     server.use(express.basicAuth('test', 'test'));
+
+    // Custom API
+    api.init(server);
 
     server.all(apiPrefix + '*', proxyRequest);
 
