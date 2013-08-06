@@ -41,7 +41,7 @@ define(function(require) {
   function _totalRevenue() {
     var total = 0;
     this.each(function(index, order) {
-      total += order.get('paid');
+      total += order.get('total');
     });
     return total;
   }
