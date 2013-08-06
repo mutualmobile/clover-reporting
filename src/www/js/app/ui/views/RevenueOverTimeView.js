@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var BaseView = require('./BaseView'),
+  var BaseChartView = require('./BaseChartView'),
       debounce = require('mout/function/debounce'),
       d3 = require('d3'),
       nv = require('nv');
@@ -9,21 +9,18 @@ define(function(require) {
   /**
    * Recent Orders View
    * @class app.ui.views.RevenueOverTimeView
-   * @extends app.ui.views.BaseView
+   * @extends app.ui.views.BaseChartView
    */
-  var RevenueOverTimeView = BaseView.extend(function() {
-    BaseView.apply(this, arguments);
+  var RevenueOverTimeView = BaseChartView.extend(function() {
+    BaseChartView.apply(this, arguments);
 
-    var debouncedRedraw = debounce(_updateChart.bind(this), 0);
+    var debouncedChangeHandler = debounce(this.updateChart.bind(this), 0);
     this.mapEvent({
       model: {
-        addItem: debouncedRedraw,
-        removeItem: debouncedRedraw,
-        change: debouncedRedraw
+        addItem: debouncedChangeHandler,
+        removeItem: debouncedChangeHandler
       }
     });
-    this.on('rendersuccess', _onRenderSuccess.bind(this));
-    this.chart = _createChart();
     this.render();
   }, {
     /**
@@ -37,53 +34,44 @@ define(function(require) {
      * @property {String} className
      * @default 'example'
      */
-    className: 'revenue_over_time'
+    className: 'revenue_over_time',
+    updateChart: function() {
+      d3.select('.revenue_over_time svg')
+        .datum(this.getData())
+        .transition().duration(500)
+          .call(this.chart);
+    },
+    getData: function() {
+      var models = this.model.toObject().items;
+      var total = 0;
+      models.sort(function(a, b) {
+        return a.modified - b.modified;
+      });
+      return [{
+          key: 'Revenue',
+          values: models.map(function(model) {
+            return [
+              model.modified,
+              total += model.total
+            ];
+          })
+        }];
+    },
+    createChart: function() {
+      var chart = nv.models.lineChart()
+        .x(function(d) { return d[0]; })
+        .y(function(d) { return d[1] / 100; })
+        .clipEdge(true);
+      chart.xAxis
+         .tickFormat(function(d) { return d3.time.format('%I:%M:%S %p')(new Date(d)); });
+
+      chart.yAxis
+         .tickFormat(d3.format(',.2f'));
+
+      return chart;
+    }
 
   });
-
-  function _onRenderSuccess() {
-    nv.addGraph(function() {
-      _updateChart.call(this);
-      return this.chart;
-    }.bind(this));
-  }
-
-  function _updateChart() {
-    d3.select('.revenue_over_time svg')
-      .datum(_getData.call(this))
-      .transition().duration(500).call(this.chart);
-  }
-
-  function _getData() {
-    var models = this.model.toObject().items;
-    var total = 0;
-    models.sort(function(a, b) {
-      return a.modified > b.modified;
-    });
-    return [{
-        key: 'Revenue',
-        values: models.map(function(model) {
-          return [
-            model.modified,
-            total += model.total
-          ];
-        })
-      }];
-  }
-
-  function _createChart() {
-    var chart = nv.models.stackedAreaChart()
-     .x(function(d) { return d[0]; })
-     .y(function(d) { return d[1] / 100; })
-     .clipEdge(true);
-    chart.xAxis
-       .tickFormat(function(d) { return d3.time.format('%I:%M:%S %p')(new Date(d)); });
-
-    chart.yAxis
-       .tickFormat(d3.format(',.2f'));
-
-    return chart;
-  }
 
   return RevenueOverTimeView;
 
