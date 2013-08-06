@@ -66,13 +66,6 @@ define(function(require) {
             .staggerLabels(true)
             .tooltips(false)
             .showValues(true);
-    },
-    dispose: function() {
-      var chartIndex = nv.graphs.indexOf(this.chart);
-      if (chartIndex > -1) {
-        nv.graphs.splice(chartIndex, 1);
-      }
-      return BaseChartView.prototype.dispose.apply(this, arguments);
     }
   });
 
