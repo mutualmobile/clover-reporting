@@ -3,7 +3,7 @@ define(function(require) {
   var BasePageView = require('./BasePageView'),
       Scrollable = require('lavaca/ui/Scrollable'),
       RecentOrdersView = require('app/ui/views/RecentOrdersView'),
-      recentOrdersCollection = require('app/models/recentOrdersCollection'),
+      recentOrdersCollection = require('app/models/RecentOrdersCollection'),
       RevenueByCustomerView = require('app/ui/views/RevenueByCustomerView'),
       RevenueOverTimeView = require('app/ui/views/RevenueOverTimeView');
 
