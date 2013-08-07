@@ -25,13 +25,11 @@ define(function(require) {
 
     this.chart = this.createChart();
     _chartCache.push(this.chart);
-    this.on('rendersuccess', this.onRenderSuccess);
     this.mapEvent({
       model: {
         'change.loading': _onChangeLoading.bind(this)
       }
     });
-    this.render();
   }, {
     template: 'templates/revenue_by_customer',
     className: 'revenue_by_customer',
