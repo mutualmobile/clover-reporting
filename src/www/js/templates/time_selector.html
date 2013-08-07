@@ -1,0 +1,22 @@
+<label for="time-range-select">Time Range</label>
+<div class="select-wrapper">
+  {@eq key="{mode}" value="custom"}<div class="toggle-dropdown"></div>{/eq}
+  <select name="range" id="time-range-select">
+    {#modes}
+      <option value="{key}" {@eq key="{key}" value="{mode}"}selected{/eq}>{label}</option>
+    {/modes}
+  </select>
+</div>
+<div class="picker">
+  <div class="date-group">
+    <label for="custom-start-date">Start Date</label>
+    <input type="date" id="custom-start-date" value="{customStartTime|ymd}">
+    <input type="time" id="custom-start-time" value="{customStartTime|hm}">
+  </div>
+  <div class="date-group">
+    <label for="custom-end-date">End Date</label>
+    <input type="date" id="custom-end-date" value="{customEndTime|ymd}">
+    <input type="time" id="custom-end-time" value="{customEndTime|hm}">
+  </div>
+  <button data-action="apply">Apply</button>
+</div>

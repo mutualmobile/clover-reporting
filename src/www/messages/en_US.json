@@ -5,5 +5,9 @@
   "error_tel": "{0} must be a telephone number",
   "error_number": "{0} must be a number",
   "error_url": "{0} must be a URL",
-  "error_offline": "No internet connection available. Please check your settings and connection and try again."
+  "error_offline": "No internet connection available. Please check your settings and connection and try again.",
+  "time_range.day": "Past 24 Hours",
+  "time_range.week": "Past Week",
+  "time_range.month": "Past Month",
+  "time_range.custom": "Custom Range"
 }

@@ -1,6 +1,8 @@
 define(function(require) {
 
   var View = require('lavaca/mvc/View'),
+      TimeSelectorView = require('app/ui/views/TimeSelectorView'),
+      timeRangeModel = require('app/models/TimeRangeModel'),
       stateModel = require('app/models/StateModel');
   require('rdust!templates/header');
 
@@ -15,6 +17,12 @@ define(function(require) {
       this.mapEvent({
         model: {
           change: this.onModelChange.bind(this)
+        }
+      });
+      this.mapChildView({
+        '.time-selector': {
+          TView: TimeSelectorView,
+          model: timeRangeModel
         }
       });
     }, {

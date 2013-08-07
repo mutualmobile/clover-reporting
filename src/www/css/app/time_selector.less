@@ -1,0 +1,82 @@
+@dropDownArrowWidth: 6px;
+.time_selector {
+  padding: 10px 20px;
+  label {
+    font-size: 14px;
+    display: block;
+    text-align: right;
+  }
+  select {
+    font-size: 22px;
+    text-align: right;
+  }
+  .select-wrapper {
+    margin: 6px 0;
+    text-align: center;
+    position: relative;
+    .toggle-dropdown {
+      position: absolute;
+      top: 50%;
+      margin-top: -15px;
+      left: -35px;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 0;
+        height: 0;
+        top: 50%;
+        margin-top: -(@dropDownArrowWidth / 2);
+        left: 50%;
+        margin-left: -@dropDownArrowWidth;
+        border-left: @dropDownArrowWidth solid transparent;
+        border-right: @dropDownArrowWidth solid transparent;
+        border-top: @dropDownArrowWidth solid #000;
+      }
+      &.open:before {
+        border-top: 0;
+        border-bottom: @dropDownArrowWidth solid #000;
+      }
+    }
+  }
+  .picker {
+    position: absolute;
+    display: none;
+    padding: 10px 20px;
+    top: 92%;
+    right: 10px;
+    background: rgba(0,0,0,0.8);
+    border-radius: 5px;
+    text-align: right;
+    white-space: nowrap;
+    .date-group:not(:first-child) {
+      margin-top: 10px;
+    }
+    label {
+      color: white;
+    }
+    input {
+      margin: 5px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+    button {
+      padding: 9px;
+      margin-top: 15px;
+      border: 0;
+      background: #67A7DA;
+      border-radius: 5px;
+      color: #FFF;
+      font-size: 16px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      &:active {
+        background: #4E8BBD;
+      }
+    }
+  }
+}

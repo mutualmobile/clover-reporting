@@ -12,7 +12,6 @@ define(function(require) {
     if (context.stack.head) {
       context.stack.head['$len'] = times;
     }
-
     for (var i = 0; i < times; i++) {
       if (context.stack.head) {
         context.stack.head['$idx'] = i;
@@ -30,24 +29,33 @@ define(function(require) {
   dust.filters.commas = function(value) {
     return _addCommas(value, 0);
   };
-
   dust.filters.cashMoney = function(value) {
     // value is in cents
     return '$' + _addCommas(value/100, 2);
   };
-
   dust.filters.dateTime = function(value) {
     if (!moment.isMoment(value)) {
       value = moment(value);
     }
     return value.format('hh:mm A dddd, MMMM DD YYYY');
   };
-
   dust.filters.timestamp = function(value) {
     if (!moment.isMoment(value)) {
       value = moment(value);
     }
     return value.toISOString();
+  };
+  dust.filters.ymd = function(value) {
+    if (!moment.isMoment(value)) {
+      value = moment(value);
+    }
+    return value.format('YYYY-MM-DD');
+  };
+  dust.filters.hm = function(value) {
+    if (!moment.isMoment(value)) {
+      value = moment(value);
+    }
+    return value.format('HH:mm');
   };
 
   // Private functions

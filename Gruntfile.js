@@ -460,7 +460,7 @@ module.exports = function( grunt ) {
       target: {
         tasks: ['server', 'watch:css'],
         options: {
-          logConcurrentOutput: false
+          logConcurrentOutput: true
         }
       }
     }

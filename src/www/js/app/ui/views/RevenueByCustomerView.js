@@ -28,7 +28,13 @@ define(function(require) {
     template: 'templates/revenue_by_customer',
     className: 'revenue_by_customer',
     updateChart: function() {
-      d3.select('.revenue_by_customer svg')
+      var data = this.getData(),
+          selected = d3.select('.revenue_by_customer svg');
+
+      if (!data) {
+        selected.text(null);
+      }
+      selected
           .datum(this.getData())
         .transition().duration(500)
           .call(this.chart);
@@ -57,7 +63,11 @@ define(function(require) {
       data.values.sort(function(a, b) {
         return a.value - b.value;
       });
-      return [data];
+      if (data.values.length) {
+        return [data];
+      } else {
+        return null;
+      }
     },
     createChart: function() {
       return nv.models.discreteBarChart()

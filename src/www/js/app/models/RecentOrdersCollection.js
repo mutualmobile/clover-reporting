@@ -1,7 +1,7 @@
 define(function(require) {
   var Collection = require('lavaca/mvc/Collection'),
       OrdersService = require('app/data/OrdersService'),
-      moment = require('moment');
+      timeRangeModel = require('app/models/TimeRangeModel');
 
   var RecentOrdersCollection = Collection.extend(function RecentOrdersCollection() {
     Collection.apply(this, arguments);
@@ -10,17 +10,31 @@ define(function(require) {
     this.apply({
       totalRevenue: _totalRevenue
     });
+
+    this._externalBoundHandler = _fetch.bind(this);
+    timeRangeModel.on('rangeUpdate', this._externalBoundHandler);
+  }, {
+    dispose: function() {
+      timeRangeModel.off('rangeUpdate', this._externalBoundHandler);
+      return Collection.prototype.dispose.apply(this, arguments);
+    }
   });
 
   // Private functions
   function _fetch() {
-    var startTime = moment().subtract('days', 1),
-        endTime = moment();
+    var startTime = timeRangeModel.get('startTime'),
+        endTime = timeRangeModel.get('endTime');
+
+    clearTimeout(this._fetchTimeout);
+    if (this._lastFetch) {
+      this._lastFetch.reject('abort');
+    }
+
     this.set('startTime', startTime);
     this.set('endTime', endTime);
-    OrdersService.getOrdersForDateRange(startTime, endTime)
+    this._lastFetch = OrdersService.getOrdersForDateRange(startTime, endTime)
       .then(function(data, hash) {
-        if (data && data.orders && data.orders.length) {
+        if (data && data.orders) {
           if (!this._lastHash || this._lastHash !== hash) {
             this.clearModels();
             this.add(data.orders);
@@ -28,12 +42,14 @@ define(function(require) {
           }
         }
         this.set('error', false);
-      }.bind(this), function() {
-        this.set('error', true);
+      }.bind(this), function(error) {
+        if (error !== 'abort') {
+          this.set('error', true);
+        }
       }.bind(this))
       .always(function() {
         this.set('loading', false);
-        setTimeout(_fetch.bind(this), 5000);
+        this._fetchTimeout = setTimeout(_fetch.bind(this), 5000);
       }.bind(this));
   }
 
