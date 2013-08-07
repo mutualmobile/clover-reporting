@@ -26,6 +26,11 @@ define(function(require) {
     this.chart = this.createChart();
     _chartCache.push(this.chart);
     this.on('rendersuccess', this.onRenderSuccess);
+    this.mapEvent({
+      model: {
+        'change.loading': _onChangeLoading.bind(this)
+      }
+    });
     this.render();
   }, {
     template: 'templates/revenue_by_customer',
@@ -46,6 +51,13 @@ define(function(require) {
       return BaseView.prototype.dispose.apply(this, arguments);
     }
   });
+
+  function _onChangeLoading(e) {
+    var loading = e.value;
+    if (!loading) {
+      this.el.find('.loading-spinner').remove();
+    }
+  }
 
   return BaseChartView;
 
