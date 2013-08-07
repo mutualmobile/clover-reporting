@@ -212,7 +212,7 @@ module.exports = function( grunt ) {
         options: {
           port: 8080,
           vhost: 'localhost',
-          base: 'src/www',
+          base: 'build/www',
           apiPrefix: '/api',
           apiBaseUrl: 'api.clover.com',
           proxyPort: '443',// change to 443 for https
