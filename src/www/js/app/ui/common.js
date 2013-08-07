@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var Spinner = require('app/ui/Widgets/Spinner');
+  var Spinner = require('app/ui/widgets/Spinner');
 
   var data = {
     mapGlobals: function() {
