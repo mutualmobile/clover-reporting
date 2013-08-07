@@ -19,7 +19,9 @@ define(function(require) {
     this.mapEvent({
       model: {
         addItem: debouncedChangeHandler,
-        removeItem: debouncedChangeHandler
+        removeItem: debouncedChangeHandler,
+        'change.startTime': debouncedChangeHandler,
+        'change.endTime': debouncedChangeHandler
       }
     });
     this.render();
@@ -37,6 +39,34 @@ define(function(require) {
      */
     className: 'revenue_over_time',
     updateChart: function() {
+      var start = this.model.get('startTime').valueOf(),
+          end = this.model.get('endTime').valueOf(),
+          range = end - start,
+          maxTicks = 12,
+          xDiff = Math.round(range / (maxTicks - 1)),
+          tickInterval = [];
+
+      this.chart.forceX([start, end]);
+
+      for (var i = 0; i < maxTicks - 1; i++){
+        tickInterval.push(start + (i * xDiff));
+      }
+      tickInterval.push(end);
+
+      this.chart.xAxis
+        .tickValues(tickInterval)
+        .tickFormat(function(d) {
+          var date = moment(d);
+          if (range <= (1000 * 60 * 60 * 24)) { // 24 hours
+            return date.format('HH');
+          } else {
+            return date.format('DD');
+          }
+        });
+
+      this.chart.yAxis
+        .tickFormat(d3.format('$,.2f'));
+
       d3.select('.revenue_over_time svg')
         .datum(this.getData())
         .transition().duration(500)
@@ -47,28 +77,10 @@ define(function(require) {
       return _getRevenueOverTimeByOrder.call(this, models);
     },
     createChart: function() {
-      var start = moment().startOf('day').subtract('d', 1).unix() * 1000,
-          end = moment().startOf('day').unix() * 1000,
-          chart = nv.models.lineChart()
+      var chart = nv.models.lineChart()
             .x(function(d) { return d[0]; })
             .y(function(d) { return d[1] / 100; })
-            .clipEdge(true)
-            .forceX([start, end]);
-
-      var maxTicks = 12, 
-          xDiff = (end - start) / maxTicks, 
-          tickInterval = [start];
-
-      for(var i = 1; i < maxTicks; i++){
-        var current = start + i * xDiff;
-        tickInterval[i] = current;
-      }
-      chart.xAxis
-        .tickValues(tickInterval)
-        .tickFormat(function(d) { return d3.time.format('%I')(new Date(d)); });
-
-      chart.yAxis
-        .tickFormat(d3.format('$,.2f'));
+            .clipEdge(true);
 
       return chart;
     }

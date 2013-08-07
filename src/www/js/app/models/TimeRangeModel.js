@@ -22,8 +22,8 @@ define(function(require) {
     this.apply({
       mode: localStore.get(_LS_SELECTED_MODE) || 'day',
       modes: _modes,
-      customStartTime: moment(savedStartTime || new Date()),
-      customEndTime: savedEndTime ? moment(savedEndTime) : moment().subtract('days', 1),
+      customStartTime: savedStartTime ? moment(savedStartTime) : moment().subtract('days', 1),
+      customEndTime: moment(savedEndTime || new Date()),
       startTime: _startTime,
       endTime: _endTime
     });
