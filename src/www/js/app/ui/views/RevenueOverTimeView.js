@@ -47,16 +47,28 @@ define(function(require) {
       return _getRevenueOverTimeByOrder.call(this, models);
     },
     createChart: function() {
-      var chart = nv.models.lineChart()
-        .x(function(d) { return d[0]; })
-        .y(function(d) { return d[1] / 100; })
-        .clipEdge(true);
+      var start = moment().startOf('day').subtract('d', 1).unix() * 1000,
+          end = moment().startOf('day').unix() * 1000,
+          chart = nv.models.lineChart()
+            .x(function(d) { return d[0]; })
+            .y(function(d) { return d[1] / 100; })
+            .clipEdge(true)
+            .forceX([start, end]);
 
+      var maxTicks = 12, 
+          xDiff = (end - start) / maxTicks, 
+          tickInterval = [start];
+
+      for(var i = 1; i < maxTicks; i++){
+        var current = start + i * xDiff;
+        tickInterval[i] = current;
+      }
       chart.xAxis
-        .tickFormat(function(d) { return d3.time.format('%I:%M:%S %p')(new Date(d)); });
+        .tickValues(tickInterval)
+        .tickFormat(function(d) { return d3.time.format('%I')(new Date(d)); });
 
       chart.yAxis
-        .tickFormat(d3.format(',.2f'));
+        .tickFormat(d3.format('$,.2f'));
 
       return chart;
     }
