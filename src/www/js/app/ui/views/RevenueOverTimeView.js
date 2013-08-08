@@ -7,6 +7,38 @@ define(function(require) {
       moment = require('moment');
   require('rdust!templates/revenue_over_time');
 
+
+  var _DURATION_HASH = [{
+          key: 'millisecond',
+          duration: 1,
+          format: 'SS'
+        }, {
+          key: 'second',
+          duration: 1000,
+          format: 'ss'
+        }, {
+          key: 'minute',
+          duration: 1000 * 60,
+          format: 'mm'
+        }, {
+          key: 'hour',
+          duration: 1000 * 60 * 60,
+          format: 'ha'
+        }, {
+          key: 'day',
+          duration: 1000 * 60 * 60 * 24,
+          format: 'DD'
+        }, {
+          key: 'month',
+          duration: 1000 * 60 * 60 * 24 * 30,
+          format: 'MM'
+        }, {
+          key: 'year',
+          duration: 1000 * 60 * 60 * 24 * 365,
+          format: 'YY'
+        }
+      ];
+
   /**
    * Recent Orders View
    * @class app.ui.views.RevenueOverTimeView
@@ -26,42 +58,56 @@ define(function(require) {
     });
     this.render();
   }, {
-    /**
-     * The name of the template used by the view
-     * @property {String} template
-     * @default 'example'
-     */
     template: 'templates/revenue_over_time',
-    /**
-     * A class name added to the view container
-     * @property {String} className
-     * @default 'example'
-     */
     className: 'revenue_over_time',
     updateChart: function() {
-      var start = this.model.get('startTime').valueOf(),
-          end = this.model.get('endTime').valueOf(),
-          range = end - start,
-          maxTicks = 12,
-          xDiff = Math.round(range / (maxTicks - 1)),
-          tickInterval = [];
+      var start = this.model.get('startTime').clone(),
+          end = this.model.get('endTime').clone(),
+          startMillis = start.valueOf(),
+          endMillis = end.valueOf(),
+          totalDuration = endMillis - startMillis,
+          minTicks = 4,
+          maxTicks = Math.round(this.el.width() / 50),
+          batchSize = 1,
+          ticks = [],
+          key,
+          format,
+          duration,
+          currentTime,
+          i;
 
-      this.chart.forceX([start, end]);
-
-      for (var i = 0; i < maxTicks - 1; i++){
-        tickInterval.push(start + (i * xDiff));
+      // Find appropriate units (minutes / hours / etc) based on minTicks
+      for (i = 1; i < _DURATION_HASH.length; i++) {
+        if (Math.ceil(totalDuration / _DURATION_HASH[i].duration) < minTicks) {
+          break;
+        }
       }
-      tickInterval.push(end);
+      i--;
+      key = _DURATION_HASH[i].key;
+      format = _DURATION_HASH[i].format;
+      duration = _DURATION_HASH[i].duration;
 
+      // Batch units as necessary (1 hour / 2 hours / etc) based on maxTicks
+      while (Math.ceil(totalDuration / (duration * batchSize)) > maxTicks) {
+        batchSize++;
+      }
+
+      // Round the start and end times to whole units
+      start.startOf(key);
+      end.startOf(key).add(key, 1);
+
+      // Generate the intermediate ticks
+      currentTime = start.clone();
+      while (+(currentTime = currentTime.add(key, batchSize)) < endMillis) {
+        ticks.push(currentTime.valueOf());
+      }
+
+      this.chart.forceX([start.valueOf(), end.valueOf()]);
       this.chart.xAxis
-        .tickValues(tickInterval)
-        .tickFormat(function(d) {
-          var date = moment(d);
-          if (range <= (1000 * 60 * 60 * 24)) { // 24 hours
-            return date.format('HH');
-          } else {
-            return date.format('DD');
-          }
+        .tickValues(ticks)
+        .tickFormat(function(millis) {
+          var date = moment(millis);
+          return date.format(format);
         });
 
       this.chart.yAxis
