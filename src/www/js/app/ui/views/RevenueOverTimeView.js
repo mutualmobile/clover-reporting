@@ -2,6 +2,7 @@ define(function(require) {
 
   var BaseChartView = require('./BaseChartView'),
       debounce = require('mout/function/debounce'),
+      Translation = require('lavaca/util/Translation'),
       d3 = require('d3'),
       nv = require('nv'),
       moment = require('moment');
@@ -104,6 +105,7 @@ define(function(require) {
 
       this.chart.forceX([start.valueOf(), end.valueOf()]);
       this.chart.xAxis
+        .axisLabel(Translation.get('chart_axis.' + key) || 'Time')
         .tickValues(ticks)
         .tickFormat(function(millis) {
           var date = moment(millis);
