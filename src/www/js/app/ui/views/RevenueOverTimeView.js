@@ -6,6 +6,7 @@ define(function(require) {
       d3 = require('d3'),
       nv = require('nv'),
       moment = require('moment');
+  require('app/ui/widgets/CustomLineChart');
   require('rdust!templates/revenue_over_time');
 
 
@@ -68,7 +69,8 @@ define(function(require) {
           endMillis = end.valueOf(),
           totalDuration = endMillis - startMillis,
           minTicks = 4,
-          maxTicks = Math.round(this.el.width() / 50),
+          elWidth = this.el.width(),
+          maxTicks = Math.round(elWidth / 50),
           batchSize = 1,
           ticks = [],
           key,
@@ -102,7 +104,6 @@ define(function(require) {
       while (+(currentTime = currentTime.add(key, batchSize)) < endMillis) {
         ticks.push(currentTime.valueOf());
       }
-
       this.chart.forceX([start.valueOf(), end.valueOf()]);
       this.chart.xAxis
         .axisLabel(Translation.get('chart_axis.' + key) || 'Time')
@@ -116,16 +117,25 @@ define(function(require) {
         .tickFormat(d3.format('$,.2f'));
 
       d3.select('.revenue_over_time svg')
-        .datum(this.getData())
+        .datum(this.getData(ticks, start, end.valueOf()))
         .transition().duration(500)
           .call(this.chart);
+
+      d3.selectAll('.revenue_over_time svg .nv-x .tick text, .revenue_over_time svg .nv-x .nv-axisMaxMin text')
+        .style('text-anchor', 'end')
+        .attr('dx', '-.8em')
+        .attr('dy', (elWidth / (ticks.length + 1)) / 2 +'px')
+        .attr('transform', function() {
+            return 'rotate(-90)' ;
+        });
     },
-    getData: function() {
+    getData: function(ticks, start, end) {
+      ticks.unshift(start.valueOf());
       var models = this.model.toObject().items;
-      return _getRevenueOverTimeByOrder.call(this, models);
+      return _getRevenueOverTimeByOrder.call(this, models, ticks, end);
     },
     createChart: function() {
-      var chart = nv.models.lineChart()
+      var chart = nv.models.customLineChart()
             .x(function(d) { return d[0]; })
             .y(function(d) { return d[1] / 100; })
             .clipEdge(true);
@@ -135,20 +145,29 @@ define(function(require) {
 
   });
 
-  function _getRevenueOverTimeByOrder(models) {
-    var total = 0;
-      models.sort(function(a, b) {
-        return a.modified - b.modified;
+  function _getRevenueOverTimeByOrder(models, ticks, end) {
+    var buckets = [];
+
+    ticks.forEach(function(tick, i) {
+      buckets.push([
+        tick + (((ticks[i+1] || end) - tick) / 2),
+        0
+      ]);
+    });
+    models.forEach(function(model) {
+      ticks.some(function(tick, i) {
+        if (model.modified > tick && model.modified < (ticks[i+1] || end)) {
+          buckets[i][1] += model.total;
+        }
       });
-      return [{
-          key: 'Revenue',
-          values: models.map(function(model) {
-            return [
-              model.modified,
-              total += model.total
-            ];
-          })
-        }];
+    });
+
+    return [{
+      area: true,
+      key: 'Revenue',
+      values: buckets
+    }];
+
   }
 
   return RevenueOverTimeView;
