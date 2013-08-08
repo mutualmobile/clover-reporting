@@ -2,12 +2,8 @@
   {^loading}
     {^error}
       <div class="info-container">
-        <div class="label">Total Revenue:</div>
         <div class="total-revenue">{totalRevenue|cashMoney}</div>
-        <div class="date-range">
-          <time datetime="{startTime|timestamp}">{startTime|dateTime}</time>
-          <time datetime="{endTime|timestamp}">{endTime|dateTime}</time>
-        </div>
+        <div class="label">Total Sales</div>
       </div>
     {:else}
       <p>Error loading data</p>

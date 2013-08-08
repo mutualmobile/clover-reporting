@@ -1,24 +1,27 @@
 @dropDownArrowWidth: 6px;
 .time_selector {
-  padding: 10px 20px;
+  padding: 30px;
   label {
     font-size: 14px;
     display: block;
     text-align: right;
   }
   select {
-    font-size: 22px;
-    text-align: right;
+    font-size: 14px;
+    -webkit-appearance: none;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0);
+    border: 1px solid rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
   }
   .select-wrapper {
     margin: 6px 0;
-    text-align: center;
     position: relative;
     .toggle-dropdown {
       position: absolute;
       top: 50%;
       margin-top: -15px;
-      left: -35px;
+      right: -25px;
       width: 30px;
       height: 30px;
       cursor: pointer;
@@ -34,11 +37,11 @@
         margin-left: -@dropDownArrowWidth;
         border-left: @dropDownArrowWidth solid transparent;
         border-right: @dropDownArrowWidth solid transparent;
-        border-top: @dropDownArrowWidth solid #000;
+        border-top: @dropDownArrowWidth solid #fff;
       }
       &.open:before {
         border-top: 0;
-        border-bottom: @dropDownArrowWidth solid #000;
+        border-bottom: @dropDownArrowWidth solid #fff;
       }
     }
   }
@@ -47,7 +50,7 @@
     display: none;
     padding: 10px 20px;
     top: 92%;
-    right: 10px;
+    left: 0;
     background: rgba(0,0,0,0.8);
     border-radius: 5px;
     text-align: right;
@@ -78,5 +81,8 @@
         background: #4E8BBD;
       }
     }
+  }
+  .date-range {
+    color: #979899;
   }
 }

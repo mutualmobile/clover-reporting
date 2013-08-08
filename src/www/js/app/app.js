@@ -28,9 +28,6 @@ define(function(require) {
 
     // Initialize translations
     Translation.init('en_US');
-
-    // Render header
-    headerView.render();
   });
 
   // Setup offline AJAX handler
