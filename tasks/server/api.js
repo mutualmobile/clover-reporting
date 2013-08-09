@@ -99,7 +99,37 @@ function batchOrder(query) {
 
 // ------ Routes ------
 function allOrders(req, res) {
-  batchOrder(req.query).then(function(data) {
+  batchOrder(req.query).then(function(orders) {
+    res.send(orders);
+  }, function() {
+    res.send(500);
+  });
+}
+function revenueByItem(req, res) {
+  var totals = {},
+      data = [];
+  batchOrder(req.query).then(function(orders) {
+    orders.forEach(function(order) {
+      var lineItems = order.lineItems || [];
+      lineItems.forEach(function(lineItem) {
+        var revenue = (lineItem.price * lineItem.qty) + lineItem.discountAmount, // TODO tax/refund/exchange
+            itemId = lineItem.itemId || 'manual';
+        if (!totals[itemId]) {
+          totals[itemId] = {
+            name: lineItem.name,
+            total: 0
+          };
+        }
+        totals[itemId].total += revenue;
+      });
+    });
+    for (var item in totals) {
+      data.push({
+        id: item,
+        name: totals[item].name,
+        total: totals[item].total
+      });
+    }
     res.send(data);
   }, function() {
     res.send(500);
@@ -116,4 +146,5 @@ exports.init = function(server) {
     }
   });
   server.get('/all-orders/*', allOrders);
+  server.get('/revenue-by-item/*', revenueByItem);
 };
