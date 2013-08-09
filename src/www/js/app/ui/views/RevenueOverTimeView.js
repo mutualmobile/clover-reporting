@@ -62,6 +62,18 @@ define(function(require) {
   }, {
     template: 'templates/revenue_over_time',
     className: 'revenue_over_time',
+    onRenderSuccess: function() {
+      BaseChartView.prototype.onRenderSuccess.apply(this, arguments);
+      setTimeout(function() {
+        d3.select('svg .nv-lineChart > g')
+          .insert('rect', '.nv-linesWrap')
+          .attr('id', 'graph-background')
+          .attr('x', '-1')
+          .attr('class', 'extent')
+          .attr('height', '186')
+          .attr('width', '110%');
+      }, 0);
+    },
     updateChart: function() {
       var start = this.model.get('startTime').clone(),
           end = this.model.get('endTime').clone(),
@@ -77,7 +89,9 @@ define(function(require) {
           format,
           duration,
           currentTime,
-          i;
+          i,
+          maxHeight,
+          data;
 
       // Find appropriate units (minutes / hours / etc) based on minTicks
       for (i = 1; i < _DURATION_HASH.length; i++) {
@@ -112,12 +126,22 @@ define(function(require) {
           var date = moment(millis);
           return date.format(format);
         });
-
       this.chart.yAxis
         .tickFormat(d3.format('$,.2f'));
+      // Get Data
+      data = this.getData(ticks, start, end.valueOf());
+      // Calcuate range for yAxis
+      maxHeight = 0;
+      data[0].values.forEach(function(item) {
+        if (item[1] > maxHeight) {
+          maxHeight = item[1];
+        }
+      });
+      maxHeight = (maxHeight/100);
+      this.chart.forceY([0, maxHeight + (maxHeight * 0.2)]);
 
       d3.select('.revenue_over_time svg')
-        .datum(this.getData(ticks, start, end.valueOf()))
+        .datum(data)
         .transition().duration(500)
           .call(this.chart);
 
@@ -128,6 +152,9 @@ define(function(require) {
         .attr('transform', function() {
             return 'rotate(-90)' ;
         });
+      d3.selectAll('.revenue_over_time svg .nv-x .tick line') 
+        .attr('x1', '0')
+        .attr('y1', '40');
     },
     getData: function(ticks, start, end) {
       ticks.unshift(start.valueOf());
@@ -137,8 +164,11 @@ define(function(require) {
     createChart: function() {
       var chart = nv.models.customLineChart()
             .x(function(d) { return d[0]; })
-            .y(function(d) { return d[1] / 100; })
-            .clipEdge(true);
+            .y(function(d) { return d[1] / 100; });
+      chart.tooltipContent(function(key, x, y, e, graph) {
+        return '<time>' + moment(e.point[0]).format('MMMM DD') + '</time>' +
+              '<div class="money">' + y + '</div><div class="triangle"></div>';
+      });
 
       return chart;
     }

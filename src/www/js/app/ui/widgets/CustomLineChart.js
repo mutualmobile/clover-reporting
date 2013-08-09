@@ -42,6 +42,7 @@ nv.models.customLineChart = function() {
     .tickPadding(7)
     ;
   yAxis
+    .tickSubdivide(1)
     .orient((rightAlignYAxis) ? 'right' : 'left')
     ;
 
