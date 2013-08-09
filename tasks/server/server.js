@@ -77,12 +77,12 @@ module.exports = function(grunt) {
       req.end();
     }
 
+    server.use(express.basicAuth('test', 'test'));
+
     server.use(express['static'](base, {maxAge: hourMs}));
     server.use(express.directory(base, {icons: true}));
     server.use(express.bodyParser());
     server.use(express.errorHandler({dumpExceptions: true, showStack: true}));
-
-    server.use(express.basicAuth('test', 'test'));
 
     // Custom API
     api.init(server);

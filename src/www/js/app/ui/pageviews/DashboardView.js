@@ -5,7 +5,9 @@ define(function(require) {
       RecentOrdersView = require('app/ui/views/RecentOrdersView'),
       recentOrdersCollection = require('app/models/RecentOrdersCollection'),
       RevenueByCustomerView = require('app/ui/views/RevenueByCustomerView'),
-      RevenueOverTimeView = require('app/ui/views/RevenueOverTimeView');
+      RevenueOverTimeView = require('app/ui/views/RevenueOverTimeView'),
+      TimeSelectorView = require('app/ui/views/TimeSelectorView'),
+      timeRangeModel = require('app/models/TimeRangeModel');
 
   require('rdust!templates/dashboard');
 
@@ -20,21 +22,17 @@ define(function(require) {
       'self': Scrollable
     });
     this.mapChildView({
-      '.widget-0': {
+      '.recent-orders-total': {
         TView: RecentOrdersView,
         model: recentOrdersCollection
       },
-      '.widget-1': {
+      '.widget-0': {
         TView: RevenueOverTimeView,
         model: recentOrdersCollection
       },
-      '.widget-2': {
-        TView: RevenueByCustomerView,
-        model: recentOrdersCollection
-      },
-      '.widget-3': {
-        TView: RecentOrdersView,
-        model: recentOrdersCollection
+      '.time-selector': {
+        TView: TimeSelectorView,
+        model: timeRangeModel
       }
     });
   }, {

@@ -22,19 +22,18 @@ body {
   font-family: Helvetica, Arial, sans-serif;
   background: #e8ebed;
   position: relative;
+  color: #d3d3d3;
 }
 
 #view-root {
   overflow: hidden;
   position: absolute;
-  top: 68px;
-  top: 6.8rem;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   .backface-visibility(hidden);
   .perspective(1200px);
-  background: #888888;
 }
 .ui-blocker {
   background: rgba(107, 23, 59, 0.25);
@@ -45,7 +44,7 @@ body {
   left: 0;
 }
 .view {
-  background: #fff;
+  background: #1a1d1e;
   position: absolute;
   top: 0;
   left: 0;
@@ -77,7 +76,6 @@ body {
 .view-interior {
   min-width: 100%;
   min-height: 100%;
-  background: rgba(255, 255, 255, .1);
 }
 /* Android scrolling fix - ensures that you can scroll to bottom of last element */
 // .view-interior > *:last-child:after {
@@ -95,20 +93,4 @@ body {
 .view p {
   margin: 1em 20px;
   line-height: 1.4em;
-}
-@media screen and (-webkit-min-device-pixel-ratio: 2),
-    screen and (min--moz-device-pixel-ratio: 2),
-    screen and (-ms-min-device-pixel-ratio: 2),
-    screen and (-o-min-device-pixel-ratio: 2/1),
-    screen and (-ms-min-device-pixel-ratio: 2),
-    screen and (min-device-pixel-ratio: 2) {
-  #nav-header .logo { 
-    background-image: url(../../assets/img/logo-2x.png);
-    background-size: 100% 100%;
-  }
-}
-@media screen and (min--moz-device-pixel-ratio: 1) {
-  #nav-header {
-    max-height: 63px;
-  }
 }

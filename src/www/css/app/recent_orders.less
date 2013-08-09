@@ -1,76 +1,26 @@
-.widget.recent_orders {
-  .wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-width: 0;
-    min-height: 0;
-
-    /* Flexbox centering: http://coding.smashingmagazine.com/2013/05/22/centering-elements-with-flexbox/ */
-    display: -webkit-box;   /* OLD: Safari,  iOS, Android browser, older WebKit browsers.  */
-    display: -moz-box;      /* OLD: Firefox (buggy) */
-    display: -ms-flexbox;   /* MID: IE 10 */
-    display: -webkit-flex;  /* NEW, Chrome 21+ */
-    display: flex;          /* NEW: Opera 12.1, Firefox 22+ */
-
-    -webkit-box-align: center; -moz-box-align: center; /* OLD… */
-    -ms-flex-align: center; /* You know the drill now… */
-    -webkit-align-items: center;
-    align-items: center;
-
-    -webkit-box-pack: center; -moz-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-
-    margin: 0;
-    height: 85%;
-    width: 100% /* needed for Firefox */
-  }
+.recent-orders-total {
+  padding: 30px;
   .label, time {
-    text-align: center;
+    text-align: right;
     font-size: 18px;
-    color: #444;
+    color: #FFFFFF;
   }
   .total-revenue {
-    text-align: center;
+    text-align: right;
     font-size: 55px;
-    margin: 10px 0 30px;
-    color: #fe9e49;
-  }
-  time {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 14px;
-    color: #999;
-    &:first-child:after {
-      content: '-';
-      padding-left: 10px;
-    }
-  }
-  @media only screen and (min-width: 600px) {
-    .view-interior {
-      height: 75%;
-    }
-    .label {
-      font-size: 22px;
-    }
-    .total-revenue {
-      font-size: 100px;
-      margin: 10px 0;
-    }
+    color: #FFFFFF;
   }
   @media only screen and (min-width: 768px) {
     .label {
       font-size: 20px;
     }
     .total-revenue {
-      font-size: 60px;
+      font-size: 40px;
     }
   }
   @media only screen and (min-width: 1200px) {
     .total-revenue {
-      font-size: 90px;
+      font-size: 50px;
     }
   }
 }

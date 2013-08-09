@@ -39,6 +39,12 @@ define(function(require) {
     }
     return value.format('hh:mm A dddd, MMMM DD YYYY');
   };
+  dust.filters.shortMonthDayTime = function(value) {
+    if (!moment.isMoment(value)) {
+      value = moment(value);
+    }
+    return value.format('MMM DD hh:mm A');
+  };
   dust.filters.timestamp = function(value) {
     if (!moment.isMoment(value)) {
       value = moment(value);

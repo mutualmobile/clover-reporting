@@ -1,24 +1,13 @@
 .view.dashboard {
   position: relative;
+  .time-selector {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
   .widget {
     width: 100%;
-    min-height: 100%;
-    overflow: hidden;
-    border: 1px solid #ccc;
+    min-height: 20%;
     position: relative;
-    @media only screen and (min-width: 768px) {
-      position: absolute;
-      width: 50%;
-      min-height: 0;
-      height: 50%;
-      top: 0;
-      left: 0;
-      &.widget-1, &.widget-3 {
-        left: 50%;
-      }
-      &.widget-2, &.widget-3 {
-        top: 50%;
-      }
-    }
   }
 }

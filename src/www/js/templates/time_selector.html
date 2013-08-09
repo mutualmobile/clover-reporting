@@ -1,4 +1,3 @@
-<label for="time-range-select">Time Range</label>
 <div class="select-wrapper">
   {@eq key="{mode}" value="custom"}<div class="toggle-dropdown"></div>{/eq}
   <select name="range" id="time-range-select">
@@ -19,4 +18,7 @@
     <input type="time" id="custom-end-time" value="{customEndTime|hm}">
   </div>
   <button data-action="apply">Apply</button>
+</div>
+<div class="date-range">
+  <time datetime="{startTime|timestamp}">{startTime|shortMonthDayTime}</time> - <time datetime="{endTime|timestamp}">{endTime|shortMonthDayTime}</time>
 </div>

@@ -9,5 +9,12 @@
   "time_range.day": "Past 24 Hours",
   "time_range.week": "Past Week",
   "time_range.month": "Past Month",
-  "time_range.custom": "Custom Range"
+  "time_range.custom": "Custom Range",
+  "chart_axis.millisecond": "Time (milliseconds)",
+  "chart_axis.second": "Time (seconds)",
+  "chart_axis.minute": "Time (minutes)",
+  "chart_axis.hour": "Time",
+  "chart_axis.day": "Time (day of the month)",
+  "chart_axis.month": "Time (month)",
+  "chart_axis.year": "Time (year)"
 }
