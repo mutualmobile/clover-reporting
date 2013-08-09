@@ -35,7 +35,7 @@ define(function(require) {
         selected.text(null);
       }
       selected
-          .datum(this.getData())
+          .datum(data)
         .transition().duration(500)
           .call(this.chart);
     },

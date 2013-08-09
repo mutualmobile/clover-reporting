@@ -4,7 +4,8 @@ define(function(require) {
       Scrollable = require('lavaca/ui/Scrollable'),
       RecentOrdersView = require('app/ui/views/RecentOrdersView'),
       recentOrdersCollection = require('app/models/RecentOrdersCollection'),
-      RevenueByCustomerView = require('app/ui/views/RevenueByCustomerView'),
+      revenueByItemsCollection = require('app/models/RevenueByItemsCollection'),
+      RevenueByItemView = require('app/ui/views/RevenueByItemView'),
       RevenueOverTimeView = require('app/ui/views/RevenueOverTimeView'),
       TimeSelectorView = require('app/ui/views/TimeSelectorView'),
       timeRangeModel = require('app/models/TimeRangeModel');
@@ -26,10 +27,14 @@ define(function(require) {
         TView: RecentOrdersView,
         model: recentOrdersCollection
       },
-      '.widget-0': {
+      '.revenue-graph': {
         TView: RevenueOverTimeView,
         model: recentOrdersCollection
       },
+      // '.revenue-by-item': {
+      //   TView: RevenueByItemView,
+      //   model: revenueByItemsCollection
+      // },
       '.time-selector': {
         TView: TimeSelectorView,
         model: timeRangeModel
