@@ -112,13 +112,19 @@ function revenueByItem(req, res) {
     orders.forEach(function(order) {
       var lineItems = order.lineItems || [];
       lineItems.forEach(function(lineItem) {
-        var revenue = (lineItem.price * lineItem.qty) + lineItem.discountAmount, // TODO tax/refund/exchange
+        var revenue = (lineItem.price * lineItem.qty) + lineItem.discountAmount,
             itemId = lineItem.itemId || 'manual';
         if (!totals[itemId]) {
           totals[itemId] = {
             name: lineItem.name,
             total: 0
           };
+        }
+        if (lineItem.taxable) {
+          revenue += Math.round((lineItem.price * lineItem.qty) * (lineItem.taxRate / 10000000));
+        }
+        if (lineItem.refunded) {
+          revenue = 0;
         }
         totals[itemId].total += revenue;
       });
