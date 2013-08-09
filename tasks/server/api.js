@@ -23,6 +23,7 @@ function makeRequest(path, query) {
 
   query = query || {};
   query.access_token = accessToken;
+  query.count = 999999999;
   options.path = options.path + url.format({query: query});
 
   limiter.removeTokens(1, function() {
@@ -151,6 +152,6 @@ exports.init = function(server) {
       console.log('Connected to clover database');
     }
   });
-  server.get('/all-orders/*', allOrders);
-  server.get('/revenue-by-item/*', revenueByItem);
+  server.get('/all-orders', allOrders);
+  server.get('/revenue-by-item', revenueByItem);
 };
