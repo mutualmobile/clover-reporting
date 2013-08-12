@@ -52,7 +52,7 @@ nv.models.customLineChart = function() {
   //============================================================
   // Private Variables
   //------------------------------------------------------------
-
+  var previousTooltipContent;
   var showTooltip = function(e, offsetElement) {
 
     // New addition to calculate position if SVG is scaled with viewBox, may move TODO: consider implementing everywhere else
@@ -73,7 +73,14 @@ nv.models.customLineChart = function() {
         y = yAxis.tickFormat()(lines.y()(e.point, e.pointIndex)),
         content = tooltip(e.series.key, x, y, e, chart);
 
-    nv.tooltip.show([left, top], content, null, null, offsetElement);
+    if (previousTooltipContent !== content) {
+      nv.tooltip.show([left, top], content, null, null, offsetElement);
+      previousTooltipContent = content;
+    } else if (tooltips) {
+      nv.tooltip.cleanup();
+      previousTooltipContent = null;
+    }
+    
   };
 
   //============================================================
@@ -307,13 +314,18 @@ nv.models.customLineChart = function() {
   // Event Handling/Dispatching (out of chart's scope)
   //------------------------------------------------------------
 
-  lines.dispatch.on('elementMouseover.tooltip', function(e) {
-    e.pos = [e.pos[0] +  margin.left, e.pos[1] + margin.top];
-    dispatch.tooltipShow(e);
-  });
+  // lines.dispatch.on('elementMouseover.tooltip', function(e) {
+  //   e.pos = [e.pos[0] +  margin.left, e.pos[1] + margin.top];
+  //   dispatch.tooltipShow(e);
+  // });
 
-  lines.dispatch.on('elementMouseout.tooltip', function(e) {
-    dispatch.tooltipHide(e);
+  // lines.dispatch.on('elementMouseout.tooltip', function(e) {
+  //   dispatch.tooltipHide(e);
+  // });
+
+  lines.scatter.dispatch.on('elementClick', function(e) {
+    if (tooltips) nv.tooltip.cleanup();
+    dispatch.tooltipShow(e);
   });
 
   dispatch.on('tooltipHide', function() {

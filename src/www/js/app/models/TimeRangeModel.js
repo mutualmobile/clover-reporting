@@ -8,10 +8,10 @@ define(function(require) {
       _LS_END_TIME = 'customEndTime';
 
   var _modes = [
-    {key: 'day', label: 'Past 24 Hours'},
-    {key: 'week', label: 'Past Week'},
-    {key: 'month', label: 'Past Month'},
-    {key: 'custom', label: 'Custom Range'}
+    {key: 'day', label: 'Day'},
+    {key: 'week', label: '7 Days'},
+    {key: 'month', label: '30 Days'}
+    // {key: 'custom', label: 'Custom Range'}
   ];
 
   var TimeRangeModel = Model.extend(function TimeRangeModel() {

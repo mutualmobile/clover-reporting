@@ -23,7 +23,8 @@ define(function(require) {
   var app = new Application(function() {
     // Initialize the routes
     this.router.add({
-      '/': [DashboardController, 'dashboard']
+      '/': [DashboardController, 'dashboard'],
+      '/zoom': [DashboardController, 'zoom']
     });
 
     // Initialize translations

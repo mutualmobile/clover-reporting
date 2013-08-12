@@ -20,5 +20,16 @@
   <button data-action="apply">Apply</button>
 </div>
 <div class="date-range">
-  <time datetime="{startTime|timestamp}">{startTime|shortMonthDayTime}</time> - <time datetime="{endTime|timestamp}">{endTime|shortMonthDayTime}</time>
+  {@eq key="{mode}" value="day"}
+    <time datetime="{startTime|timestamp}">{startTime|scopeDay}</time> - <time datetime="{endTime|timestamp}">{endTime|scopeDay}</time>
+  {/eq}
+  {@eq key="{mode}" value="week"}
+    <time datetime="{startTime|timestamp}">{startTime|scopeDay}</time> - <time datetime="{endTime|timestamp}">{endTime|scopeDay}</time>
+  {/eq}
+  {@eq key="{mode}" value="month"}
+    <time datetime="{startTime|timestamp}">{startTime|scopeMonth}</time> - <time datetime="{endTime|timestamp}">{endTime|scopeMonth}</time>
+  {/eq}
+  {@eq key="{mode}" value="custom"}
+    <time datetime="{startTime|timestamp}">{startTime|scopeDay}</time> - <time datetime="{endTime|timestamp}">{endTime|scopeDay}</time>
+  {/eq}
 </div>

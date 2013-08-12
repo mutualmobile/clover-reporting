@@ -45,6 +45,24 @@ define(function(require) {
     }
     return value.format('MMM DD hh:mm A');
   };
+  dust.filters.scopeDay = function(value) {
+    if (!moment.isMoment(value)) {
+      value = moment(value);
+    }
+    return value.format('MMMM DD YYYY');
+  };
+  dust.filters.scopeWeek = function(value) {
+    if (!moment.isMoment(value)) {
+      value = moment(value);
+    }
+    return value.format('MMMM YYYY');
+  };
+  dust.filters.scopeMonth = function(value) {
+    if (!moment.isMoment(value)) {
+      value = moment(value);
+    }
+    return value.format('MMMM YYYY');
+  };
   dust.filters.timestamp = function(value) {
     if (!moment.isMoment(value)) {
       value = moment(value);

@@ -3,9 +3,11 @@ define(function(require) {
   var BaseChartView = require('./BaseChartView'),
       debounce = require('mout/function/debounce'),
       Translation = require('lavaca/util/Translation'),
+      router = require('lavaca/mvc/Router'),
       d3 = require('d3'),
       nv = require('nv'),
-      moment = require('moment');
+      moment = require('moment'),
+      $ = require('jquery');
   require('app/ui/widgets/CustomLineChart');
   require('rdust!templates/revenue_over_time');
 
@@ -56,6 +58,9 @@ define(function(require) {
         removeItem: debouncedChangeHandler,
         'change.startTime': debouncedChangeHandler,
         'change.endTime': debouncedChangeHandler
+      },
+      '.nvtooltip .button': {
+        'tap': _onTapTooltipButton.bind(this)
       }
     });
     this.render();
@@ -85,14 +90,12 @@ define(function(require) {
           maxTicks = Math.round(elWidth / 50),
           batchSize = 1,
           ticks = [],
-          key,
-          format,
-          duration,
           currentTime,
           i,
           maxHeight,
           data;
-
+      // Remove tooldtips
+      nv.tooltip.cleanup();
       // Find appropriate units (minutes / hours / etc) based on minTicks
       for (i = 1; i < _DURATION_HASH.length; i++) {
         if (Math.ceil(totalDuration / _DURATION_HASH[i].duration) < minTicks) {
@@ -100,32 +103,32 @@ define(function(require) {
         }
       }
       i--;
-      key = _DURATION_HASH[i].key;
-      format = _DURATION_HASH[i].format;
-      duration = _DURATION_HASH[i].duration;
+      this.key = _DURATION_HASH[i].key;
+      this.format = _DURATION_HASH[i].format;
+      this.duration = _DURATION_HASH[i].duration;
 
       // Batch units as necessary (1 hour / 2 hours / etc) based on maxTicks
-      while (Math.ceil(totalDuration / (duration * batchSize)) > maxTicks) {
+      while (Math.ceil(totalDuration / (this.duration * batchSize)) > maxTicks) {
         batchSize++;
       }
 
       // Round the start and end times to whole units
-      start.startOf(key);
-      end.startOf(key).add(key, 1);
+      start.startOf(this.key);
+      end.startOf(this.key).add(this.key, 1);
 
       // Generate the intermediate ticks
       currentTime = start.clone();
-      while (+(currentTime = currentTime.add(key, batchSize)) < endMillis) {
+      while (+(currentTime = currentTime.add(this.key, batchSize)) < endMillis) {
         ticks.push(currentTime.valueOf());
       }
       this.chart.forceX([start.valueOf(), end.valueOf()]);
       this.chart.xAxis
-        .axisLabel(Translation.get('chart_axis.' + key) || 'Time')
+        .axisLabel(Translation.get('chart_axis.' + this.key) || 'Time')
         .tickValues(ticks)
         .tickFormat(function(millis) {
           var date = moment(millis);
-          return date.format(format);
-        });
+          return date.format(this.format);
+        }.bind(this));
       this.chart.yAxis
         .tickFormat(d3.format('$,.2f'));
       // Get Data
@@ -167,9 +170,27 @@ define(function(require) {
             .x(function(d) { return d[0]; })
             .y(function(d) { return d[1] / 100; });
       chart.tooltipContent(function(key, x, y, e, graph) {
-        return '<time>' + moment(e.point[0]).format('MMMM DD') + '</time>' +
+        var time = moment(e.point[0]),
+            content,
+            hideButton,
+            start,
+            end;
+        if (this.key === 'month') {
+          start = time.clone().startOf('day');
+          end = time.clone().startOf('month').add('months', 1);
+        } else if (this.key === 'day') {
+          start = time.clone().startOf('day');
+          end = time.clone().startOf('day').add('days', 1);
+        } else {
+          hideButton = true;
+        }
+        content = '<time>' + time.format('MMMM DD') + '</time>' +
               '<div class="money">$' + parseFloat(y, 10).toFixed(2) + '</div><div class="triangle"></div>';
-      });
+        if (!hideButton) {
+          content += '<div class="button" data-start="'+ start +'" data-end="'+ end +'">View</div>';
+        }
+        return content;
+      }.bind(this));
 
       return chart;
     }
@@ -199,6 +220,14 @@ define(function(require) {
       values: buckets
     }];
 
+  }
+
+  function _onTapTooltipButton(e) {
+    var el = $(e.currentTarget);
+    router.exec('/zoom', null, {
+      startTime: el.data('start'),
+      endTime: el.data('end')
+    });
   }
 
   return RevenueOverTimeView;

@@ -2,7 +2,10 @@ define(function(require) {
 
   var BaseController = require('app/net/BaseController'),
       DashboardView = require('app/ui/pageviews/DashboardView'),
-      Model = require('lavaca/mvc/Model');
+      Model = require('lavaca/mvc/Model'),
+      Promise = require('lavaca/util/Promise'),
+      timeRangeModel = require('app/models/TimeRangeModel'),
+      moment = require('moment');
 
   /**
    * Dashboard controller
@@ -22,6 +25,19 @@ define(function(require) {
       return this
         .view(null, DashboardView, new Model())
         .then(this.updateState(model, 'Dashboard', params.url));
+    },
+    zoom: function(params, model) {
+      if (params.startTime && params.endTime) {
+        timeRangeModel.suppressEvents = true;
+        timeRangeModel.apply({
+          customStartTime: moment(params.startTime),
+          customEndTime: moment(params.endTime),
+          mode: 'custom'
+        });
+        timeRangeModel.suppressEvents = false;
+        timeRangeModel.trigger('rangeUpdate');
+      }
+      return new Promise().resolve();
     }
   });
 
