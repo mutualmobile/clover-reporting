@@ -31,10 +31,10 @@ define(function(require) {
         TView: RevenueOverTimeView,
         model: recentOrdersCollection
       },
-      // '.revenue-by-item': {
-      //   TView: RevenueByItemView,
-      //   model: revenueByItemsCollection
-      // },
+      '.revenue-by-item': {
+        TView: RevenueByItemView,
+        model: revenueByItemsCollection
+      },
       '.time-selector': {
         TView: TimeSelectorView,
         model: timeRangeModel

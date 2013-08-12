@@ -4,7 +4,7 @@ define(function(require) {
       debounce = require('mout/function/debounce'),
       d3 = require('d3'),
       nv = require('nv');
-
+  require('app/ui/widgets/CustomPieChart');
   require('rdust!templates/revenue_by_item');
 
   /**
@@ -51,6 +51,10 @@ define(function(require) {
         });
       });
 
+      data.sort(function(a, b) {
+        return b.value - a.value;
+      });
+
       if (data.length) {
         return data;
       } else {
@@ -58,12 +62,22 @@ define(function(require) {
       }
     },
     createChart: function() {
-      return nv.models.pieChart()
+      var colors = ['#afa728', '#984b29', '#2e9a59', '#2777b0'];
+      var chart = nv.models.pieChart()
               .x(function(d) { return d.label; })
               .y(function(d) { return d.value; })
               .showLabels(true)
+              .showLegend(false)
               .labelThreshold(0.05)
-              .donut(true);
+              .donut(true)
+              .donutRatio(1)
+              .donutLabelsOutside(true)
+              .spacing(0.09)
+              .color(function(d, i) {
+                return colors[i % colors.length];
+              });
+
+      return chart;
     }
   });
 

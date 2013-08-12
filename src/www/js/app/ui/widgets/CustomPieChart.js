@@ -27,6 +27,7 @@ nv.models.pie = function() {
     , startAngle = false
     , endAngle = false
     , donutRatio = 0.5
+    , spacing = 0
     , dispatch = d3.dispatch('chartClick', 'elementClick', 'elementDblClick', 'elementMouseover', 'elementMouseout')
     ;
 
@@ -38,7 +39,7 @@ nv.models.pie = function() {
       var availableWidth = width - margin.left - margin.right,
           availableHeight = height - margin.top - margin.bottom,
           radius = Math.min(availableWidth, availableHeight) / 2,
-          arcRadius = radius-(radius / 5),
+          arcRadius = 63,
           container = d3.select(this);
 
 
@@ -75,7 +76,7 @@ nv.models.pie = function() {
 
       if (startAngle) arc.startAngle(startAngle)
       if (endAngle) arc.endAngle(endAngle);
-      if (donut) arc.innerRadius(radius * donutRatio);
+      if (donut) arc.innerRadius(arcRadius * donutRatio);
 
       // Setup the Pie chart and choose the data element
       var pie = d3.layout.pie()
@@ -151,7 +152,7 @@ nv.models.pie = function() {
           
           if (pieLabelsOutside){ labelsArc = arc; }
 
-          if (donutLabelsOutside) { labelsArc = d3.svg.arc().outerRadius(arc.outerRadius()); }
+          if (donutLabelsOutside) { labelsArc = d3.svg.arc().outerRadius(arc.outerRadius()() + 50); }
 
           ae.append("g").classed("nv-label", true)
             .each(function(d, i) {
@@ -184,7 +185,6 @@ nv.models.pie = function() {
 
               group.append('text')
                   .style('text-anchor', labelSunbeamLayout ? ((d.startAngle + d.endAngle) / 2 < Math.PI ? 'start' : 'end') : 'middle') //center the text on it's origin or begin/end if orthogonal aligned
-                  .style('fill', '#000')
 
 
           });
@@ -242,8 +242,14 @@ nv.models.pie = function() {
         }
 
         function arcTween(a) {
+          var midAngle;
           a.endAngle = isNaN(a.endAngle) ? 0 : a.endAngle;
           a.startAngle = isNaN(a.startAngle) ? 0 : a.startAngle;
+          if (spacing) {
+            midAngle = ((a.endAngle - a.startAngle) / 2) + a.startAngle;
+            a.endAngle = Math.max(a.endAngle - (spacing / 2), midAngle);
+            a.startAngle = Math.min(a.startAngle + (spacing / 2), midAngle);
+          }
           if (!donut) a.innerRadius = 0;
           var i = d3.interpolate(this._current, a);
           this._current = i(0);
@@ -356,6 +362,12 @@ nv.models.pie = function() {
   chart.donutRatio = function(_) {
     if (!arguments.length) return donutRatio;
     donutRatio = _;
+    return chart;
+  };
+
+  chart.spacing = function(_) {
+    if (!arguments.length) return spacing;
+    spacing = _;
     return chart;
   };
 
@@ -641,7 +653,7 @@ nv.models.pieChart = function() {
   chart.dispatch = dispatch;
   chart.pie = pie;
 
-  d3.rebind(chart, pie, 'valueFormat', 'values', 'x', 'y', 'description', 'id', 'showLabels', 'donutLabelsOutside', 'pieLabelsOutside', 'labelType', 'donut', 'donutRatio', 'labelThreshold');
+  d3.rebind(chart, pie, 'valueFormat', 'values', 'x', 'y', 'description', 'id', 'showLabels', 'donutLabelsOutside', 'pieLabelsOutside', 'labelType', 'donut', 'donutRatio', 'spacing', 'labelThreshold');
 
   chart.margin = function(_) {
     if (!arguments.length) return margin;
