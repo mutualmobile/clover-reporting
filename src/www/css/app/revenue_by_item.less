@@ -1,12 +1,36 @@
 .revenue_by_item {
   svg {
     min-height: 300px;
+    max-height: 100%;
+    max-width: 100%;
+    &.loading .nv-noData {
+      display: none;
+    }
   }
   .nvd3.nv-pie path {
     stroke: inherit;
     stroke-width: 3px;
+    &.label-line {
+      stroke: #dfdfe0;
+      stroke-width: 1px;
+      fill-opacity: 0;
+    }
+  }
+  .label-line {
+    opacity: 0.5;
   }
   text {
-    fill: #fff;
+    fill: #dfdfe0;
+    font: lighter 11px Helvetica;
+  }
+  .pie-overlay {
+    background: url(../../assets/img/pie-overlay.png) 0 0 no-repeat;
+    width: 151px;
+    height: 165px;
+    position: absolute;
+    top: 84px;
+    left: 50%;
+    margin-left: -78px;
+    display: none;
   }
 }

@@ -53,6 +53,7 @@ define(function(require) {
   function _onChangeLoading(e) {
     var loading = e.value;
     if (!loading) {
+      d3.select('.loading').classed('loading', false);
       this.el.find('.loading-spinner').remove();
     }
   }

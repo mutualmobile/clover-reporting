@@ -28,6 +28,7 @@ nv.models.pie = function() {
     , endAngle = false
     , donutRatio = 0.5
     , spacing = 0
+    , labelOffset = 10
     , dispatch = d3.dispatch('chartClick', 'elementClick', 'elementDblClick', 'elementMouseover', 'elementMouseout')
     ;
 
@@ -39,9 +40,9 @@ nv.models.pie = function() {
       var availableWidth = width - margin.left - margin.right,
           availableHeight = height - margin.top - margin.bottom,
           radius = Math.min(availableWidth, availableHeight) / 2,
-          arcRadius = 63,
+          arcRadius = window.arcRadius || 62,
+          calculatedLabelOffset = Math.min(labelOffset, radius/5 - 10),
           container = d3.select(this);
-
 
       //------------------------------------------------------------
       // Setup containers and skeleton of chart
@@ -139,10 +140,11 @@ nv.models.pie = function() {
             .attr('stroke', function(d,i) { return color(d, i); });
 
         var paths = ae.append('path')
+            .classed('donut-arc', true)
             .each(function(d) { this._current = d; });
             //.attr('d', arc);
 
-        d3.transition(slices.select('path'))
+        d3.transition(slices.select('path.donut-arc'))
             .attr('d', arc)
             .attrTween('d', arcTween);
 
@@ -152,9 +154,9 @@ nv.models.pie = function() {
           
           if (pieLabelsOutside){ labelsArc = arc; }
 
-          if (donutLabelsOutside) { labelsArc = d3.svg.arc().outerRadius(arc.outerRadius()() + 50); }
+          if (donutLabelsOutside) { labelsArc = d3.svg.arc().outerRadius(arc.outerRadius()); }
 
-          ae.append("g").classed("nv-label", true)
+          ae.insert("g", 'path.donut-arc').classed("nv-label", true)
             .each(function(d, i) {
               var group = d3.select(this);
 
@@ -171,20 +173,18 @@ nv.models.pie = function() {
                        }
                        return 'translate(' + labelsArc.centroid(d) + ') rotate(' + rotateAngle + ')';
                      } else {
-                       d.outerRadius = radius + 10; // Set Outer Coordinate
-                       d.innerRadius = radius + 15; // Set Inner Coordinate
+                       d.outerRadius = radius + calculatedLabelOffset; // Set Outer Coordinate
+                       d.innerRadius = radius + calculatedLabelOffset + 5; // Set Inner Coordinate
                        return 'translate(' + labelsArc.centroid(d) + ')'
                      }
                 });
 
-              group.append('rect')
-                  .style('stroke', '#fff')
-                  .style('fill', '#fff')
-                  .attr("rx", 3)
-                  .attr("ry", 3);
+              group.append('path')
+                .classed('label-line', true);
+
 
               group.append('text')
-                  .style('text-anchor', labelSunbeamLayout ? ((d.startAngle + d.endAngle) / 2 < Math.PI ? 'start' : 'end') : 'middle') //center the text on it's origin or begin/end if orthogonal aligned
+                  .style('text-anchor', (d.startAngle + d.endAngle) / 2 < Math.PI ? 'start' : 'end'); //center the text on it's origin or begin/end if orthogonal aligned
 
 
           });
@@ -202,35 +202,67 @@ nv.models.pie = function() {
                   }
                   return 'translate(' + labelsArc.centroid(d) + ') rotate(' + rotateAngle + ')';
                 } else {
-                  d.outerRadius = radius + 10; // Set Outer Coordinate
-                  d.innerRadius = radius + 15; // Set Inner Coordinate
+                  d.outerRadius = radius + calculatedLabelOffset; // Set Outer Coordinate
+                  d.innerRadius = radius + calculatedLabelOffset + 5; // Set Inner Coordinate
                   return 'translate(' + labelsArc.centroid(d) + ')'
                 }
             });
 
           slices.each(function(d, i) {
-            var slice = d3.select(this);
+            var slice = d3.select(this),
+                isRightSide = (d.startAngle + d.endAngle) / 2 < Math.PI;
 
             slice
               .select(".nv-label text")
-                .style('text-anchor', labelSunbeamLayout ? ((d.startAngle + d.endAngle) / 2 < Math.PI ? 'start' : 'end') : 'middle') //center the text on it's origin or begin/end if orthogonal aligned
+                .style('text-anchor', isRightSide ? 'start' : 'end') //center the text on it's origin or begin/end if orthogonal aligned
                 .text(function(d, i) {
                   var percent = (d.endAngle - d.startAngle) / (2 * Math.PI);
                   var labelTypes = {
                     "key" : getX(d.data),
                     "value": getY(d.data),
-                    "percent": d3.format('%')(percent)
+                    "percent": d3.format('%')(percent),
+                    "custom1": getX(d.data).toUpperCase() + ' ' + d3.format('%')(percent)
                   };
                   return (d.value && percent > labelThreshold) ? labelTypes[labelType] : '';
                 });
 
-            var textBox = slice.select('text').node().getBBox();
-            slice.select(".nv-label rect")
-              .attr("width", textBox.width + 10)
-              .attr("height", textBox.height + 10)
-              .attr("transform", function() {
-                return "translate(" + [textBox.x - 5, textBox.y - 5] + ")";
-              });
+            function getPathData(d) {
+              var textBox = slice.select('text').node().getBBox(),
+                  xOverhang = 5,
+                  y = textBox.y + textBox.height + 5,
+                  labelCentroid = labelsArc.centroid(d),
+                  arcCentroid = arc.centroid(d),
+                  centerPoint,
+                  pathData = [];
+              if (textBox.width) {
+                pathData = [
+                  {
+                    x: textBox.x - (isRightSide ? xOverhang : 0),
+                    y: y
+                  },
+                  {
+                    x: textBox.x + textBox.width + (isRightSide ? 0 : xOverhang),
+                    y: y
+                  }
+                ];
+                centerPoint = {
+                  x: arcCentroid[0]-labelCentroid[0] + (isRightSide ? 6 : -6),
+                  y: arcCentroid[1]-labelCentroid[1] + (isRightSide ? 6 : -6)
+                };
+                if (isRightSide) {
+                  pathData.unshift(centerPoint);
+                } else {
+                  pathData.push(centerPoint);
+                }
+              }
+              return pathData;
+            }
+            var line = d3.svg.line()
+                          .x(function(d) {return d.x; })
+                          .y(function(d) { return d.y; })
+                          .interpolate('linear');
+            slice.select('.nv-label path')
+                .attr('d', line(getPathData(d)));
           });
         }
 
@@ -371,6 +403,12 @@ nv.models.pie = function() {
     return chart;
   };
 
+  chart.labelOffset = function(_) {
+    if (!arguments.length) return labelOffset;
+    labelOffset = _;
+    return chart;
+  };
+
   chart.startAngle = function(_) {
     if (!arguments.length) return startAngle;
     startAngle = _;
@@ -471,7 +509,9 @@ nv.models.pieChart = function() {
       chart.container = this;
 
       //set state.disabled
-      state.disabled = data.map(function(d) { return !!d.disabled });
+      if (data) {
+        state.disabled = data.map(function(d) { return !!d.disabled });
+      }
 
       if (!defaultState) {
         var key;
@@ -653,7 +693,7 @@ nv.models.pieChart = function() {
   chart.dispatch = dispatch;
   chart.pie = pie;
 
-  d3.rebind(chart, pie, 'valueFormat', 'values', 'x', 'y', 'description', 'id', 'showLabels', 'donutLabelsOutside', 'pieLabelsOutside', 'labelType', 'donut', 'donutRatio', 'spacing', 'labelThreshold');
+  d3.rebind(chart, pie, 'valueFormat', 'values', 'x', 'y', 'description', 'id', 'showLabels', 'donutLabelsOutside', 'pieLabelsOutside', 'labelType', 'donut', 'donutRatio', 'spacing', 'labelOffset', 'labelThreshold');
 
   chart.margin = function(_) {
     if (!arguments.length) return margin;

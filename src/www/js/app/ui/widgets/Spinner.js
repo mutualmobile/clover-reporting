@@ -19,7 +19,7 @@ define(function(require) {
     }.bind(this), ie8 ? 500 : 0);
   }, {
     defaults: {
-      color: '#000',
+      color: '#fff',
       left: 'auto',
       top: 'auto'
     }

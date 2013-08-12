@@ -72,10 +72,13 @@ define(function(require) {
               .donut(true)
               .donutRatio(1)
               .donutLabelsOutside(true)
-              .spacing(0.09)
+              .spacing(0.07)
+              .labelOffset(30)
               .color(function(d, i) {
                 return colors[i % colors.length];
-              });
+              })
+              .tooltips(false)
+              .labelType('custom1');
 
       return chart;
     }
