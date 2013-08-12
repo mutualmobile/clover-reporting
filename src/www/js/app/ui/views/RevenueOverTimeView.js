@@ -138,7 +138,8 @@ define(function(require) {
         }
       });
       maxHeight = (maxHeight/100);
-      this.chart.forceY([0, maxHeight + (maxHeight * 0.2)]);
+      maxHeight = maxHeight + (maxHeight * 0.2);
+      this.chart.forceY([0, maxHeight || 1]);
 
       d3.select('.revenue_over_time svg')
         .datum(data)
@@ -167,7 +168,7 @@ define(function(require) {
             .y(function(d) { return d[1] / 100; });
       chart.tooltipContent(function(key, x, y, e, graph) {
         return '<time>' + moment(e.point[0]).format('MMMM DD') + '</time>' +
-              '<div class="money">' + y + '</div><div class="triangle"></div>';
+              '<div class="money">$' + parseFloat(y, 10).toFixed(2) + '</div><div class="triangle"></div>';
       });
 
       return chart;
