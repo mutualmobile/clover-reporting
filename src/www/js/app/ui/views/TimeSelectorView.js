@@ -14,7 +14,7 @@ define(function(require) {
   var TimeSelectorView = BaseView.extend(function() {
     BaseView.apply(this, arguments);
     this.mapEvent({
-      '#time-range-select > div': {
+      '.select-wrapper > div': {
         'tap': _onChangeRangeSelect.bind(this)
       },
       '[data-action="apply"]': {

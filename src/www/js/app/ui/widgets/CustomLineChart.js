@@ -16,7 +16,7 @@ nv.models.customLineChart = function() {
     ;
 
 //set margin.right to 23 to fit dates on the x-axis within the chart
-  var margin = {top: 48, right: 0, bottom: 158, left: 0}
+  var margin = {top: 0, right: 0, bottom: 158, left: 0}
     , color = nv.utils.defaultColor()
     , width = null
     , height = null

@@ -80,21 +80,12 @@ define(function(require) {
           .attr('class', 'extent')
           .attr('height', '182')
           .attr('width', '110%');
-
-        svg
-          .insert('image', '.nv-lineChart')
-          .attr('xlink:href', '/assets/img/graphshadow_bottom.png')
-          .attr('id', 'graph-top-shadow')
-          .attr('x', '0')
-          .attr('class', 'extent')
-          .attr('height', '48')
-          .attr('width', '100%');
         svg
           .insert('image', '.nv-lineChart')
           .attr('xlink:href', '/assets/img/graphshadow_top.png')
           .attr('id', 'graph-bottom-shadow')
           .attr('x', '0')
-          .attr('y', '230')
+          .attr('y', '182')
           .attr('class', 'extent')
           .attr('height', '108')
           .attr('width', '100%');
