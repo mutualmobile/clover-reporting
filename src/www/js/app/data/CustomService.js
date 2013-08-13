@@ -12,6 +12,13 @@ define(function(require) {
         end_time: endTime.valueOf()
       };
       return this.makeRequest('revenue-by-item', opts);
+    },
+    getRevenueByCategoryForDateRange: function(startTime, endTime) {
+      var opts = {
+        start_time: startTime.valueOf(),
+        end_time: endTime.valueOf()
+      };
+      return this.makeRequest('revenue-by-category', opts);
     }
   });
 

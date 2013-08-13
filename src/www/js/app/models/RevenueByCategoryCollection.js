@@ -3,7 +3,7 @@ define(function(require) {
       CustomService = require('app/data/CustomService'),
       timeRangeModel = require('app/models/TimeRangeModel');
 
-  var RevenueByItemsCollection = Collection.extend(function RevenueByItemsCollection() {
+  var RevenueByCategoryCollection = Collection.extend(function RevenueByCategoryCollection() {
     Collection.apply(this, arguments);
     _fetch.call(this);
     this.set('loading', true);
@@ -28,7 +28,7 @@ define(function(require) {
 
     this.set('startTime', startTime);
     this.set('endTime', endTime);
-    this._lastFetch = CustomService.getRevenueByItemForDateRange(startTime, endTime)
+    this._lastFetch = CustomService.getRevenueByCategoryForDateRange(startTime, endTime)
       .then(function(data, hash) {
         if (data) {
           if (!this._lastHash || this._lastHash !== hash) {
@@ -49,5 +49,5 @@ define(function(require) {
       }.bind(this));
   }
 
-  return new RevenueByItemsCollection();
+  return new RevenueByCategoryCollection();
 });
