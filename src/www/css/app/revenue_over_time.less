@@ -1,16 +1,16 @@
 .revenue_over_time {
   .wrapper {
-    height: 235px;
+    height: 387px;
     position: relative;
     .nvd3.nv-lineChart .nv-groups .nv-point {
-      fill: #FFFFFF;
-      stroke: rgba(255,255,255,1);
+      fill: #e9f7ff;
+      stroke: rgba(0,0,0,.3);
       fill-opacity: 1 !important;
       stroke-opacity: 1 !important;
-      -webkit-svg-shadow: 0 0 3px rgba(0,0,0,0);
+      stroke-width:1;
     }
     .nvd3.nv-scatter .nv-groups .nv-point.hover, .nvd3 .nv-groups .nv-point.hover {
-      stroke-width: 3 !important;
+      stroke-width: 1 !important;
     }
     .nvd3.nv-lineChart .nv-group {
       fill-opacity: .2;
@@ -18,24 +18,20 @@
       stroke-width: 3;
     }
     .nvd3 .nv-groups path.nv-line {
-      -webkit-svg-shadow: 0 0 3px rgba(0,0,0,0);
+      stroke: #e9f7ff;
+      -webkit-svg-shadow: 0 0 30px rgba(0,0,0,.6);
     }
     svg {
+      margin-top: -48px;
       #graph-background {
-        fill: #2b2e30;
-        fill-opacity: .5;
-        stroke: #FFFFFF;
+        fill: url(#background-gradient);
+        stroke: rgba(255,255,255,.6);
         stroke-width: 1;
-      }
-      .nv-linesWrap #nv-edge-clip-17057 rect {
-        stroke: rgba(255,255,255,1);
-        stroke-width: 1;
-        stoke-opacity: 1;
       }
       .nv-series-0 {
-        fill: url(#gradient) !important;
+        fill: url(#area-gradient) !important;
         stroke: #FFFFFF !important;
-        fill-opacity: .2 !important;
+        fill-opacity: .8 !important;
         stroke-width: 3 !important;
       }
       text {
@@ -43,14 +39,20 @@
       }
       .nv-axislabel {
         fill: #979899;
+        display: none;
       }
       .tick {
         line {
-          stroke: #262929;
+          stroke: rgba(255,255,255,.05);
+        }
+      }
+      .nv-y .tick {
+        line {
+          stroke: rgba(255,255,255,.03);
         }
       }
       .tick.minor {
-        stroke: #393c3c;
+        stroke: rgba(255,255,255,.03);
       }
     }
     .nvtooltip {

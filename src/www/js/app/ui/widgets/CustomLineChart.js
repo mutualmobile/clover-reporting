@@ -1,7 +1,7 @@
 define(function(require) {
 var d3 = require('d3');
 var nv = require('nv');
-
+require('app/ui/widgets/ScatterOverride');
 
 nv.models.customLineChart = function() {
 
@@ -16,7 +16,7 @@ nv.models.customLineChart = function() {
     ;
 
 //set margin.right to 23 to fit dates on the x-axis within the chart
-  var margin = {top: 0, right: 0, bottom: 50, left: 0}
+  var margin = {top: 48, right: 0, bottom: 158, left: 0}
     , color = nv.utils.defaultColor()
     , width = null
     , height = null
@@ -42,7 +42,7 @@ nv.models.customLineChart = function() {
     .tickPadding(7)
     ;
   yAxis
-    .tickSubdivide(1)
+    .tickSubdivide(4)
     .orient((rightAlignYAxis) ? 'right' : 'left')
     ;
 
@@ -68,7 +68,7 @@ nv.models.customLineChart = function() {
     }
 
     var left = e.pos[0] + ( offsetElement.offsetLeft || 0 ),
-        top = e.pos[1] + ( offsetElement.offsetTop || 0),
+        top = e.pos[1] + ( offsetElement.offsetTop + margin.top  || 0),
         x = xAxis.tickFormat()(lines.x()(e.point, e.pointIndex)),
         y = yAxis.tickFormat()(lines.y()(e.point, e.pointIndex)),
         content = tooltip(e.series.key, x, y, e, chart);
@@ -97,7 +97,7 @@ nv.models.customLineChart = function() {
                              - margin.top - margin.bottom;
 
 
-      chart.update = function() { container.transition().call(chart) };
+      chart.update = function() { container.transition().call(chart); };
       chart.container = this;
 
       //set state.disabled
@@ -330,6 +330,10 @@ nv.models.customLineChart = function() {
 
   dispatch.on('tooltipHide', function() {
     if (tooltips) nv.tooltip.cleanup();
+  });
+
+  lines.scatter.clipRadius(function() {
+    return 100;
   });
 
   //============================================================

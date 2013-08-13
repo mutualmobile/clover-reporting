@@ -70,13 +70,34 @@ define(function(require) {
     onRenderSuccess: function() {
       BaseChartView.prototype.onRenderSuccess.apply(this, arguments);
       setTimeout(function() {
+        var svg = d3.select('svg'),
+            defs = svg.append('svg:defs');
         d3.select('svg .nv-lineChart > g')
           .insert('rect', '.nv-linesWrap')
           .attr('id', 'graph-background')
           .attr('x', '-1')
+          .attr('y', '0')
           .attr('class', 'extent')
-          .attr('height', '186')
+          .attr('height', '182')
           .attr('width', '110%');
+
+        svg
+          .insert('image', '.nv-lineChart')
+          .attr('xlink:href', '/assets/img/graphshadow_bottom.png')
+          .attr('id', 'graph-top-shadow')
+          .attr('x', '0')
+          .attr('class', 'extent')
+          .attr('height', '48')
+          .attr('width', '100%');
+        svg
+          .insert('image', '.nv-lineChart')
+          .attr('xlink:href', '/assets/img/graphshadow_top.png')
+          .attr('id', 'graph-bottom-shadow')
+          .attr('x', '0')
+          .attr('y', '230')
+          .attr('class', 'extent')
+          .attr('height', '108')
+          .attr('width', '100%');
       }, 0);
     },
     updateChart: function() {
@@ -87,7 +108,7 @@ define(function(require) {
           totalDuration = endMillis - startMillis,
           minTicks = 4,
           elWidth = this.el.width(),
-          maxTicks = Math.round(elWidth / 50),
+          maxTicks = Math.round(elWidth / 20),
           batchSize = 1,
           ticks = [],
           currentTime,
@@ -151,14 +172,15 @@ define(function(require) {
 
       d3.selectAll('.revenue_over_time svg .nv-x .tick text, .revenue_over_time svg .nv-x .nv-axisMaxMin text')
         .style('text-anchor', 'end')
-        .attr('dx', '-.8em')
-        .attr('dy', (elWidth / (ticks.length + 1)) / 2 +'px')
+        .attr('dx', '-1.5em')
+        .attr('dy', ((elWidth / (ticks.length + 1)) / 2) - 2 +'px')
         .attr('transform', function() {
             return 'rotate(-90)' ;
         });
       d3.selectAll('.revenue_over_time svg .nv-x .tick line') 
         .attr('x1', '0')
         .attr('y1', '40');
+
     },
     getData: function(ticks, start, end) {
       ticks.unshift(start.valueOf());
