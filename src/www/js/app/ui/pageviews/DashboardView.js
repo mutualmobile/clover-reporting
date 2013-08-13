@@ -6,6 +6,7 @@ define(function(require) {
       recentOrdersCollection = require('app/models/RecentOrdersCollection'),
       revenueByCategoryCollection = require('app/models/RevenueByCategoryCollection'),
       RevenueByCategoryView = require('app/ui/views/RevenueByCategoryView'),
+      RevenueByEmployeeView = require('app/ui/views/RevenueByEmployeeView'),
       RevenueOverTimeView = require('app/ui/views/RevenueOverTimeView'),
       TimeSelectorView = require('app/ui/views/TimeSelectorView'),
       timeRangeModel = require('app/models/TimeRangeModel');
@@ -31,9 +32,13 @@ define(function(require) {
         TView: RevenueOverTimeView,
         model: recentOrdersCollection
       },
-      '.revenue-by-item': {
+      '.revenue-by-category': {
         TView: RevenueByCategoryView,
         model: revenueByCategoryCollection
+      },
+      '.revenue-by-employee': {
+        TView: RevenueByEmployeeView,
+        model: recentOrdersCollection
       },
       '.time-selector': {
         TView: TimeSelectorView,

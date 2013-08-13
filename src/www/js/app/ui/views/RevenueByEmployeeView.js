@@ -5,25 +5,37 @@ define(function(require) {
 
   /**
    * Renders a pie chart showing revenue
-   * breakdown by category
-   * @class app.ui.views.RevenueByCategoryView
+   * breakdown by employee
+   * @class app.ui.views.RevenueByEmployeeView
    * @extends app.ui.views.BasePieChartView
    */
-  var RevenueByCategoryView = BasePieChartView.extend(function RevenueByCategoryView() {
+  var RevenueByEmployeeView = BasePieChartView.extend(function RevenueByEmployeeView() {
     BasePieChartView.apply(this, arguments);
     this.render();
   }, {
     template: 'templates/base_pie',
-    className: 'base_pie revenue_by_category',
-    d3ChartSelector: '.revenue_by_category svg',
+    className: 'base_pie revenue_by_employee',
+    d3ChartSelector: '.revenue_by_employee svg',
     getData: function() {
-      var data = [];
+      var totals = {},
+          data = [];
+
       this.model.each(function(index, model) {
-        data.push({
-          label: model.get('name'),
-          value: model.get('total') / 100
-        });
+        var employeeName = model.get('employeeName');
+        if (employeeName) {
+          if (!totals[employeeName]) {
+            totals[employeeName] = {
+              label: employeeName,
+              value: 0
+            };
+          }
+          totals[employeeName].value += model.get('total');
+        }
       });
+
+      for (var employee in totals) {
+        data.push(totals[employee]);
+      }
 
       data.sort(function(a, b) {
         return b.value - a.value;
@@ -45,6 +57,6 @@ define(function(require) {
     }
   });
 
-  return RevenueByCategoryView;
+  return RevenueByEmployeeView;
 
 });

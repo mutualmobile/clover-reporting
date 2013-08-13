@@ -5,7 +5,6 @@ define(function(require) {
       d3 = require('d3'),
       nv = require('nv');
   require('app/ui/widgets/CustomPieChart');
-  require('rdust!templates/revenue_by_item');
 
   /**
    * Renders a pie chart
