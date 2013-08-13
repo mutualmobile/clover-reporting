@@ -7,6 +7,7 @@ define(function(require) {
       d3 = require('d3'),
       nv = require('nv'),
       moment = require('moment'),
+      timeRangeModel = require('app/models/TimeRangeModel'),
       $ = require('jquery');
   require('app/ui/widgets/CustomLineChart');
   require('rdust!templates/revenue_over_time');
@@ -188,10 +189,7 @@ define(function(require) {
             hideButton,
             start,
             end;
-        if (this.key === 'month') {
-          start = time.clone().startOf('day');
-          end = time.clone().endOf('month');
-        } else if (this.key === 'day') {
+        if (this.key === 'day') {
           start = time.clone().startOf('day');
           end = time.clone().endOf('day');
         } else {
@@ -237,6 +235,7 @@ define(function(require) {
 
   function _onTapTooltipButton(e) {
     var el = $(e.currentTarget);
+    timeRangeModel.set('mode', 'day');
     router.exec('/zoom', null, {
       startTime: el.data('start'),
       endTime: el.data('end')
