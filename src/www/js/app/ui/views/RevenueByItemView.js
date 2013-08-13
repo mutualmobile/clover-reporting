@@ -68,7 +68,7 @@ define(function(require) {
               .y(function(d) { return d.value; })
               .showLabels(true)
               .showLegend(false)
-              .labelThreshold(0.05)
+              .labelThreshold(0.062)
               .donut(true)
               .donutRatio(1)
               .donutLabelsOutside(true)

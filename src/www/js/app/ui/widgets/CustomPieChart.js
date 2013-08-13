@@ -29,6 +29,7 @@ nv.models.pie = function() {
     , donutRatio = 0.5
     , spacing = 0
     , labelOffset = 10
+    , labelOverhang = 5
     , dispatch = d3.dispatch('chartClick', 'elementClick', 'elementDblClick', 'elementMouseover', 'elementMouseout')
     ;
 
@@ -162,21 +163,27 @@ nv.models.pie = function() {
 
               group
                 .attr('transform', function(d) {
-                     if (labelSunbeamLayout) {
-                       d.outerRadius = arcRadius + 10; // Set Outer Coordinate
-                       d.innerRadius = arcRadius + 15; // Set Inner Coordinate
-                       var rotateAngle = (d.startAngle + d.endAngle) / 2 * (180 / Math.PI);
-                       if ((d.startAngle+d.endAngle)/2 < Math.PI) {
-                         rotateAngle -= 90;
-                       } else {
-                         rotateAngle += 90;
-                       }
-                       return 'translate(' + labelsArc.centroid(d) + ') rotate(' + rotateAngle + ')';
-                     } else {
-                       d.outerRadius = radius + calculatedLabelOffset; // Set Outer Coordinate
-                       d.innerRadius = radius + calculatedLabelOffset + 5; // Set Inner Coordinate
-                       return 'translate(' + labelsArc.centroid(d) + ')'
-                     }
+                  if (labelSunbeamLayout) {
+                    d.outerRadius = arcRadius + 10; // Set Outer Coordinate
+                    d.innerRadius = arcRadius + 15; // Set Inner Coordinate
+                    var rotateAngle = (d.startAngle + d.endAngle) / 2 * (180 / Math.PI);
+                    if ((d.startAngle+d.endAngle)/2 < Math.PI) {
+                      rotateAngle -= 90;
+                    } else {
+                      rotateAngle += 90;
+                    }
+                    return 'translate(' + labelsArc.centroid(d) + ') rotate(' + rotateAngle + ')';
+                  } else {
+                    d.outerRadius = radius + calculatedLabelOffset; // Set Outer Coordinate
+                    d.innerRadius = radius + calculatedLabelOffset + 5; // Set Inner Coordinate
+                    var translate = labelsArc.centroid(d);
+                    if ((d.startAngle+d.endAngle)/2 < Math.PI) {
+                      translate[0] += labelOverhang;
+                    } else {
+                      translate[0] -= labelOverhang;
+                    }
+                    return 'translate(' + translate + ')';
+                  }
                 });
 
               group.append('path')
@@ -192,20 +199,26 @@ nv.models.pie = function() {
           slices.select(".nv-label").transition()
             .attr('transform', function(d) {
               if (labelSunbeamLayout) {
-                  d.outerRadius = arcRadius + 10; // Set Outer Coordinate
-                  d.innerRadius = arcRadius + 15; // Set Inner Coordinate
-                  var rotateAngle = (d.startAngle + d.endAngle) / 2 * (180 / Math.PI);
-                  if ((d.startAngle+d.endAngle)/2 < Math.PI) {
-                    rotateAngle -= 90;
-                  } else {
-                    rotateAngle += 90;
-                  }
-                  return 'translate(' + labelsArc.centroid(d) + ') rotate(' + rotateAngle + ')';
+                d.outerRadius = arcRadius + 10; // Set Outer Coordinate
+                d.innerRadius = arcRadius + 15; // Set Inner Coordinate
+                var rotateAngle = (d.startAngle + d.endAngle) / 2 * (180 / Math.PI);
+                if ((d.startAngle+d.endAngle)/2 < Math.PI) {
+                  rotateAngle -= 90;
                 } else {
-                  d.outerRadius = radius + calculatedLabelOffset; // Set Outer Coordinate
-                  d.innerRadius = radius + calculatedLabelOffset + 5; // Set Inner Coordinate
-                  return 'translate(' + labelsArc.centroid(d) + ')'
+                  rotateAngle += 90;
                 }
+                return 'translate(' + labelsArc.centroid(d) + ') rotate(' + rotateAngle + ')';
+              } else {
+                d.outerRadius = radius + calculatedLabelOffset; // Set Outer Coordinate
+                d.innerRadius = radius + calculatedLabelOffset + 5; // Set Inner Coordinate
+                var translate = labelsArc.centroid(d);
+                if ((d.startAngle+d.endAngle)/2 < Math.PI) {
+                 translate[0] += labelOverhang;
+                } else {
+                 translate[0] -= labelOverhang;
+                }
+                return 'translate(' + translate + ')';
+              }
             });
 
           slices.each(function(d, i) {
@@ -226,32 +239,36 @@ nv.models.pie = function() {
                   return (d.value && percent > labelThreshold) ? labelTypes[labelType] : '';
                 });
 
+            // Utility function
             function getPathData(d) {
               var textBox = slice.select('text').node().getBBox(),
-                  xOverhang = 5,
                   y = textBox.y + textBox.height + 5,
                   labelCentroid = labelsArc.centroid(d),
                   arcCentroid = arc.centroid(d),
                   centerPoint,
                   pathData = [];
-              if (textBox.width) {
+              if (textBox.width && textBox.height) {
                 pathData = [
                   {
-                    x: textBox.x - (isRightSide ? xOverhang : 0),
+                    x: textBox.x - (isRightSide ? labelOverhang : 0),
                     y: y
                   },
                   {
-                    x: textBox.x + textBox.width + (isRightSide ? 0 : xOverhang),
+                    x: textBox.x + textBox.width + (isRightSide ? 0 : labelOverhang),
                     y: y
                   }
                 ];
                 centerPoint = {
-                  x: arcCentroid[0]-labelCentroid[0] + (isRightSide ? 6 : -6),
-                  y: arcCentroid[1]-labelCentroid[1] + (isRightSide ? 6 : -6)
+                  x: arcCentroid[0]-labelCentroid[0] + (isRightSide ? -labelOverhang : labelOverhang),
+                  y: arcCentroid[1]-labelCentroid[1]
                 };
                 if (isRightSide) {
+                  centerPoint.x -= (centerPoint.x - pathData[0].x) * 0.2;
+                  centerPoint.y -= (centerPoint.y - pathData[0].y) * 0.2;
                   pathData.unshift(centerPoint);
                 } else {
+                  centerPoint.x -= (centerPoint.x - pathData[1].x) * 0.2;
+                  centerPoint.y -= (centerPoint.y - pathData[1].y) * 0.2;
                   pathData.push(centerPoint);
                 }
               }
@@ -400,6 +417,12 @@ nv.models.pie = function() {
   chart.spacing = function(_) {
     if (!arguments.length) return spacing;
     spacing = _;
+    return chart;
+  };
+
+  chart.labelOverhang = function(_) {
+    if (!arguments.length) return labelOverhang;
+    labelOverhang = _;
     return chart;
   };
 
@@ -693,7 +716,7 @@ nv.models.pieChart = function() {
   chart.dispatch = dispatch;
   chart.pie = pie;
 
-  d3.rebind(chart, pie, 'valueFormat', 'values', 'x', 'y', 'description', 'id', 'showLabels', 'donutLabelsOutside', 'pieLabelsOutside', 'labelType', 'donut', 'donutRatio', 'spacing', 'labelOffset', 'labelThreshold');
+  d3.rebind(chart, pie, 'valueFormat', 'values', 'x', 'y', 'description', 'id', 'showLabels', 'donutLabelsOutside', 'pieLabelsOutside', 'labelType', 'donut', 'donutRatio', 'spacing', 'labelOverhang', 'labelOffset', 'labelThreshold');
 
   chart.margin = function(_) {
     if (!arguments.length) return margin;
