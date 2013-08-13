@@ -30,9 +30,8 @@ define(function(require) {
       if (params.startTime && params.endTime) {
         timeRangeModel.suppressEvents = true;
         timeRangeModel.apply({
-          customStartTime: moment(params.startTime),
-          customEndTime: moment(params.endTime),
-          mode: 'custom'
+          startTime: moment(params.startTime),
+          endTime: moment(params.endTime)
         });
         timeRangeModel.suppressEvents = false;
         timeRangeModel.trigger('rangeUpdate');

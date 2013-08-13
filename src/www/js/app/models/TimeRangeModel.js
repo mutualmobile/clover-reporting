@@ -20,7 +20,7 @@ define(function(require) {
     var savedStartTime = parseInt(localStore.get(_LS_START_TIME), 10),
         savedEndTime = parseInt(localStore.get(_LS_END_TIME), 10);
     this.apply({
-      mode: localStore.get(_LS_SELECTED_MODE) || 'day',
+      mode: 'day',
       modes: _modes,
       customStartTime: savedStartTime ? moment(savedStartTime) : moment().subtract('days', 1),
       customEndTime: moment(savedEndTime || new Date()),
@@ -34,7 +34,11 @@ define(function(require) {
 
   // Event handlers
   function _onChangeMode(e) {
-    localStore.set(_LS_SELECTED_MODE, e.value);
+    //localStore.set(_LS_SELECTED_MODE, e.value);
+    this.apply({
+      startTime: _startTime,
+      endTime: _endTime
+    });
     this.trigger('rangeUpdate');
   }
 
@@ -51,7 +55,7 @@ define(function(require) {
     if (mode === 'custom') {
       return this.get('customStartTime');
     }
-    return moment().subtract(mode + 's', 1);
+    return moment().startOf(mode);
   }
 
   function _endTime() {
@@ -59,7 +63,7 @@ define(function(require) {
     if (mode === 'custom') {
       return this.get('customEndTime');
     }
-    return moment();
+    return moment().endOf(mode);
   }
 
   return new TimeRangeModel();

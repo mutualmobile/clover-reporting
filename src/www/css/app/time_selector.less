@@ -106,12 +106,60 @@
     }
   }
   .date-range {
-    color: #979899;
+    position: relative;
+    color: #FFFFFF;
     display: block;
     float: left;
     width: 60%;
     height: 64px;
     line-height: 64px;
-    .border-highlight
+    .border-highlight;
+    font-family: helveticaUltraLight;
+    text-transform: uppercase;
+    font-size: 34px;
+    text-align: center;
+    time {
+      height: 64px;
+      line-height: 64px;
+      display: inline-block;
+      vertical-align: top;
+    }
+    .sep {
+      display: inline-block;
+      line-height: 64px;
+      vertical-align: top;
+    }
+    .day {
+      font-family: helveticaBold;
+    }
+    .arrow {
+      width: 64px;
+      height: 64px;
+      display: inline-block;
+      position: relative;
+      &:before {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        width: 0;
+        height: 0;
+        top: 50%;
+        left: 50%;
+        margin-top: -(@dropDownArrowWidth / 2);
+        margin-left: -@dropDownArrowWidth;
+      }
+      &.forward:before {
+        border-left: @dropDownArrowWidth solid #FFF;
+        border-right: @dropDownArrowWidth solid transparent;
+        border-top: @dropDownArrowWidth solid transparent;
+        border-bottom: @dropDownArrowWidth solid transparent;
+      }
+      &.back:before {
+        border-left: @dropDownArrowWidth solid transparent;
+        border-right: @dropDownArrowWidth solid #FFF;
+        border-top: @dropDownArrowWidth solid transparent;
+        border-bottom: @dropDownArrowWidth solid transparent;
+      }
+    }
   }
 }

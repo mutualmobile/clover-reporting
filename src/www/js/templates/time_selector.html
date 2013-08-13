@@ -1,16 +1,17 @@
 <div class="date-range">
-  {@eq key="{mode}" value="day"}
-    <time datetime="{startTime|timestamp}">{startTime|scopeDay}</time> - <time datetime="{endTime|timestamp}">{endTime|scopeDay}</time>
-  {/eq}
-  {@eq key="{mode}" value="week"}
-    <time datetime="{startTime|timestamp}">{startTime|scopeDay}</time> - <time datetime="{endTime|timestamp}">{endTime|scopeDay}</time>
-  {/eq}
-  {@eq key="{mode}" value="month"}
-    <time datetime="{startTime|timestamp}">{startTime|scopeMonth}</time> - <time datetime="{endTime|timestamp}">{endTime|scopeMonth}</time>
-  {/eq}
-  {@eq key="{mode}" value="custom"}
-    <time datetime="{startTime|timestamp}">{startTime|scopeDay}</time> - <time datetime="{endTime|timestamp}">{endTime|scopeDay}</time>
-  {/eq}
+  <div class="arrow back"></div>
+  <time datetime="{startTime|timestamp}">
+    <span class="month">{@moment value="{startTime}" format="MMM"/}</span>
+    <span class="day">{@moment value="{startTime}" format="D"/}</span>
+    <span class="year">&lsquo;{@moment value="{startTime}" format="YY"/}</span>
+  </time>
+  <span class="sep">&thinsp;&ndash;&thinsp;</span>
+  <time datetime="{endTime|timestamp}">
+    <span class="month">{@moment value="{endTime}" format="MMM"/}</span>
+    <span class="day">{@moment value="{endTime}" format="D"/}</span>
+    <span class="year">&lsquo;{@moment value="{endTime}" format="YY"/}</span>
+  </time>
+  <div class="arrow forward"></div>
 </div>
 
 <div id="time-range-select">

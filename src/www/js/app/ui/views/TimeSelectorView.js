@@ -2,7 +2,8 @@ define(function(require) {
 
   var BaseView = require('./BaseView'),
       $ = require('$'),
-      moment = require('moment');
+      moment = require('moment'),
+      router = require('lavaca/mvc/Router');
 
   require('rdust!templates/time_selector');
 
@@ -19,6 +20,12 @@ define(function(require) {
       },
       '[data-action="apply"]': {
         tap: _onApplyCustomDateRange.bind(this)
+      },
+      '.date-range .forward': {
+        tap: _onTapForward.bind(this)
+      },
+      '.date-range .back': {
+        tap: _onTapBack.bind(this)
       },
       'model': {
         'rangeUpdate': _onChangeModel.bind(this)
@@ -57,6 +64,20 @@ define(function(require) {
 
     $el.toggleClass('open');
     this.el.find('.picker').css('display', shouldShow ? 'block': 'none');
+  }
+
+  function _onTapForward() {
+    var start = this.model.get('startTime'),
+        mode = this.model.get('mode'),
+        newStart = start.add(mode, 1);
+    router.exec('/zoom', null, {startTime: newStart.valueOf(), endTime: newStart.endOf(mode).valueOf()});
+  }
+
+  function _onTapBack() {
+    var start = this.model.get('startTime'),
+        mode = this.model.get('mode'),
+        newStart = start.subtract(mode, 1);
+    router.exec('/zoom', null, {startTime: newStart.valueOf(), endTime: newStart.endOf(mode).valueOf()});
   }
 
   return TimeSelectorView;

@@ -78,14 +78,14 @@ define(function(require) {
           .attr('x', '-1')
           .attr('y', '0')
           .attr('class', 'extent')
-          .attr('height', '182')
+          .attr('height', '192')
           .attr('width', '110%');
         svg
           .insert('image', '.nv-lineChart')
           .attr('xlink:href', '/assets/img/graphshadow_top.png')
           .attr('id', 'graph-bottom-shadow')
           .attr('x', '0')
-          .attr('y', '182')
+          .attr('y', '192')
           .attr('class', 'extent')
           .attr('height', '108')
           .attr('width', '100%');
@@ -190,10 +190,10 @@ define(function(require) {
             end;
         if (this.key === 'month') {
           start = time.clone().startOf('day');
-          end = time.clone().startOf('month').add('months', 1);
+          end = time.clone().endOf('month');
         } else if (this.key === 'day') {
           start = time.clone().startOf('day');
-          end = time.clone().startOf('day').add('days', 1);
+          end = time.clone().endOf('day');
         } else {
           hideButton = true;
         }
