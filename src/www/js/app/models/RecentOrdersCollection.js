@@ -8,7 +8,9 @@ define(function(require) {
     _fetch.call(this);
     this.set('loading', true);
     this.apply({
-      totalRevenue: _totalRevenue
+      totalRevenue: _totalRevenue,
+      revenuePerEmployee: _revenuePerEmployee,
+      revenuePerCustomer: _revenuePerCustomer
     });
 
     this._externalBoundHandler = _fetch.bind(this);
@@ -60,6 +62,44 @@ define(function(require) {
       total += order.get('total');
     });
     return total;
+  }
+  function _revenuePerEmployee() {
+    var employees = [],
+        totalRevenue = 0;
+    this.each(function(index, order) {
+      var employeeName = order.get('employeeName');
+      if (employeeName && employees.indexOf(employeeName) === -1) {
+        employees.push(employeeName);
+      }
+      totalRevenue += order.get('total');
+    });
+
+    // Dividing by zero is bad, mmmkay?
+    if (employees.length) {
+      return totalRevenue / employees.length;
+    }
+    return null;
+  }
+  function _revenuePerCustomer() {
+    var customers = [],
+        customerCount = 0,
+        totalRevenue = 0;
+    this.each(function(index, order) {
+      var customer = order.get('customer');
+      if (customer && customers.indexOf(customer.id) === -1) {
+        customers.push(customer.id);
+        customerCount++;
+      } else if (!customer) {
+        customerCount++;
+      }
+      totalRevenue += order.get('total');
+    });
+
+    // Dividing by zero is bad, mmmkay?
+    if (customerCount) {
+      return totalRevenue / customerCount;
+    }
+    return null;
   }
 
   return new RecentOrdersCollection();
