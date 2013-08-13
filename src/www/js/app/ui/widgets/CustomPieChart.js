@@ -296,8 +296,8 @@ nv.models.pie = function() {
           a.startAngle = isNaN(a.startAngle) ? 0 : a.startAngle;
           if (spacing) {
             midAngle = ((a.endAngle - a.startAngle) / 2) + a.startAngle;
-            a.endAngle = Math.max(a.endAngle - (spacing / 2), midAngle);
-            a.startAngle = Math.min(a.startAngle + (spacing / 2), midAngle);
+            a.endAngle = Math.max(a.endAngle - (spacing / 2), midAngle + 0.03);
+            a.startAngle = Math.min(a.startAngle + (spacing / 2), midAngle - 0.03);
           }
           if (!donut) a.innerRadius = 0;
           var i = d3.interpolate(this._current, a);
