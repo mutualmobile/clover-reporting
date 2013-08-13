@@ -26,6 +26,19 @@ define(function(require) {
     return chunk;
   };
 
+  dust.helpers.moment = function(chunk, context, bodies, params) {
+    var val = parseInt(dust.helpers.tap(params.value, chunk, context) || 0, 10),
+        format = dust.helpers.tap(params.format, chunk, context);
+
+    if (val && format) {
+      if (!moment.isMoment(val)) {
+        val = moment(val);
+      }
+      return chunk.write(val.format(format));
+    }
+    return chunk;
+  };
+
   dust.filters.commas = function(value) {
     return _addCommas(value, 0);
   };
