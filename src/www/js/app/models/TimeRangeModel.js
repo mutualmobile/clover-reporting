@@ -9,8 +9,8 @@ define(function(require) {
 
   var _modes = [
     {key: 'day', label: 'Day'},
-    {key: 'week', label: '7 Days'},
-    {key: 'month', label: '30 Days'}
+    {key: 'week', label: 'Week'},
+    {key: 'month', label: 'Month'}
     // {key: 'custom', label: 'Custom Range'}
   ];
 

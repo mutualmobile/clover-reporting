@@ -1,24 +1,3 @@
-<div class="select-wrapper">
-  {@eq key="{mode}" value="custom"}<div class="toggle-dropdown"></div>{/eq}
-  <select name="range" id="time-range-select">
-    {#modes}
-      <option value="{key}" {@eq key="{key}" value="{mode}"}selected{/eq}>{label}</option>
-    {/modes}
-  </select>
-</div>
-<div class="picker">
-  <div class="date-group">
-    <label for="custom-start-date">Start Date</label>
-    <input type="date" id="custom-start-date" value="{customStartTime|ymd}">
-    <input type="time" id="custom-start-time" value="{customStartTime|hm}">
-  </div>
-  <div class="date-group">
-    <label for="custom-end-date">End Date</label>
-    <input type="date" id="custom-end-date" value="{customEndTime|ymd}">
-    <input type="time" id="custom-end-time" value="{customEndTime|hm}">
-  </div>
-  <button data-action="apply">Apply</button>
-</div>
 <div class="date-range">
   {@eq key="{mode}" value="day"}
     <time datetime="{startTime|timestamp}">{startTime|scopeDay}</time> - <time datetime="{endTime|timestamp}">{endTime|scopeDay}</time>
@@ -33,3 +12,24 @@
     <time datetime="{startTime|timestamp}">{startTime|scopeDay}</time> - <time datetime="{endTime|timestamp}">{endTime|scopeDay}</time>
   {/eq}
 </div>
+
+<div id="time-range-select">
+  <div class="select-wrapper">
+    {#modes}
+      <div data-value="{key}" {@eq key="{key}" value="{mode}"}class="selected"{/eq}>{label}</div>
+    {/modes}
+  </div>
+</div>
+<!-- <div class="picker">
+  <div class="date-group">
+    <label for="custom-start-date">Start Date</label>
+    <input type="date" id="custom-start-date" value="{customStartTime|ymd}">
+    <input type="time" id="custom-start-time" value="{customStartTime|hm}">
+  </div>
+  <div class="date-group">
+    <label for="custom-end-date">End Date</label>
+    <input type="date" id="custom-end-date" value="{customEndTime|ymd}">
+    <input type="time" id="custom-end-time" value="{customEndTime|hm}">
+  </div>
+  <button data-action="apply">Apply</button>
+</div> -->

@@ -14,11 +14,8 @@ define(function(require) {
   var TimeSelectorView = BaseView.extend(function() {
     BaseView.apply(this, arguments);
     this.mapEvent({
-      'select': {
-        'change': _onChangeRangeSelect.bind(this)
-      },
-      '.toggle-dropdown': {
-        tap: _onTapToggleDropdown.bind(this)
+      '#time-range-select > div': {
+        'tap': _onChangeRangeSelect.bind(this)
       },
       '[data-action="apply"]': {
         tap: _onApplyCustomDateRange.bind(this)
@@ -34,7 +31,7 @@ define(function(require) {
   });
 
   function _onChangeRangeSelect(e) {
-    this.model.set('mode', e.currentTarget.value);
+    this.model.set('mode', $(e.currentTarget).data('value'));
   }
 
   function _onChangeModel() {

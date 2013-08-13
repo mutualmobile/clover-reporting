@@ -1,27 +1,49 @@
 @dropDownArrowWidth: 6px;
 .time_selector {
-  padding: 30px;
-  label {
-    font-size: 14px;
-    display: block;
-    text-align: right;
-  }
-  select {
-    font-size: 14px;
-    -webkit-appearance: none;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0);
-    border: 1px solid rgb(255, 255, 255);
-    color: rgb(255, 255, 255);
-  }
-  .select-wrapper {
-    margin: 6px 0;
+  display: block;
+  height: 64px;
+  #time-range-select {
+    display: inline-block;
+    float: right;
+    width: 30%;
     position: relative;
+    .border-highlight;
+    height: 64px;
+    .select-wrapper {
+      text-align: center;
+      & > div {
+        position: relative;
+        display: inline-block;
+        text-transform: uppercase;
+        padding: 0 30px;
+        font-size: 14px;
+        letter-spacing: 1px;
+        line-height: 64px;
+        text-align: center;
+        &.selected {
+          font-weight: bold;
+        }
+        &.selected:before {
+          content: '';
+          display: block;
+          position: absolute;
+          width: 0;
+          height: 0;
+          top: 0;
+          left: 50%;
+          margin-left: -@dropDownArrowWidth;
+          border-left: @dropDownArrowWidth solid transparent;
+          border-right: @dropDownArrowWidth solid transparent;
+          border-top: @dropDownArrowWidth solid #fff;
+        }
+      }
+    }
     .toggle-dropdown {
+      pointer-events: none;
       position: absolute;
       top: 50%;
-      margin-top: -15px;
-      right: -25px;
+      margin-top: -13px;
+      right: 0;
       width: 30px;
       height: 30px;
       cursor: pointer;
@@ -85,5 +107,11 @@
   }
   .date-range {
     color: #979899;
+    display: block;
+    float: left;
+    width: 70%;
+    height: 64px;
+    line-height: 64px;
+    .border-highlight
   }
 }
