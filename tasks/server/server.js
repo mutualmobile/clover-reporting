@@ -45,7 +45,7 @@ module.exports = function(grunt) {
       }
       var req = requester.request(options, function(res) {
         var output = '';
-        console.log(options.method + ' @ ' + options.host + options.path + ' Code: '+ res.statusCode);
+        // console.log(options.method + ' @ ' + options.host + options.path + ' Code: '+ res.statusCode);
         res.setEncoding('utf8');
         res.on('data', function (chunk) {
           output += chunk;
