@@ -1,7 +1,7 @@
 define(function(require) {
 
   var BasePieChartView = require('./BasePieChartView');
-  require('rdust!templates/base_pie');
+  require('rdust!templates/revenue_by_employee');
 
   /**
    * Renders a pie chart showing revenue
@@ -13,7 +13,7 @@ define(function(require) {
     BasePieChartView.apply(this, arguments);
     this.render();
   }, {
-    template: 'templates/base_pie',
+    template: 'templates/revenue_by_employee',
     className: 'base_pie revenue_by_employee',
     d3ChartSelector: '.revenue_by_employee svg',
     getData: function() {
