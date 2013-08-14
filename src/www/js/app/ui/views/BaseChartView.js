@@ -4,6 +4,7 @@ define(function(require) {
       $ = require('jquery'),
       remove = require('mout/array/remove'),
       debounce = require('mout/function/debounce'),
+      d3 = require('d3'),
       nv = require('nv');
 
   require('rdust!templates/revenue_by_customer');
@@ -53,7 +54,9 @@ define(function(require) {
   function _onChangeLoading(e) {
     var loading = e.value;
     if (!loading) {
-      d3.select('.loading').classed('loading', false);
+      this.el.find('.loading').each(function() {
+        d3.select(this).classed('loading', false);
+      });
       this.el.find('.loading-spinner').remove();
     }
   }

@@ -33,6 +33,9 @@ define(function(require) {
 
       if (!data) {
         selected.text(null);
+        this.el.addClass('empty');
+      } else {
+        this.el.removeClass('empty');
       }
 
       selected

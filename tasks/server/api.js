@@ -225,16 +225,18 @@ function revenueByCategory(req, res) {
     categories.forEach(function(category) {
       category.items.forEach(function(item) {
         var itemRevenue = revenueByItem[item.id];
-        if (!totals[category.id]) {
-          totals[category.id] = {
-            id: category.id,
-            name: category.name,
-            total: 0,
-            items: []
-          };
+        if (itemRevenue) {
+          if (!totals[category.id]) {
+            totals[category.id] = {
+              id: category.id,
+              name: category.name,
+              total: 0,
+              items: []
+            };
+          }
+          totals[category.id].total += itemRevenue.total;
+          totals[category.id].items.push(itemRevenue);
         }
-        totals[category.id].total += itemRevenue.total;
-        totals[category.id].items.push(itemRevenue);
       });
     });
     for (var category in totals) {
@@ -264,39 +266,6 @@ exports.init = function(server) {
   });
   server.get('/all-orders', allOrders);
   server.get('/all-categories', allCategories);
-  server.get('/revenue-by-item', function(req, res) {
-    res.send([
-      {
-        "id": "CCV25BC0ZRNWG",
-        "name": "Whiskey + Coke",
-        "total": 1280
-      },
-      {
-        "id": "E133C8PH0VA18",
-        "name": "Shiner",
-        "total": 433
-      },
-      {
-        "id": "T3J42JEAEAT4P",
-        "name": "Lone Star",
-        "total": 11258
-      },
-      {
-        "id": "Q8XN1K1R2G3AC",
-        "name": "Jameson",
-        "total": 1280
-      },
-      {
-        "id": "1DF1D7GEFRRZ0",
-        "name": "Curly Fries",
-        "total": 3132
-      },
-      {
-        "id": "manual",
-        "name": "Manual Transaction",
-        "total": 3141
-      }
-    ]);
-  });
+  server.get('/revenue-by-item', revenueByItem);
   server.get('/revenue-by-category', revenueByCategory);
 };
