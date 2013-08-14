@@ -56,9 +56,7 @@ define(function(require) {
     this.mapEvent({
       model: {
         addItem: debouncedChangeHandler,
-        removeItem: debouncedChangeHandler,
-        'change.startTime': debouncedChangeHandler,
-        'change.endTime': debouncedChangeHandler
+        removeItem: debouncedChangeHandler
       },
       '.nvtooltip .button': {
         'tap': _onTapTooltipButton.bind(this)
@@ -159,20 +157,27 @@ define(function(require) {
 
       d3.select('.revenue_over_time svg')
         .datum(data)
-        .transition().duration(500)
           .call(this.chart);
 
       d3.selectAll('.revenue_over_time svg .nv-x .tick text, .revenue_over_time svg .nv-x .nv-axisMaxMin text')
         .style('text-anchor', 'end')
-        .attr('dx', '-1.5em')
+        .attr('dx', '-25')
         .attr('dy', ((elWidth / (ticks.length + 1)) / 2) - 2 +'px')
         .attr('transform', function() {
             return 'rotate(-90)' ;
         });
-      d3.selectAll('.revenue_over_time svg .nv-x .tick line') 
+      d3.selectAll('.revenue_over_time svg .nv-x .tick > line:first-child') 
         .attr('x1', '0')
-        .attr('y1', '40');
-
+        .attr('y1', '64');
+      d3.selectAll('.revenue_over_time svg .nv-x .tick')[0].forEach(function(item) {
+        d3.select(item)
+          .insert('line')
+          .attr('x1', '-1')
+          .attr('y1', '64')
+          .attr('x2', '-1')
+          .attr('y2', '0')
+          .style('stroke', 'rgba(0,0,0,.2)');
+      });
     },
     getData: function(ticks, start, end) {
       ticks.unshift(start.valueOf());

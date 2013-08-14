@@ -2,7 +2,7 @@ define(function(require) {
 
   var BasePageView = require('./BasePageView'),
       Scrollable = require('lavaca/ui/Scrollable'),
-      RecentOrdersView = require('app/ui/views/RecentOrdersView'),
+      OrderMetricsView = require('app/ui/views/OrderMetricsView'),
       recentOrdersCollection = require('app/models/RecentOrdersCollection'),
       revenueByCategoryCollection = require('app/models/RevenueByCategoryCollection'),
       RevenueByCategoryView = require('app/ui/views/RevenueByCategoryView'),
@@ -24,8 +24,8 @@ define(function(require) {
       'self': Scrollable
     });
     this.mapChildView({
-      '.recent-orders-total': {
-        TView: RecentOrdersView,
+      '.order-metrics': {
+        TView: OrderMetricsView,
         model: recentOrdersCollection
       },
       '.revenue-graph': {

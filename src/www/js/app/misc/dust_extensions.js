@@ -44,7 +44,13 @@ define(function(require) {
   };
   dust.filters.cashMoney = function(value) {
     // value is in cents
-    return '$' + _addCommas(value/100, 2);
+    if (value > 99999) {
+      return '<span class="dollar light">$</span>' + _addCommas(value / 100000) + '<span class="light">K</span>';
+    } else {
+      value = _addCommas(value / 100, 2);
+      value = (''+value).split('.');
+      return '<span class="dollar light">$</span>' + value[0] + '<span class="light">.' + value[1] + '</span>';
+    }
   };
   dust.filters.dateTime = function(value) {
     if (!moment.isMoment(value)) {

@@ -387,7 +387,7 @@ nv.models.scatter = function() {
             .classed('nv-point', true)
             .classed('nv-point-' + i, true);
         });
-        points.transition()
+        points
             .attr('cx', function(d,i) { return x(getX(d,i)) })
             .attr('cy', function(d,i) { return y(getY(d,i)) })
             .attr('r', function(d,i) { return 3 });
