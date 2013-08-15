@@ -52,12 +52,16 @@ define(function(require) {
   });
 
   function _onChangeLoading(e) {
-    var loading = e.value;
+    var loading = e.value,
+        spinners,
+        nestedSpinners;
     if (!loading) {
       this.el.find('.loading').each(function() {
         d3.select(this).classed('loading', false);
       });
-      this.el.find('.loading-spinner').remove();
+      spinners = this.el.find('.loading-spinner');
+      nestedSpinners = this.el.find('[data-view-id] .loading-spinner');
+      spinners.not(nestedSpinners).remove();
     }
   }
 

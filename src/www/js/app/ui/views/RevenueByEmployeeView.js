@@ -1,6 +1,7 @@
 define(function(require) {
 
-  var BasePieChartView = require('./BasePieChartView');
+  var BasePieChartView = require('./BasePieChartView'),
+      PieChartPopoverView = require('./PieChartPopoverView');
   require('rdust!templates/revenue_by_employee');
 
   /**
@@ -11,6 +12,11 @@ define(function(require) {
    */
   var RevenueByEmployeeView = BasePieChartView.extend(function RevenueByEmployeeView() {
     BasePieChartView.apply(this, arguments);
+    this.mapChildView({
+      '.popover': {
+        TView: PieChartPopoverView
+      }
+    });
     this.render();
   }, {
     template: 'templates/revenue_by_employee',

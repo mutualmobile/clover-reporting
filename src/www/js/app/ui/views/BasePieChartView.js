@@ -3,7 +3,8 @@ define(function(require) {
   var BaseChartView = require('./BaseChartView'),
       debounce = require('mout/function/debounce'),
       d3 = require('d3'),
-      nv = require('nv');
+      nv = require('nv'),
+      $ = require('jquery');
   require('app/ui/widgets/CustomPieChart');
   require('rdust!templates/base_pie');
 
@@ -17,11 +18,24 @@ define(function(require) {
 
     var debouncedChangeHandler = debounce(this.updateChart.bind(this), 0);
     this.mapEvent({
+      '.popover': {
+        tap: _tapInPopover,
+        'mouseenter': _enterPopover,
+        'mouseleave': _exitPopover.bind(this)
+      },
+      '.pie-center': {
+        'tap': _togglePopover.bind(this),
+        'mouseenter': _enterCircle.bind(this),
+        'mouseleave': _exitCircle.bind(this)
+      },
+      '.see-more': {
+        tap: _tapSeeMore
+      },
       model: {
         addItem: debouncedChangeHandler,
-        removeItem: debouncedChangeHandler,
-        'change.startTime': debouncedChangeHandler,
-        'change.endTime': debouncedChangeHandler
+        removeItem: debouncedChangeHandler
+        // 'change.startTime': debouncedChangeHandler,
+        // 'change.endTime': debouncedChangeHandler
       }
     });
   }, {
@@ -93,6 +107,60 @@ define(function(require) {
 
       return chart;
     }
+  });
+
+  var _inPopover = false,
+      _inCircle = false;
+  function _togglePopover(e) {
+    var $popover = this.el.find('.popover');
+    $popover.toggle();
+    e._dontHidePopover = $popover;
+  }
+
+  function _enterCircle() {
+    _inCircle = true;
+    this.el.find('.popover').show();
+  }
+
+  function _exitCircle() {
+    _inCircle = false;
+    _hidePopover.call(this);
+  }
+
+  function _enterPopover() {
+    _inPopover = true;
+  }
+
+  function _exitPopover() {
+    _inPopover = false;
+    _hidePopover.call(this);
+  }
+
+  function _tapInPopover(e) {
+    e._dontHidePopover = $(e.currentTarget);
+  }
+
+  function _tapSeeMore(e) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
+  function _hidePopover() {
+    setTimeout(function() {
+      if (!_inPopover && !_inCircle) {
+        this.el.find('.popover').hide();
+      }
+    }.bind(this), 0);
+  }
+
+  $(function() {
+    $('body').on('tap.pieChartPopover', function(e) {
+      var $popovers = $('.base_pie .popover');
+      if (e._dontHidePopover) {
+        $popovers = $popovers.not(e._dontHidePopover);
+      }
+      $popovers.hide();
+    });
   });
 
   return BasePieChartView;

@@ -5,7 +5,10 @@ define(function(require) {
   var data = {
     mapGlobals: function() {
       this.mapWidget({
-        '.loading-spinner': Spinner
+        '.loading-spinner': {
+          TWidget: Spinner,
+          args: this.spinnerArgs
+        }
       });
     }
   };

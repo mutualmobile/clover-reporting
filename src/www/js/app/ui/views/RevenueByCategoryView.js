@@ -1,6 +1,8 @@
 define(function(require) {
 
-  var BasePieChartView = require('./BasePieChartView');
+  var BasePieChartView = require('./BasePieChartView'),
+      PieChartPopoverView = require('./PieChartPopoverView'),
+      revenueByItemCollection = require('app/models/RevenueByItemCollection');
   require('rdust!templates/revenue_by_category');
 
   /**
@@ -11,6 +13,12 @@ define(function(require) {
    */
   var RevenueByCategoryView = BasePieChartView.extend(function RevenueByCategoryView() {
     BasePieChartView.apply(this, arguments);
+    this.mapChildView({
+      '.popover': {
+        TView: PieChartPopoverView,
+        model: revenueByItemCollection
+      }
+    });
     this.render();
   }, {
     template: 'templates/revenue_by_category',
