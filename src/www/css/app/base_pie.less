@@ -128,13 +128,16 @@
       padding-right: 40px;
       display: inline-block;
       max-width: 100%;
-      span {
+      > span {
         position: absolute;
         right: 0;
         font-size: 10px;
         opacity: 0.4;
         line-height: 18px;
         vertical-align: middle;
+        .dollar {
+          display: none;
+        }
       }
     }
     .bar-wrapper, .bar {
