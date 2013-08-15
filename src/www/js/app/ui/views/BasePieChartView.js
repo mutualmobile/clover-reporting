@@ -19,21 +19,21 @@ define(function(require) {
     var debouncedChangeHandler = debounce(this.updateChart.bind(this), 0);
     this.mapEvent({
       '.popover': {
-        tap: _tapInPopover,
+        'tap': _tapInPopover,
         'mouseenter': _enterPopover,
         'mouseleave': _exitPopover.bind(this)
       },
       '.pie-center': {
-        'tap': _togglePopover.bind(this),
+        'tap': _tapInCircle.bind(this),
         'mouseenter': _enterCircle.bind(this),
         'mouseleave': _exitCircle.bind(this)
       },
       '.see-more': {
-        tap: _tapSeeMore
+        'tap': this.onTapSeeMore.bind(this)
       },
       model: {
-        addItem: debouncedChangeHandler,
-        removeItem: debouncedChangeHandler
+        'addItem': debouncedChangeHandler,
+        'removeItem': debouncedChangeHandler
         // 'change.startTime': debouncedChangeHandler,
         // 'change.endTime': debouncedChangeHandler
       }
@@ -106,15 +106,19 @@ define(function(require) {
               .labelType('custom1');
 
       return chart;
+    },
+    onTapSeeMore: function(e) {
+      e.stopPropagation();
+      e.preventDefault();
     }
   });
 
   var _inPopover = false,
       _inCircle = false;
-  function _togglePopover(e) {
-    var $popover = this.el.find('.popover');
-    $popover.toggle();
-    e._dontHidePopover = $popover;
+  function _tapInCircle(e) {
+    $('.base_pie .popover').hide();
+    this.el.find('.popover').show();
+    e.stopPropagation();
   }
 
   function _enterCircle() {
@@ -137,12 +141,7 @@ define(function(require) {
   }
 
   function _tapInPopover(e) {
-    e._dontHidePopover = $(e.currentTarget);
-  }
-
-  function _tapSeeMore(e) {
     e.stopPropagation();
-    e.preventDefault();
   }
 
   function _hidePopover() {
@@ -154,12 +153,8 @@ define(function(require) {
   }
 
   $(function() {
-    $('body').on('tap.pieChartPopover', function(e) {
-      var $popovers = $('.base_pie .popover');
-      if (e._dontHidePopover) {
-        $popovers = $popovers.not(e._dontHidePopover);
-      }
-      $popovers.hide();
+    $('body').on('tap.pieChartPopover', function() {
+      $('.base_pie .popover').hide();
     });
   });
 
