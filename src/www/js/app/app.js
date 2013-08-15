@@ -24,7 +24,8 @@ define(function(require) {
     // Initialize the routes
     this.router.add({
       '/': [DashboardController, 'dashboard'],
-      '/zoom': [DashboardController, 'zoom']
+      '/zoom': [DashboardController, 'zoom'],
+      '/employees': [DashboardController, 'employees']
     });
 
     // Initialize translations
