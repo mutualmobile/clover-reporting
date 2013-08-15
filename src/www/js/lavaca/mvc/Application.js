@@ -12,7 +12,7 @@ define(function(require) {
     Promise = require('lavaca/util/Promise'),
     ChildBrowser = require('lavaca/env/ChildBrowser'),
     Translation = require('lavaca/util/Translation');
-    require('jquery-mobile/events/touch');
+    // require('jquery-mobile/events/touch');
     require('jquery-mobile/events/orientationchange');
 
   function _stopEvent(e) {
