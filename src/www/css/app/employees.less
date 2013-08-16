@@ -1,18 +1,20 @@
 .view.employees {
   position: relative;
-
+  .time-selector{
+    margin-bottom: 5rem;
+  }
   .employee{
     width: 100%;
     min-height: 10rem;
     position: relative;
     background-color: #303537;
     max-width: 630px;
-    margin: 1rem auto;
+    margin: 0.8rem auto;
     border-radius:0.4rem;
     color:#fff;
-    // .box-shadow(inset 2px 2px 2px 2px black);
     border-top:1px solid #4b4f51;
     .horizontal-gradient(#373b3d,#2d3033);
+    box-shadow:0 2px 3px #212121;
     .employee-info{
       .number{
         font-family: helveticaUltraLight;
@@ -24,7 +26,8 @@
         padding: 0;
         width: 20%;
         text-align: center;
-        font-size:4.6rem;
+        font-size:5.6rem;
+        text-shadow:0px 1px 3px #111;
       }
       .name{
         position:absolute;
@@ -35,24 +38,28 @@
         font-family: helveticaBold;
         font-weight: normal;
         text-transform: uppercase;
-        font-size: 2rem;
+        font-size: 2.4rem;
         letter-spacing: 1px;
+        text-shadow:0px 1px 3px #111;
         span{
           font-family: helveticaUltraLight;
-        font-weight: normal;
+          font-weight: normal;
         }
       }
       .numeric-stats{
         color:#fff;
-        width:35%;
+        width:40%;
         position:absolute;
         left: 20%;
-        top: 52%;
+        top: 54%;
         .numbers{
+          text-shadow:0px 1px 2px #212121;
           span{
-            padding-left:1rem;
-            padding-right:1rem;
-            letter-spacing:1px;
+            font-size:1.2rem;
+            font-family: helveticaLight;
+            font-weight: normal;
+            padding-left:1.2rem;
+            padding-right:1.2rem;
             &.drinks{
               border-left:1px solid #fff;
               border-right:1px solid #fff;
@@ -66,21 +73,75 @@
           }
         }
         .line-graph{
-          margin-top:1rem;
+          margin-top:0.8rem;
           height:2px;
           background-color:#202324;
           width:100%;
-          box-shadow:0 1px 3px #212325;
           .pink-line{
             height:2px;
             background-color:#ee589e;
+            .box-shadow(0 1px 3px #212325);
             border-bottom:1px solid #e8207e;
             width:20%;
           }
         }
       }
       .graphs{
-        position:absolute;
+        position: absolute;
+        height: 8rem;
+        height:100%;
+        width: 40%;
+        right: 0;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+        min-width:12rem;
+        .bar-chart{
+          width:40%;
+          margin-left:10%;
+          height:100%;
+          padding-top:1rem;
+          .transform(scaleY(-1));
+          .bar{
+            background-color:#22e5a3;
+            width:6%;
+            min-width:0.8rem;
+            min-height: 1px;
+            margin-left:0.15rem;
+            margin-right:0.15rem;
+            float:left;
+            .border-radius(0.1rem);
+            .box-shadow(0 -2px 3px #212325);
+            .horizontal-gradient(#1adf8e,#28ebb6);
+            height:50%;
+            &#one{
+              height:5%;
+            }
+            &#two{
+              height:15%;
+            }
+            &#three{
+              height:40%;
+            }
+            &#four{
+              height:0%;
+            }
+            &#five{
+              height:30%;
+            }
+            &#six{
+              height:40%;
+            }
+            &#seven{
+              height:45%;
+            }
+            &#eight{
+              height:70%;
+            }
+            &#nine{
+              height:30%;
+            }
+          }
+        }
       }
     }
   }

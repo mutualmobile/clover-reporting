@@ -2,6 +2,7 @@ define(function(require) {
 
   var BasePageView = require('./BasePageView'),
       TimeSelectorView = require('app/ui/views/TimeSelectorView'),
+      BarChartView = require('app/ui/views/BarChartView'),
       timeRangeModel = require('app/models/TimeRangeModel');
 
   require('rdust!templates/employees');
@@ -17,6 +18,9 @@ define(function(require) {
       '.time-selector': {
         TView: TimeSelectorView,
         model: timeRangeModel
+      },
+      '.bar-chart': {
+        TView: BarChartView
       }
     });
   }, {
