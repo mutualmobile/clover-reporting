@@ -3,7 +3,7 @@ define(function(require) {
   var BasePageView = require('./BasePageView'),
       TimeSelectorView = require('app/ui/views/TimeSelectorView'),
       BarChartView = require('app/ui/views/BarChartView'),
-      revenueByEmployeeCollection = require('app/models/RevenueByEmployeeCollection'),
+      revenueByCategoryCollection = require('app/models/RevenueByCategoryCollection'),
       SmallRevenueByCategoryView = require('app/ui/views/SmallRevenueByCategoryView'),
       timeRangeModel = require('app/models/TimeRangeModel');
 
@@ -24,9 +24,9 @@ define(function(require) {
       '.bar-chart': {
         TView: BarChartView
       },
-      '.revenue-by-category':{
+      '.revenue-by-category': {
         TView: SmallRevenueByCategoryView,
-        model: revenueByEmployeeCollection
+        model: revenueByCategoryCollection
       }
     });
   }, {
