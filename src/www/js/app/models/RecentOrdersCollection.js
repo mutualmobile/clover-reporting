@@ -106,7 +106,7 @@ define(function(require) {
   function _popoverData() {
     var totals = {},
         data = {
-          title: 'Top Drinks',
+          title: 'Top Sellers',
           items: []
         },
         colors = ['af4f25', 'b79e16', '2e9a59', '2569af', 'cf1077', '25adaf', '700eaf'];

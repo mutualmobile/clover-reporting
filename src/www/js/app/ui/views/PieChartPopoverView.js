@@ -14,10 +14,6 @@ define(function(require) {
 
     var debouncedChangeHandler = debounce(_redraw.bind(this), 0);
     this.mapEvent({
-      'self': {
-        'mouseenter': _mouseEnter.bind(this),
-        'mouseleave': _mouseLeave.bind(this)
-      },
       model: {
         addItem: debouncedChangeHandler,
         removeItem: debouncedChangeHandler,
@@ -35,14 +31,6 @@ define(function(require) {
 
   function _redraw() {
     this.redraw();
-  }
-
-  function _mouseEnter(e) {
-
-  }
-
-  function _mouseLeave(e) {
-    
   }
 
   return PieChartPopoverView;
