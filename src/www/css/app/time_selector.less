@@ -11,15 +11,21 @@
     height: 64px;
     .select-wrapper {
       text-align: center;
+      white-space: nowrap;
+      overflow-x: scroll;
+      -webkit-overflow-scrolling: touch;
       & > div {
         position: relative;
         display: inline-block;
         text-transform: uppercase;
-        padding: 0 30px;
+        padding: 0 20px;
         font-size: 14px;
         letter-spacing: 1px;
         line-height: 64px;
         text-align: center;
+        @media (min-width: 1024px) {
+          padding: 0 30px;
+        }
         &.selected {
           font-weight: bold;
         }
