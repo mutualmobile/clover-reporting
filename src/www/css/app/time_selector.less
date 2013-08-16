@@ -2,10 +2,35 @@
 .time_selector {
   display: block;
   height: 64px;
+  #pagemenu{
+    display: block;
+    width: 25%;
+    float: left;
+    height: 64px;
+    line-height:64px;
+    font-family:helveticaBold;
+    font-weight: normal;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing:1px;
+    text-align: center;
+    color:#fff;
+    position: relative;
+    .border-highlight;
+    .menu{
+      display: inline-block;
+      position: relative;
+      left: 0rem;
+      font-family: helveticaLight, Helvetica, Arial, sans-serif;
+      font-size: 28px;
+      padding-right: 2rem;
+      top: 0.5rem;
+    }
+  }
   #time-range-select {
     display: inline-block;
     float: right;
-    width: 40%;
+    width: 25%;
     position: relative;
     .border-highlight;
     height: 64px;
@@ -18,17 +43,20 @@
         position: relative;
         display: inline-block;
         text-transform: uppercase;
-        padding: 0 20px;
-        font-size: 14px;
+        padding: 0 8px;
+        font-size: 12px;
         letter-spacing: 1px;
         line-height: 64px;
         text-align: center;
         cursor: pointer;
+        font-family:helveticaLight;
+        font-weight: normal;
         @media (min-width: 1024px) {
           padding: 0 30px;
         }
         &.selected {
-          font-weight: bold;
+          font-family:helveticaBold;
+          font-weight: normal;
         }
         &.selected:before {
           content: '';
@@ -117,13 +145,13 @@
     color: #FFFFFF;
     display: block;
     float: left;
-    width: 60%;
+    width: 50%;
     height: 64px;
     line-height: 64px;
     .border-highlight;
     font-family: helveticaUltraLight;
     text-transform: uppercase;
-    font-size: 34px;
+    font-size: 28px;
     text-align: center;
     time {
       height: 64px;
