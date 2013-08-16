@@ -3,8 +3,8 @@ define(function(require) {
   var BasePageView = require('./BasePageView'),
       TimeSelectorView = require('app/ui/views/TimeSelectorView'),
       BarChartView = require('app/ui/views/BarChartView'),
-      recentOrdersCollection = require('app/models/RecentOrdersCollection'),
-      RevenueByCategoryView = require('app/ui/views/RevenueByCategoryView'),
+      revenueByEmployeeCollection = require('app/models/RevenueByEmployeeCollection'),
+      SmallRevenueByCategoryView = require('app/ui/views/SmallRevenueByCategoryView'),
       timeRangeModel = require('app/models/TimeRangeModel');
 
   require('rdust!templates/employees');
@@ -25,8 +25,8 @@ define(function(require) {
         TView: BarChartView
       },
       '.revenue-by-category':{
-        TView: RevenueByCategoryView,
-        model: recentOrdersCollection
+        TView: SmallRevenueByCategoryView,
+        model: revenueByEmployeeCollection
       }
     });
   }, {

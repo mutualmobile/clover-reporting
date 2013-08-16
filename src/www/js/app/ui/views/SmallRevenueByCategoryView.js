@@ -1,8 +1,6 @@
 define(function(require) {
 
-  var RevenueByCategoryView = require('./RevenueByCategoryView'),
-      revenueByItemCollection = require('app/models/RevenueByItemCollection');
-  require('rdust!templates/revenue_by_category');
+  var RevenueByCategoryView = require('./RevenueByCategoryView');
 
   /**
    * Renders a smaller pie chart showing revenue
@@ -11,12 +9,13 @@ define(function(require) {
    * @extends app.ui.views.RevenueByCategoryView
    */
 
-  var SmallRevenueByCategoryView = RevenueByCategoryView.extend(function SmallRevenueByCategoryView() {
-      RevenueByCategoryView.apply(this, arguments);
-      this.render();
-    }, {
-    template: 'templates/revenue_by_category',
-    className: 'base_pie revenue_by_category'
+  var SmallRevenueByCategoryView = RevenueByCategoryView.extend({
+    
+    createChart: function() {
+      var chart = RevenueByCategoryView.prototype.createChart.apply(this,arguments);
+      chart.arcRadius(28);
+      return chart;
+    }
     
   });
 
