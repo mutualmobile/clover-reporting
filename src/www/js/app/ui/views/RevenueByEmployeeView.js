@@ -60,6 +60,10 @@ define(function(require) {
         return colors[i % colors.length];
       });
       return chart;
+    },
+    onTapSeeMore: function(e) {
+      // e.stopPropagation();
+      // e.preventDefault();
     }
   });
 

@@ -1,0 +1,95 @@
+.view.employees {
+  position: relative;
+
+  .employee{
+    width: 100%;
+    min-height: 10rem;
+    position: relative;
+    background-color: #303537;
+    max-width: 630px;
+    margin: 1rem auto;
+    border-radius:0.4rem;
+    color:#fff;
+    // .box-shadow(inset 2px 2px 2px 2px black);
+    border-top:1px solid #4b4f51;
+    .horizontal-gradient(#373b3d,#2d3033);
+    .employee-info{
+      .number{
+        font-family: helveticaUltraLight;
+        font-weight: normal;
+        text-transform: uppercase;
+        position:absolute;
+        color:#fff;
+        line-height: 10rem;
+        padding: 0;
+        width: 20%;
+        text-align: center;
+        font-size:4.6rem;
+      }
+      .name{
+        position:absolute;
+        left: 20%;
+        padding:0;
+        top: 2.4rem;
+        color:#fff;
+        font-family: helveticaBold;
+        font-weight: normal;
+        text-transform: uppercase;
+        font-size: 2rem;
+        letter-spacing: 1px;
+        span{
+          font-family: helveticaUltraLight;
+        font-weight: normal;
+        }
+      }
+      .numeric-stats{
+        color:#fff;
+        width:35%;
+        position:absolute;
+        left: 20%;
+        top: 52%;
+        .numbers{
+          span{
+            padding-left:1rem;
+            padding-right:1rem;
+            letter-spacing:1px;
+            &.drinks{
+              border-left:1px solid #fff;
+              border-right:1px solid #fff;
+            }
+            &:first-child{
+              padding-left:0;
+            }
+            &:last-child{
+              padding-right:0;
+            }
+          }
+        }
+        .line-graph{
+          margin-top:1rem;
+          height:2px;
+          background-color:#202324;
+          width:100%;
+          box-shadow:0 1px 3px #212325;
+          .pink-line{
+            height:2px;
+            background-color:#ee589e;
+            border-bottom:1px solid #e8207e;
+            width:20%;
+          }
+        }
+      }
+      .graphs{
+        position:absolute;
+      }
+    }
+  }
+  .pie-chart > div {
+    position: relative;
+    @media (min-width: 1000px) {
+      width: 50%;
+      float: left;
+    }
+  }
+}
+
