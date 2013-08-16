@@ -30,6 +30,7 @@ nv.models.pie = function() {
     , spacing = 0
     , labelOffset = 10
     , labelOverhang = 5
+    , arcRadius = 62
     , dispatch = d3.dispatch('chartClick', 'elementClick', 'elementDblClick', 'elementMouseover', 'elementMouseout')
     ;
 
@@ -41,7 +42,6 @@ nv.models.pie = function() {
       var availableWidth = width - margin.left - margin.right,
           availableHeight = height - margin.top - margin.bottom,
           radius = Math.min(availableWidth, availableHeight) / 2,
-          arcRadius = window.arcRadius || 62,
           calculatedLabelOffset = Math.min(labelOffset, radius/5 - 10),
           container = d3.select(this);
 
@@ -152,7 +152,7 @@ nv.models.pie = function() {
         if (showLabels) {
           // This does the normal label
           var labelsArc = d3.svg.arc().innerRadius(0);
-          
+
           if (pieLabelsOutside){ labelsArc = arc; }
 
           if (donutLabelsOutside) { labelsArc = d3.svg.arc().outerRadius(arc.outerRadius()); }
@@ -364,7 +364,7 @@ nv.models.pie = function() {
     getY = d3.functor(_);
     return chart;
   };
-  
+
   chart.description = function(_) {
     if (!arguments.length) return getDescription;
     getDescription = _;
@@ -376,7 +376,7 @@ nv.models.pie = function() {
     showLabels = _;
     return chart;
   };
-  
+
   chart.labelSunbeamLayout = function(_) {
     if (!arguments.length) return labelSunbeamLayout;
     labelSunbeamLayout = _;
@@ -388,7 +388,7 @@ nv.models.pie = function() {
     donutLabelsOutside = _;
     return chart;
   };
-  
+
   chart.pieLabelsOutside = function(_) {
     if (!arguments.length) return pieLabelsOutside;
     pieLabelsOutside = _;
@@ -407,7 +407,7 @@ nv.models.pie = function() {
     donut = _;
     return chart;
   };
-  
+
   chart.donutRatio = function(_) {
     if (!arguments.length) return donutRatio;
     donutRatio = _;
@@ -429,6 +429,12 @@ nv.models.pie = function() {
   chart.labelOffset = function(_) {
     if (!arguments.length) return labelOffset;
     labelOffset = _;
+    return chart;
+  };
+
+  chart.arcRadius = function(_) {
+    if (!arguments.length) return arcRadius;
+    arcRadius = _;
     return chart;
   };
 
@@ -654,7 +660,7 @@ nv.models.pieChart = function() {
           data.forEach(function(d) {
              d.disabled = true;
           });
-          d.disabled = false;  
+          d.disabled = false;
 
           state.disabled = data.map(function(d) { return !!d.disabled });
           dispatch.stateChange(state);
@@ -716,7 +722,7 @@ nv.models.pieChart = function() {
   chart.dispatch = dispatch;
   chart.pie = pie;
 
-  d3.rebind(chart, pie, 'valueFormat', 'values', 'x', 'y', 'description', 'id', 'showLabels', 'donutLabelsOutside', 'pieLabelsOutside', 'labelType', 'donut', 'donutRatio', 'spacing', 'labelOverhang', 'labelOffset', 'labelThreshold');
+  d3.rebind(chart, pie, 'valueFormat', 'values', 'x', 'y', 'description', 'id', 'showLabels', 'donutLabelsOutside', 'pieLabelsOutside', 'labelType', 'donut', 'donutRatio', 'spacing', 'labelOverhang', 'labelOffset', 'arcRadius', 'labelThreshold');
 
   chart.margin = function(_) {
     if (!arguments.length) return margin;
