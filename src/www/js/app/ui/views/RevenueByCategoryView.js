@@ -23,7 +23,6 @@ define(function(require) {
   }, {
     template: 'templates/revenue_by_category',
     className: 'base_pie revenue_by_category',
-    d3ChartSelector: '.revenue_by_category svg',
     getData: function() {
       var data = [];
       this.model.each(function(index, model) {

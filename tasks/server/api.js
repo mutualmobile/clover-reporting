@@ -64,6 +64,15 @@ function makeRequest(path, query) {
 function allOrders(req, res) {
   var deferred = Q.defer();
 
+  // Only need to make 1 service query
+  // per incoming request, so cache the result
+  // on the req obj and return the cached result
+  // if present
+  if (req.allOrders) {
+    deferred.resolve(req.allOrders);
+    return deferred.promise;
+  }
+
   makeRequest('/v2/merchant/RZC2F4FMKFJ12/orders', req.query).then(function(data) {
     var orders = data && data.orders ? data.orders : [],
         collection = db.collection('orders'),
@@ -100,6 +109,7 @@ function allOrders(req, res) {
       if (res) {
         res.send.apply(res, arguments);
       }
+      req.allOrders = arguments[0];
       deferred.resolve.apply(deferred, arguments);
     });
   }, function() {
@@ -113,6 +123,15 @@ function allOrders(req, res) {
 }
 function allCategories(req, res) {
   var deferred = Q.defer();
+
+  // Only need to make 1 service query
+  // per incoming request, so cache the result
+  // on the req obj and return the cached result
+  // if present
+  if (req.allCategories) {
+    deferred.resolve(req.allCategories);
+    return deferred.promise;
+  }
 
   makeRequest('/v2/merchant/RZC2F4FMKFJ12/inventory/categories', req.query).then(function(data) {
     var categories = data && data.categories ? data.categories : [],
@@ -149,6 +168,7 @@ function allCategories(req, res) {
       if (res) {
         res.send.apply(res, arguments);
       }
+      req.allCategories = arguments[0];
       deferred.resolve.apply(deferred, arguments);
     });
   }, function() {
@@ -163,17 +183,25 @@ function allCategories(req, res) {
 function revenueByItem(req, res) {
   var totals = {},
       data = [],
-      deferred = Q.defer();
+      deferred = Q.defer(),
+      employeeId = req.employeeId;
+
   allOrders(req).then(function(orders) {
     orders.forEach(function(order) {
       var lineItems = order.lineItems || [];
+
+      // Filters
+      if (employeeId && order.employeeId !== employeeId) { return; }
+
       lineItems.forEach(function(lineItem) {
         var revenue = (lineItem.price * lineItem.qty) + lineItem.discountAmount,
             itemId = lineItem.itemId || 'manual';
         if (!totals[itemId]) {
           totals[itemId] = {
+            id: itemId,
             name: lineItem.name,
-            total: 0
+            total: 0,
+            count: 0
           };
         }
         if (lineItem.taxable) {
@@ -183,14 +211,11 @@ function revenueByItem(req, res) {
           revenue = 0;
         }
         totals[itemId].total += revenue;
+        totals[itemId].count++;
       });
     });
     for (var item in totals) {
-      data.push({
-        id: item,
-        name: totals[item].name,
-        total: totals[item].total
-      });
+      data.push(totals[item]);
     }
     if (res) {
       res.send(data);
@@ -231,11 +256,13 @@ function revenueByCategory(req, res) {
               id: category.id,
               name: category.name,
               total: 0,
-              items: []
+              count: 0
+              // items: []
             };
           }
           totals[category.id].total += itemRevenue.total;
-          totals[category.id].items.push(itemRevenue);
+          totals[category.id].count += itemRevenue.count;
+          // totals[category.id].items.push(itemRevenue);
         }
       });
     });
@@ -252,7 +279,64 @@ function revenueByCategory(req, res) {
     }
     deferred.reject();
   });
-  return deferred;
+  return deferred.promise;
+}
+function employeeData(req, res) {
+  var totals = {},
+      data = [],
+      fetches = [],
+      deferred = Q.defer();
+
+  allOrders(req).then(function(orders) {
+    console.log(orders.length);
+    orders.forEach(function(order) {
+      var employeeId = order.employeeId,
+          revenueByCategoryFetch,
+          revenueByItemFetch;
+      if (!totals[employeeId]) {
+        console.log(employeeId);
+        totals[employeeId] = {
+          id: employeeId,
+          name: order.employeeName,
+          total: 0,
+          count: 0
+        };
+        req.employeeId = employeeId;
+        revenueByCategoryFetch = revenueByCategory(req);
+        revenueByCategoryFetch.then(function(data) {
+          totals[employeeId].revenueByCategory = data;
+        });
+        revenueByItemFetch = revenueByItem(req);
+        revenueByItemFetch.then(function(items) {
+          items.forEach(function(item) {
+            totals[employeeId].total += item.total;
+            totals[employeeId].count += item.count;
+          });
+        });
+        fetches.push(revenueByCategoryFetch, revenueByItemFetch);
+      }
+    });
+    console.log(fetches.length);
+    Q.all(fetches).then(function() {
+      console.log('done');
+      for (var item in totals) {
+        data.push(totals[item]);
+      }
+      data.sort(function(a, b) {
+        return b.total - a.total;
+      });
+      if (res) {
+        res.send(data);
+      }
+      deferred.resolve(data);
+    });
+  }, function() {
+    if (res) {
+      res.send(500);
+    }
+    deferred.reject();
+  });
+  return deferred.promise;
 }
 
 
@@ -268,4 +352,5 @@ exports.init = function(server) {
   server.get('/all-categories', allCategories);
   server.get('/revenue-by-item', revenueByItem);
   server.get('/revenue-by-category', revenueByCategory);
+  server.get('/employee-data', employeeData);
 };

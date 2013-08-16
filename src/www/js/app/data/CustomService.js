@@ -19,6 +19,13 @@ define(function(require) {
         end_time: endTime.valueOf()
       };
       return this.makeRequest('revenue-by-category', opts);
+    },
+    getEmployeeDataForDateRange: function(startTime, endTime) {
+      var opts = {
+        start_time: startTime.valueOf(),
+        end_time: endTime.valueOf()
+      };
+      return this.makeRequest('employee-data', opts);
     }
   });
 
