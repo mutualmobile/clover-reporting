@@ -6,6 +6,7 @@
   .employee{
     width: 100%;
     min-height: 10rem;
+    min-width:600px;
     position: relative;
     background-color: #303537;
     max-width: 630px;
@@ -96,7 +97,7 @@
         padding-bottom: 1.5rem;
         min-width:12rem;
         .bar-chart{
-          width:40%;
+          width:50%;
           margin-left:10%;
           height:100%;
           padding-top:1rem;
@@ -105,7 +106,7 @@
           .bar{
             background-color:#22e5a3;
             width:6%;
-            min-width:0.8rem;
+            min-width:0.6rem;
             min-height: 1px;
             margin-left:0.15rem;
             margin-right:0.15rem;
@@ -144,15 +145,12 @@
           }
         }
         .pie-chart{
-          width: 35%;
+          width: 30%;
           float: left;
-          margin-left: 7.5%;
-          margin-right: 7.5%;
+          margin-right: 10%;
           .revenue-by-category{
-            .base_pie {
-              .wrapper{
-                height:100%;
-              }
+            &.base_pie {
+              margin-top:-0.5rem;
             }
             .pie-center{
               display:none;
@@ -160,13 +158,6 @@
           }
         }
       }
-    }
-  }
-  .pie-chart > div {
-    position: relative;
-    @media (min-width: 1000px) {
-      width: 50%;
-      float: left;
     }
   }
 }
