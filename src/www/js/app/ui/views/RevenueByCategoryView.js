@@ -44,7 +44,7 @@ define(function(require) {
       }
     },
     createChart: function() {
-      var colors = ['#afa728', '#984b29', '#2e9a59', '#2777b0'],
+      var colors = ['#af4f25', '#b79e16', '#2e9a59', '#2569af', '#cf1077', '#25adaf', '#700eaf'],
           chart = BasePieChartView.prototype.createChart.apply(this, arguments);
       chart.color(function(d, i) {
         return colors[i % colors.length];
