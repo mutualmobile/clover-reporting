@@ -4,6 +4,7 @@ define(function(require) {
       Scrollable = require('lavaca/ui/Scrollable'),
       OrderMetricsView = require('app/ui/views/OrderMetricsView'),
       recentOrdersCollection = require('app/models/RecentOrdersCollection'),
+      revenueByEmployeeCollection = require('app/models/RevenueByEmployeeCollection'),
       revenueByCategoryCollection = require('app/models/RevenueByCategoryCollection'),
       RevenueByCategoryView = require('app/ui/views/RevenueByCategoryView'),
       RevenueByEmployeeView = require('app/ui/views/RevenueByEmployeeView'),
@@ -38,7 +39,7 @@ define(function(require) {
       },
       '.revenue-by-employee': {
         TView: RevenueByEmployeeView,
-        model: recentOrdersCollection
+        model: revenueByEmployeeCollection
       },
       '.time-selector': {
         TView: TimeSelectorView,

@@ -23,32 +23,10 @@ define(function(require) {
     className: 'base_pie revenue_by_employee',
     d3ChartSelector: '.revenue_by_employee svg',
     getData: function() {
-      var totals = {},
-          data = [];
+      var data = this.model.toObject();
 
-      this.model.each(function(index, model) {
-        var employeeName = model.get('employeeName');
-        if (employeeName) {
-          if (!totals[employeeName]) {
-            totals[employeeName] = {
-              label: employeeName,
-              value: 0
-            };
-          }
-          totals[employeeName].value += model.get('total');
-        }
-      });
-
-      for (var employee in totals) {
-        data.push(totals[employee]);
-      }
-
-      data.sort(function(a, b) {
-        return b.value - a.value;
-      });
-
-      if (data.length) {
-        return data;
+      if (data.items.length) {
+        return data.items;
       } else {
         return null;
       }

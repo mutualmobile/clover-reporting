@@ -10,8 +10,7 @@ define(function(require) {
     this.apply({
       totalRevenue: _totalRevenue,
       revenuePerEmployee: _revenuePerEmployee,
-      revenuePerCustomer: _revenuePerCustomer,
-      popoverData: _popoverData
+      revenuePerCustomer: _revenuePerCustomer
     });
 
     this._externalBoundHandler = _fetch.bind(this);
@@ -101,45 +100,6 @@ define(function(require) {
       return totalRevenue / customerCount;
     }
     return null;
-  }
-
-  function _popoverData() {
-    var totals = {},
-        data = {
-          title: 'Top Sellers',
-          items: []
-        },
-        colors = ['af4f25', 'b79e16', '2e9a59', '2569af', 'cf1077', '25adaf', '700eaf'];
-
-    this.each(function(index, model) {
-      var employeeName = model.get('employeeName');
-      if (employeeName) {
-        if (!totals[employeeName]) {
-          totals[employeeName] = {
-            label: employeeName,
-            value: 0
-          };
-        }
-        totals[employeeName].value += model.get('total');
-      }
-    });
-
-    for (var employee in totals) {
-      data.items.push(totals[employee]);
-    }
-
-    data.items.sort(function(a, b) {
-      return b.value - a.value;
-    });
-    data.items = data.items.slice(0, colors.length);
-
-    // Add 'percentOfTop' attribute
-    data.items.forEach(function(item, index) {
-      item.color = colors[index];
-      item.percentOfTop = (item.value / data.items[0].value) * 100;
-    });
-
-    return data;
   }
 
   return new RecentOrdersCollection();
