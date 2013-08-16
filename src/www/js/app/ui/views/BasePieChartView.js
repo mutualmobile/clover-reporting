@@ -43,7 +43,7 @@ define(function(require) {
     className: 'base_pie',
     updateChart: function() {
       var data = this.getData(),
-          selected = d3.select(this.d3ChartSelector);
+          selected = d3.select(this.el[0]).select('svg');
 
       if (!data) {
         selected.text(null);

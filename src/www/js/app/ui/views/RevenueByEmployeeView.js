@@ -21,7 +21,6 @@ define(function(require) {
   }, {
     template: 'templates/revenue_by_employee',
     className: 'base_pie revenue_by_employee',
-    d3ChartSelector: '.revenue_by_employee svg',
     getData: function() {
       var data = this.model.toObject();
 
