@@ -3,7 +3,9 @@ define(function(require) {
   var BaseView = require('./BaseView'),
       $ = require('$'),
       moment = require('moment'),
-      router = require('lavaca/mvc/Router');
+      router = require('lavaca/mvc/Router'),
+      PageMenuView = require('app/ui/controls/PageMenuView'),
+      stateModel = require('app/models/StateModel');
 
   require('rdust!templates/time_selector');
 
@@ -14,6 +16,12 @@ define(function(require) {
    */
   var TimeSelectorView = BaseView.extend(function() {
     BaseView.apply(this, arguments);
+    this.mapChildView({
+      '#pagemenu': {
+        TView: PageMenuView,
+        model: stateModel
+      }
+    });
     this.mapEvent({
       '.select-wrapper > div': {
         'tap': _onChangeRangeSelect.bind(this)

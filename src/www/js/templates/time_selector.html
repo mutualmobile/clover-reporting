@@ -1,7 +1,4 @@
-<div id="pagemenu">
-  <span class="menu">&#8801;</span><span class="selected-page">Employees</span>
-</div>
-
+<div id="pagemenu"></div>
 <div class="date-range">
   <div class="arrow back"></div>
   <time datetime="{startTime|timestamp}">
@@ -9,12 +6,14 @@
     <span class="day">{@moment value="{startTime}" format="D"/}</span>
     <span class="year">&lsquo;{@moment value="{startTime}" format="YY"/}</span>
   </time>
+  {@ne value="{mode}" key="day"}
   <span class="sep">&thinsp;&ndash;&thinsp;</span>
   <time datetime="{endTime|timestamp}">
     <span class="month">{@moment value="{endTime}" format="MMM"/}</span>
     <span class="day">{@moment value="{endTime}" format="D"/}</span>
     <span class="year">&lsquo;{@moment value="{endTime}" format="YY"/}</span>
   </time>
+  {/ne}
   <div class="arrow forward"></div>
 </div>
 
@@ -25,16 +24,3 @@
     {/modes}
   </div>
 </div>
-<!-- <div class="picker">
-  <div class="date-group">
-    <label for="custom-start-date">Start Date</label>
-    <input type="date" id="custom-start-date" value="{customStartTime|ymd}">
-    <input type="time" id="custom-start-time" value="{customStartTime|hm}">
-  </div>
-  <div class="date-group">
-    <label for="custom-end-date">End Date</label>
-    <input type="date" id="custom-end-date" value="{customEndTime|ymd}">
-    <input type="time" id="custom-end-time" value="{customEndTime|hm}">
-  </div>
-  <button data-action="apply">Apply</button>
-</div> -->
