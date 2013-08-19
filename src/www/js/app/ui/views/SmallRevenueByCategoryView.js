@@ -10,7 +10,6 @@ define(function(require) {
    */
 
   var SmallRevenueByCategoryView = RevenueByCategoryView.extend({
-
     createChart: function() {
       var chart = RevenueByCategoryView.prototype.createChart.apply(this,arguments);
       chart

@@ -1,0 +1,24 @@
+<div class="employee-info">
+  <div class="number"></div>
+  <h1 class="name">{firstName}<span>{lastName}</span></h1>
+  <div class="numeric-stats">
+    <div class="numbers">
+      <span class="percent">{percent|percent}</span>
+      <span class="drinks">{count} Drinks</span>
+      <span class="revenue">{total|cashMoney|s}</span>
+    </div>
+    <div class="line-graph">
+      <div class="pink-line" style="width:{percent|percent}"></div>
+    </div>
+  </div>
+  <div class="graphs">
+    <div class="bar-chart clearfix">
+      {#bars}
+        <div class="bar"></div>
+      {/bars}
+    </div>
+    <div class="pie-chart clearfix">
+      <div class="revenue-by-category"></div>
+    </div>
+  </div>
+</div>

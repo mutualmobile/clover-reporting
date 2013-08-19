@@ -39,6 +39,10 @@ define(function(require) {
     return chunk;
   };
 
+  dust.filters.percent = function(value) {
+    return Math.round(value * 100) + '%';
+  };
+
   dust.filters.commas = function(value) {
     return _addCommas(value, 0);
   };

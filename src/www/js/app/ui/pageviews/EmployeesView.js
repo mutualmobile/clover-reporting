@@ -1,9 +1,9 @@
 define(function(require) {
 
   var BasePageView = require('./BasePageView'),
-      BarChartView = require('app/ui/views/BarChartView'),
-      revenueByCategoryCollection = require('app/models/RevenueByCategoryCollection'),
-      SmallRevenueByCategoryView = require('app/ui/views/SmallRevenueByCategoryView');
+      EmployeeCollectionView = require('app/ui/views/EmployeeCollectionView'),
+      employeeCollection = require('app/models/EmployeeCollection');
+
   require('rdust!templates/employees');
 
   /**
@@ -14,28 +14,14 @@ define(function(require) {
   var EmployeesView = BasePageView.extend(function() {
     BasePageView.apply(this, arguments);
     this.mapChildView({
-      '.bar-chart': {
-        TView: BarChartView
-      },
-      '.revenue-by-category': {
-        TView: SmallRevenueByCategoryView,
-        model: revenueByCategoryCollection
+      '.employee-list': {
+        TView: EmployeeCollectionView,
+        model: employeeCollection
       }
     });
   }, {
-    /**
-     * The name of the template used by the view
-     * @property {String} template
-     * @default 'example'
-     */
     template: 'templates/employees',
-    /**
-     * A class name added to the view container
-     * @property {String} className
-     * @default 'example'
-     */
     className: 'employees'
-
   });
 
   return EmployeesView;

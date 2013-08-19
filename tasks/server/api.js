@@ -283,23 +283,23 @@ function revenueByCategory(req, res) {
 }
 function employeeData(req, res) {
   var totals = {},
+      totalRevenue = 0,
       data = [],
       fetches = [],
       deferred = Q.defer();
 
   allOrders(req).then(function(orders) {
-    console.log(orders.length);
     orders.forEach(function(order) {
       var employeeId = order.employeeId,
           revenueByCategoryFetch,
           revenueByItemFetch;
       if (!totals[employeeId]) {
-        console.log(employeeId);
         totals[employeeId] = {
           id: employeeId,
           name: order.employeeName,
           total: 0,
-          count: 0
+          count: 0,
+          percent: 0
         };
         req.employeeId = employeeId;
         revenueByCategoryFetch = revenueByCategory(req);
@@ -311,15 +311,15 @@ function employeeData(req, res) {
           items.forEach(function(item) {
             totals[employeeId].total += item.total;
             totals[employeeId].count += item.count;
+            totalRevenue += item.total;
           });
         });
         fetches.push(revenueByCategoryFetch, revenueByItemFetch);
       }
     });
-    console.log(fetches.length);
     Q.all(fetches).then(function() {
-      console.log('done');
       for (var item in totals) {
+        totals[item].percent = totals[item].total / totalRevenue;
         data.push(totals[item]);
       }
       data.sort(function(a, b) {
