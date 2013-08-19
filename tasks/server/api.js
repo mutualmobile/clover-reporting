@@ -9,7 +9,7 @@ var https = require('https'),
 var accessToken = '8b8a19c5-1b13-dcbd-c9b3-36e3b24eccea',
     server = new Server('localhost', 27017, {auto_reconnect: true}),
     db = new Db('clover', server, {w: 'acknowledged'}),
-    limiter = new RateLimiter(15, 'second');
+    limiter = new RateLimiter(13, 'second');
 
 // ------ Utility functions ------
 function makeRequest(path, query) {
