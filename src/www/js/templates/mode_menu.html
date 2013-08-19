@@ -1,0 +1,12 @@
+<div class="label">
+  {timeRange.mode}
+  <div class="popover select">
+    <ul>
+      {#timeRange}
+      {#modes}
+        <li data-value="{key}" {@eq key="{key}" value="{mode}"}class="active"{/eq}>{label}</li>
+      {/modes}
+      {/timeRange}
+    </ul>
+  </div>
+</div>

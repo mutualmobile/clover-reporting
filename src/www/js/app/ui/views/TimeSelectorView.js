@@ -5,6 +5,7 @@ define(function(require) {
       moment = require('moment'),
       router = require('lavaca/mvc/Router'),
       PageMenuView = require('app/ui/controls/PageMenuView'),
+      ModeMenuView = require('app/ui/controls/ModeMenuView'),
       stateModel = require('app/models/StateModel');
 
   require('rdust!templates/time_selector');
@@ -20,15 +21,13 @@ define(function(require) {
       '#pagemenu': {
         TView: PageMenuView,
         model: stateModel
+      },
+      '#time-range-select': {
+        TView: ModeMenuView,
+        model: {}
       }
     });
     this.mapEvent({
-      '.select-wrapper > div': {
-        'tap': _onChangeRangeSelect.bind(this)
-      },
-      '[data-action="apply"]': {
-        tap: _onApplyCustomDateRange.bind(this)
-      },
       '.date-range .forward': {
         tap: _onTapForward.bind(this)
       },
@@ -45,33 +44,8 @@ define(function(require) {
     className: 'time_selector'
   });
 
-  function _onChangeRangeSelect(e) {
-    this.model.set('mode', $(e.currentTarget).data('value'));
-  }
-
   function _onChangeModel() {
     this.redraw();
-  }
-
-  function _onApplyCustomDateRange() {
-    var startDateVal = this.el.find('#custom-start-date').val(),
-        startTimeVal = this.el.find('#custom-start-time').val(),
-        endDateVal = this.el.find('#custom-end-date').val(),
-        endTimeVal = this.el.find('#custom-end-time').val(),
-        startTime, endTime;
-
-    startTime = moment(startDateVal + ' ' + startTimeVal);
-    endTime = moment(endDateVal + ' ' + endTimeVal);
-    this.model.set('customStartTime', startTime);
-    this.model.set('customEndTime', endTime);
-  }
-
-  function _onTapToggleDropdown(e) {
-    var $el = $(e.currentTarget),
-        shouldShow = !$el.hasClass('open');
-
-    $el.toggleClass('open');
-    this.el.find('.picker').css('display', shouldShow ? 'block': 'none');
   }
 
   function _onTapForward() {

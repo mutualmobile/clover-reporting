@@ -1,0 +1,54 @@
+@dropDownArrowWidth: 7px;
+#time-range-select {
+  display: block;
+  width: 25%;
+  float: left;
+  height: 64px;
+  position: relative;
+  .border-highlight;
+  text-align: center;
+  .label {
+    display: inline-block;
+    position: relative;
+    line-height:64px;
+    font-family:helveticaBold;
+    font-weight: normal;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing:1px;
+    color:#fff;
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 0;
+      height: 0;
+      top: 50%;
+      right: -24px;
+      margin-top: -3px;
+      margin-left: -@dropDownArrowWidth;
+      border-left: @dropDownArrowWidth solid transparent;
+      border-right: @dropDownArrowWidth solid transparent;
+      border-top: @dropDownArrowWidth solid #fff;
+    }
+    .popover {
+      top: 77%;
+      right: 0;
+      margin-bottom: 23px;
+      margin-right: -35px;
+      width: 196px;
+      &:after {
+        border-left: 7px solid rgba(0, 0, 0, 0);
+        border-right: 7px solid rgba(0, 0, 0, 0);
+        border-top: 7px solid rgba(0, 0, 0, 0);
+        border-bottom: 7px solid #C6D5DE;
+        right: 18px;
+        top: -14px;
+        margin-right: -7px;
+      }
+      &.active {
+        display: block;
+      }
+    }
+  }
+}

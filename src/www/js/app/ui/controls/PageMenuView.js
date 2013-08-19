@@ -1,7 +1,6 @@
 define(function(require) {
 
-  var BaseView = require('app/ui/views/BaseView'),
-      debounce = require('mout/function/debounce'),
+  var PopoverControlView = require('app/ui/controls/PopoverControlView'),
       $ = require('$'),
       router = require('lavaca/mvc/Router');
   require('rdust!templates/page_menu');
@@ -12,27 +11,17 @@ define(function(require) {
    * @class app.ui.views.PageMenuView
    * @extends app.ui.views.BaseView
    */
-  var PageMenuView = BaseView.extend(function PageMenuView() {
-    BaseView.apply(this, arguments);
-    var debouncedChangeHandler = debounce(this.updateMenu.bind(this), 0);
+  var PageMenuView = PopoverControlView.extend(function PageMenuView() {
+    PopoverControlView.apply(this, arguments);
     this.mapEvent({
       li: {
         tap: _onTapLink.bind(this)
-      },
-      self: {
-        tap: _onTapPageMenu.bind(this)
-      },
-      model: {
-        change: debouncedChangeHandler
       }
     });
     this.render();
   }, {
     template: 'templates/page_menu',
-    className: 'page_menu',
-    updateMenu: function() {
-      this.redraw();
-    }
+    className: 'page_menu'
   });
 
   function _onTapLink(e) {
@@ -40,10 +29,6 @@ define(function(require) {
     if (link) {
       router.exec(link);
     }
-  }
-
-  function _onTapPageMenu() {
-    this.el.find('.popover').toggleClass('active');
   }
 
   return PageMenuView;
