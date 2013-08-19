@@ -10,7 +10,7 @@ define(function(require) {
     timeRangeModel.on('rangeUpdate', this._externalBoundHandler);
   }, {
     fetch: null,
-    fetchDelay: 5000,
+    fetchDelay: 10000,
     dispose: function() {
       timeRangeModel.off('rangeUpdate', this._externalBoundHandler);
       return Collection.prototype.dispose.apply(this, arguments);
