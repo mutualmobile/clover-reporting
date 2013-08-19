@@ -12,38 +12,6 @@ define(function(require) {
   require('app/ui/widgets/CustomLineChart');
   require('rdust!templates/revenue_over_time');
 
-
-  var _DURATION_HASH = [{
-      key: 'millisecond',
-      duration: 1,
-      format: 'SS'
-    }, {
-      key: 'second',
-      duration: 1000,
-      format: 'ss'
-    }, {
-      key: 'minute',
-      duration: 1000 * 60,
-      format: 'mm'
-    }, {
-      key: 'hour',
-      duration: 1000 * 60 * 60,
-      format: 'ha'
-    }, {
-      key: 'day',
-      duration: 1000 * 60 * 60 * 24,
-      format: 'DD'
-    }, {
-      key: 'month',
-      duration: 1000 * 60 * 60 * 24 * 30,
-      format: 'MM'
-    }, {
-      key: 'year',
-      duration: 1000 * 60 * 60 * 24 * 365,
-      format: 'YY'
-    }
-  ];
-
   /**
    * Recent Orders View
    * @class app.ui.views.RevenueOverTimeView
@@ -93,59 +61,29 @@ define(function(require) {
       }.bind(this), 0);
     },
     updateChart: function() {
-      var start = this.model.get('startTime').clone(),
-          end = this.model.get('endTime').clone(),
-          startMillis = start.valueOf(),
-          endMillis = end.valueOf(),
-          totalDuration = endMillis - startMillis,
-          minTicks = 4,
+      var minTicks = 4,
           elWidth = this.el.width(),
           maxTicks = Math.round(elWidth / 20),
-          batchSize = 1,
-          ticks = [],
-          currentTime,
-          i,
+          rangeData = timeRangeModel.getRangeData(minTicks, maxTicks),
           maxHeight,
           data;
       // Remove tooldtips
       nv.tooltip.cleanup();
-      // Find appropriate units (minutes / hours / etc) based on minTicks
-      for (i = 1; i < _DURATION_HASH.length; i++) {
-        if (Math.ceil(totalDuration / _DURATION_HASH[i].duration) < minTicks) {
-          break;
-        }
-      }
-      i--;
-      this.key = _DURATION_HASH[i].key;
-      this.format = _DURATION_HASH[i].format;
-      this.duration = _DURATION_HASH[i].duration;
 
-      // Batch units as necessary (1 hour / 2 hours / etc) based on maxTicks
-      while (Math.ceil(totalDuration / (this.duration * batchSize)) > maxTicks) {
-        batchSize++;
-      }
+      this.key = rangeData.key;
 
-      // Round the start and end times to whole units
-      start.startOf(this.key);
-      end.startOf(this.key).add(this.key, 1);
-
-      // Generate the intermediate ticks
-      currentTime = start.clone();
-      while (+(currentTime = currentTime.add(this.key, batchSize)) < endMillis) {
-        ticks.push(currentTime.valueOf());
-      }
-      this.chart.forceX([start.valueOf(), end.valueOf()]);
+      this.chart.forceX([rangeData.start.valueOf(), rangeData.end.valueOf()]);
       this.chart.xAxis
-        .axisLabel(Translation.get('chart_axis.' + this.key) || 'Time')
-        .tickValues(ticks)
+        .axisLabel(Translation.get('chart_axis.' + rangeData.key) || 'Time')
+        .tickValues(rangeData.ticks)
         .tickFormat(function(millis) {
           var date = moment(millis);
-          return date.format(this.format);
+          return date.format(rangeData.format);
         }.bind(this));
       this.chart.yAxis
         .tickFormat(d3.format('$,.2f'));
       // Get Data
-      data = this.getData(ticks, start, end.valueOf());
+      data = this.getData(rangeData.ticks, rangeData.start, rangeData.end.valueOf());
       // Calcuate range for yAxis
       maxHeight = 0;
       data[0].values.forEach(function(item) {
@@ -164,7 +102,7 @@ define(function(require) {
       d3.selectAll('.revenue_over_time svg .nv-x .tick text, .revenue_over_time svg .nv-x .nv-axisMaxMin text')
         .style('text-anchor', 'end')
         .attr('dx', '-25')
-        .attr('dy', ((elWidth / (ticks.length + 1)) / 2) - 2 +'px')
+        .attr('dy', ((elWidth / (rangeData.ticks.length + 1)) / 2) - 2 +'px')
         .attr('transform', function() {
             return 'rotate(-90)' ;
         });
