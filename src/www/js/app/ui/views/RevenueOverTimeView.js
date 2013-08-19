@@ -14,35 +14,35 @@ define(function(require) {
 
 
   var _DURATION_HASH = [{
-          key: 'millisecond',
-          duration: 1,
-          format: 'SS'
-        }, {
-          key: 'second',
-          duration: 1000,
-          format: 'ss'
-        }, {
-          key: 'minute',
-          duration: 1000 * 60,
-          format: 'mm'
-        }, {
-          key: 'hour',
-          duration: 1000 * 60 * 60,
-          format: 'ha'
-        }, {
-          key: 'day',
-          duration: 1000 * 60 * 60 * 24,
-          format: 'DD'
-        }, {
-          key: 'month',
-          duration: 1000 * 60 * 60 * 24 * 30,
-          format: 'MM'
-        }, {
-          key: 'year',
-          duration: 1000 * 60 * 60 * 24 * 365,
-          format: 'YY'
-        }
-      ];
+      key: 'millisecond',
+      duration: 1,
+      format: 'SS'
+    }, {
+      key: 'second',
+      duration: 1000,
+      format: 'ss'
+    }, {
+      key: 'minute',
+      duration: 1000 * 60,
+      format: 'mm'
+    }, {
+      key: 'hour',
+      duration: 1000 * 60 * 60,
+      format: 'ha'
+    }, {
+      key: 'day',
+      duration: 1000 * 60 * 60 * 24,
+      format: 'DD'
+    }, {
+      key: 'month',
+      duration: 1000 * 60 * 60 * 24 * 30,
+      format: 'MM'
+    }, {
+      key: 'year',
+      duration: 1000 * 60 * 60 * 24 * 365,
+      format: 'YY'
+    }
+  ];
 
   /**
    * Recent Orders View
@@ -56,7 +56,9 @@ define(function(require) {
     this.mapEvent({
       model: {
         addItem: debouncedChangeHandler,
-        removeItem: debouncedChangeHandler
+        removeItem: debouncedChangeHandler,
+        'change.startTime': debouncedChangeHandler,
+        'change.endTime': debouncedChangeHandler
       },
       '.nvtooltip .button': {
         'tap': _onTapTooltipButton.bind(this)
@@ -69,8 +71,8 @@ define(function(require) {
     onRenderSuccess: function() {
       BaseChartView.prototype.onRenderSuccess.apply(this, arguments);
       setTimeout(function() {
-        var svg = d3.select('svg'),
-            defs = svg.append('svg:defs');
+        var svg = d3.select(this.el[0]).select('svg');
+        svg.append('svg:defs');
         d3.select('svg .nv-lineChart > g')
           .insert('rect', '.nv-linesWrap')
           .attr('id', 'graph-background')
@@ -88,7 +90,7 @@ define(function(require) {
           .attr('class', 'extent')
           .attr('height', '108')
           .attr('width', '100%');
-      }, 0);
+      }.bind(this), 0);
     },
     updateChart: function() {
       var start = this.model.get('startTime').clone(),
@@ -166,7 +168,7 @@ define(function(require) {
         .attr('transform', function() {
             return 'rotate(-90)' ;
         });
-      d3.selectAll('.revenue_over_time svg .nv-x .tick > line:first-child') 
+      d3.selectAll('.revenue_over_time svg .nv-x .tick > line:first-child')
         .attr('x1', '0')
         .attr('y1', '64');
       d3.selectAll('.revenue_over_time svg .nv-x .tick')[0].forEach(function(item) {

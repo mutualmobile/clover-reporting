@@ -5,7 +5,11 @@ define(function(require) {
   var BaseChartDataCollection = Collection.extend(function BaseChartDataCollection() {
     Collection.apply(this, arguments);
     _fetch.call(this);
-    this.set('loading', true);
+    this.apply({
+      loading: true,
+      startTime: timeRangeModel.get('startTime'),
+      endTime: timeRangeModel.get('endTime')
+    });
     this._externalBoundHandler = _fetch.bind(this);
     timeRangeModel.on('rangeUpdate', this._externalBoundHandler);
   }, {
@@ -26,9 +30,6 @@ define(function(require) {
     if (this._lastFetch) {
       this._lastFetch.reject('abort');
     }
-
-    this.set('startTime', startTime);
-    this.set('endTime', endTime);
     this._lastFetch = this.fetch(startTime, endTime)
       .then(function(data, hash) {
         if (data) {
@@ -38,6 +39,8 @@ define(function(require) {
             this._lastHash = hash;
           }
         }
+        this.set('startTime', startTime);
+        this.set('endTime', endTime);
         this.set('error', false);
       }.bind(this), function(error) {
         if (error !== 'abort') {
