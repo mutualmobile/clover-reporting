@@ -1,12 +1,9 @@
 define(function(require) {
 
   var BasePageView = require('./BasePageView'),
-      TimeSelectorView = require('app/ui/views/TimeSelectorView'),
       BarChartView = require('app/ui/views/BarChartView'),
       revenueByCategoryCollection = require('app/models/RevenueByCategoryCollection'),
-      SmallRevenueByCategoryView = require('app/ui/views/SmallRevenueByCategoryView'),
-      timeRangeModel = require('app/models/TimeRangeModel');
-
+      SmallRevenueByCategoryView = require('app/ui/views/SmallRevenueByCategoryView');
   require('rdust!templates/employees');
 
   /**
@@ -17,10 +14,6 @@ define(function(require) {
   var EmployeesView = BasePageView.extend(function() {
     BasePageView.apply(this, arguments);
     this.mapChildView({
-      '.time-selector': {
-        TView: TimeSelectorView,
-        model: timeRangeModel
-      },
       '.bar-chart': {
         TView: BarChartView
       },

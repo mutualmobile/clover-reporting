@@ -8,9 +8,7 @@ define(function(require) {
       revenueByCategoryCollection = require('app/models/RevenueByCategoryCollection'),
       RevenueByCategoryView = require('app/ui/views/RevenueByCategoryView'),
       RevenueByEmployeeView = require('app/ui/views/RevenueByEmployeeView'),
-      RevenueOverTimeView = require('app/ui/views/RevenueOverTimeView'),
-      TimeSelectorView = require('app/ui/views/TimeSelectorView'),
-      timeRangeModel = require('app/models/TimeRangeModel');
+      RevenueOverTimeView = require('app/ui/views/RevenueOverTimeView');
 
   require('rdust!templates/dashboard');
 
@@ -40,10 +38,6 @@ define(function(require) {
       '.revenue-by-employee': {
         TView: RevenueByEmployeeView,
         model: revenueByEmployeeCollection
-      },
-      '.time-selector': {
-        TView: TimeSelectorView,
-        model: timeRangeModel
       }
     });
   }, {

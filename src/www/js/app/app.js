@@ -4,7 +4,9 @@ define(function(require) {
       Connectivity = require('lavaca/net/Connectivity'),
       Application = require('lavaca/mvc/Application'),
       Translation = require('lavaca/util/Translation'),
-      headerView = require('app/ui/controls/HeaderView');
+      $ = require('$'),
+      TimeSelectorView = require('app/ui/views/TimeSelectorView'),
+      timeRangeModel = require('app/models/TimeRangeModel');
   require('lavaca/ui/DustTemplate');
   require('jquery-mobile/events/orientationchange');
   require('app/misc/dust_extensions');
@@ -30,6 +32,8 @@ define(function(require) {
 
     // Initialize translations
     Translation.init('en_US');
+
+    this.timeSelector = new TimeSelectorView('#time-selector', timeRangeModel);
   });
 
   // Setup offline AJAX handler
