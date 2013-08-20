@@ -21,7 +21,7 @@ define(function(require) {
     });
   }, {
     template: 'templates/employees',
-    className: 'employees'
+    className: 'details'
   });
 
   return EmployeesView;

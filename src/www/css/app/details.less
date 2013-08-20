@@ -1,10 +1,10 @@
-.view.employees {
+.view.details {
   position: relative;
   .time-selector{
     margin-bottom: 5rem;
   }
-  counter-reset: employees;
-  .employee{
+  counter-reset: details;
+  .detail{
     width: 100%;
     min-height: 10rem;
     min-width:600px;
@@ -17,11 +17,11 @@
     border-top:1px solid #4b4f51;
     .horizontal-gradient(#373b3d,#2d3033);
     box-shadow:0 2px 3px #212121;
-    .employee-info{
+    .detail-info{
       .number{
         &:before {
-          content: counter(employees);
-          counter-increment: employees;
+          content: counter(details);
+          counter-increment: details;
         }
         font-family: helveticaUltraLight;
         font-weight: normal;
@@ -110,6 +110,9 @@
           .wrapper {
             height: 100%;
           }
+          .discreteBar {
+            fill-opacity: 1;
+          }
         }
         .pie-chart{
           width: 30%;
@@ -126,8 +129,8 @@
         }
       }
     }
-    &:nth-child(-n+9) .employee-info .number:before {
-      content: '0' counter(employees);
+    &:nth-child(-n+9) .detail-info .number:before {
+      content: '0' counter(details);
     }
   }
 }

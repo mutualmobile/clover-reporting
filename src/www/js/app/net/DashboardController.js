@@ -32,6 +32,11 @@ define(function(require) {
         .view(null, EmployeesView, new Model())
         .then(this.updateState(model, 'Employees', params.url));
     },
+    products: function(params, model) {
+      return this
+        .view(null, EmployeesView, new Model())
+        .then(this.updateState(model, 'Products', params.url));
+    },
     zoom: function(params, model) {
       if (params.startTime && params.endTime) {
         timeRangeModel.suppressEvents = true;
