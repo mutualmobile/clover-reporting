@@ -77,20 +77,15 @@ define(function(require) {
         .tickFormat(function(d) { return '$' + commaFormat(d/100); });
 
       this.chart.xAxis
+        .tickPadding(10)
         .tickFormat(function(millis) {
           var date = moment(millis);
           return date.format(rangeData.format);
         }.bind(this));
-     
 
       selected
           .datum(data)
           .call(this.chart);
-
-      setTimeout(function() {
-        selected.selectAll('.nv-x .tick text')
-          .attr('y', 10);
-      }, 10);
       
     },
     createChart: function() {
