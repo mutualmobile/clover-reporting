@@ -36,7 +36,12 @@
     <div class="label">{barChartLabel}</div>
     <div class="bar-chart-full"></div>
   </div>
-  <div class="detail-panel" data-panel="pie">
+  <div class="detail-panel clearfix" data-panel="pie">
     <div class="pie-detail"></div>
+    <ol>
+      {#revenueByItem}
+        <li>{name}<span class="count">{count}</span></li>
+      {/revenueByItem}
+    </ol>
   </div>
 </div>

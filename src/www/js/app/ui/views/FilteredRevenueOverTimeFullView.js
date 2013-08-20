@@ -16,7 +16,6 @@ define(function(require) {
 
   var FilteredRevenueOverTimeFullView = FilteredRevenueOverTimeView.extend(function() {
     FilteredRevenueOverTimeView.apply(this, arguments);
-    this.parentView.on('bar', this.updateChart.bind(this));
   }, {
     updateChart: function() {
       var selected = d3.select(this.el[0]).select('svg'),

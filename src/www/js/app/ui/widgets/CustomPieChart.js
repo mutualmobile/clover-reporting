@@ -41,8 +41,6 @@ nv.models.pie = function() {
     selection.each(function(data) {
       var availableWidth = width - margin.left - margin.right,
           availableHeight = height - margin.top - margin.bottom,
-          radius = Math.min(availableWidth, availableHeight) / 2,
-          calculatedLabelOffset = Math.min(labelOffset, radius/5 - 10),
           container = d3.select(this);
 
       //------------------------------------------------------------
@@ -174,8 +172,9 @@ nv.models.pie = function() {
                     }
                     return 'translate(' + labelsArc.centroid(d) + ') rotate(' + rotateAngle + ')';
                   } else {
-                    d.outerRadius = radius + calculatedLabelOffset; // Set Outer Coordinate
-                    d.innerRadius = radius + calculatedLabelOffset + 5; // Set Inner Coordinate
+                    d.outerRadius = arcRadius + labelOffset; // Set Outer Coordinate
+                    d.innerRadius = arcRadius + labelOffset + 5; // Set Inner Coordinate
+                    console.log('normal ' + d.innerRadius);
                     var translate = labelsArc.centroid(d);
                     if ((d.startAngle+d.endAngle)/2 < Math.PI) {
                       translate[0] += labelOverhang;
@@ -209,8 +208,9 @@ nv.models.pie = function() {
                 }
                 return 'translate(' + labelsArc.centroid(d) + ') rotate(' + rotateAngle + ')';
               } else {
-                d.outerRadius = radius + calculatedLabelOffset; // Set Outer Coordinate
-                d.innerRadius = radius + calculatedLabelOffset + 5; // Set Inner Coordinate
+                d.outerRadius = arcRadius + labelOffset; // Set Outer Coordinate
+                d.innerRadius = arcRadius + labelOffset + 5; // Set Inner Coordinate
+                console.log('transition ' + d.innerRadius);
                 var translate = labelsArc.centroid(d);
                 if ((d.startAngle+d.endAngle)/2 < Math.PI) {
                  translate[0] += labelOverhang;

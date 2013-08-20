@@ -327,6 +327,10 @@ function employeeData(req, res) {
         });
         revenueByItemFetch = revenueByItem(req);
         revenueByItemFetch.then(function(items) {
+          items.sort(function(a, b) {
+            return b.total - a.total;
+          });
+          totals[employeeId].revenueByItem = items;
           items.forEach(function(item) {
             totals[employeeId].total += item.total;
             totals[employeeId].count += item.count;

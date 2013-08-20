@@ -193,6 +193,7 @@
     .detail-panels {
       position: relative;
       height: 0;
+      overflow: hidden;
       .transition(all 300ms);
       background-color: #40484d;
       border-bottom-left-radius: 0.4rem;
@@ -268,6 +269,42 @@
         .pie-detail {
           position: relative;
           width: 70%;
+          float: left;
+          height: 200px;
+        }
+        ol {
+          width: 30%;
+          float: left;
+          margin-top: 24px;
+          counter-reset: items;
+          li {
+            font-size: 13px;
+            font-weight: lighter;
+            position: relative;
+            padding-right: 45px;
+            text-shadow: 0 -1px 2px rgba(0, 0, 0, 0.6);
+            margin: 15px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            &:before {
+              content: '0' counter(items);
+              counter-increment: items;
+              font-weight: bold;
+              display: inline-block;
+              margin-right: 7px;
+            }
+            &:nth-child(n+7) {
+              display: none;
+            }
+            &:first-child {
+              margin-top: 0;
+            }
+            span {
+              position: absolute;
+              right: 10px;
+            }
+          }
         }
       }
     }

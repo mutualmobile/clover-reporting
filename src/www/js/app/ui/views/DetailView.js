@@ -22,7 +22,6 @@ define(function(require) {
     openPanel: function(panel) {
       this.el.addClass('detail-panel-active');
       this.el.attr('data-active-panel', panel);
-      this.trigger(panel);
     },
     closePanel: function() {
       this.el.removeClass('detail-panel-active');
@@ -32,16 +31,27 @@ define(function(require) {
 
   function _onTapTab(e) {
     var tab = $(e.currentTarget),
-        panel = tab.data('panel');
+        panel = tab.data('panel'),
+        tabViews;
     $('[data-active-panel]')
       .removeClass('detail-panel-active')
       .find('.active')
-        .removeClass('active')
+        .removeClass('active');
     tab
       .toggleClass('active')
       .siblings()
         .removeClass('active');
     if (tab.hasClass('active')) {
+      tabViews = this.el.find('[data-panel="' + panel + '"] [data-view-id]');
+      tabViews.each(function() {
+        var $el = $(this),
+            view = $el.data('view');
+        if (view && view.updateChart) {
+          setTimeout(function() {
+            view.updateChart();
+          });
+        }
+      });
       this.openPanel.call(this, panel);
     } else {
       this.closePanel.call(this, panel);
