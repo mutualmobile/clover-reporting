@@ -1,26 +1,18 @@
 define(function(require) {
-  var BaseView = require('./BaseView'),
+  var DetailView = require('./DetailView'),
       Collection = require('lavaca/mvc/Collection'),
       recentOrdersCollection = require('app/models/RecentOrdersCollection'),
       FilteredRevenueOverTimeView = require('app/ui/views/FilteredRevenueOverTimeView'),
       SmallRevenueByCategoryView = require('app/ui/views/SmallRevenueByCategoryView'),
-      FilteredRevenueOverTimeFullView = require('app/ui/views/FilteredRevenueOverTimeFullView'),
-      $ = require('$');
-
-  require('rdust!templates/detail');
+      FilteredRevenueOverTimeFullView = require('app/ui/views/FilteredRevenueOverTimeFullView');
 
   /**
    * Employee Detail View
    * @class app.ui.views.EmployeeDetailView
-   * @extends app.ui.views.BaseView
+   * @extends app.ui.views.DetailView
    */
-  var EmployeeDetailView = BaseView.extend(function() {
-    BaseView.apply(this, arguments);
-    this.mapEvent({
-      '.detail-info > [data-panel]': {
-        tap: _onTapTab.bind(this)
-      }
-    });
+  var EmployeeDetailView = DetailView.extend(function() {
+    DetailView.apply(this, arguments);
     this.mapChildView({
       '.revenue-by-category': {
         TView: SmallRevenueByCategoryView,
@@ -36,33 +28,7 @@ define(function(require) {
       }
     });
     this.render();
-  }, {
-    template: 'templates/detail',
-    className: 'detail',
-    openPanel: function(panel) {
-      this.el.addClass('detail-panel-active');
-      this.el.attr('data-active-panel', panel);
-      this.trigger(panel);
-    },
-    closePanel: function() {
-      this.el.removeClass('detail-panel-active');
-      this.el.attr('data-active-panel', null);
-    }
   });
-
-  function _onTapTab(e) {
-    var tab = $(e.currentTarget),
-        panel = tab.data('panel');
-    tab
-      .toggleClass('active')
-      .siblings()
-        .removeClass('active');
-    if (tab.hasClass('active')) {
-      this.openPanel.call(this, panel);
-    } else {
-      this.closePanel.call(this, panel);
-    }
-  }
 
   return EmployeeDetailView;
 

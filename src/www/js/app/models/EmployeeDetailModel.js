@@ -5,7 +5,8 @@ define(function(require) {
     Model.apply(this, arguments);
     this.apply({
       'firstName': _firstName,
-      'lastName': _lastName
+      'lastName': _lastName,
+      'barChartLabel': 'Employee Sales'
     });
   }, {
     filterCollectionItem: function(index, model) {
