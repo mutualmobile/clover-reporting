@@ -10,7 +10,7 @@ define(function(require) {
   require('lavaca/ui/DustTemplate');
   require('jquery-mobile/events/orientationchange');
   require('app/misc/dust_extensions');
-  require('app/misc/util/tap_handler');
+  require('app/misc/tap_handler');
 
 
   // Uncomment this section to use hash-based browser history instead of HTML5 history.

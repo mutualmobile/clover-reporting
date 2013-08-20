@@ -17,11 +17,11 @@ define(function(require) {
     this.mapChildView({
       '.revenue-by-category': {
         TView: SmallRevenueByCategoryView,
-        model: new Collection(this.model.get('revenueByCategory'))
+        model: new Collection(this.model.get('employees'))
       },
       '.bar-chart': {
         TView: FilteredRevenueOverTimeView,
-        model: recentOrdersCollection
+        model: new Collection(this.model.get('orders'))
       }
     });
     this.render();

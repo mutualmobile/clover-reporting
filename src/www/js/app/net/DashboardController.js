@@ -3,6 +3,7 @@ define(function(require) {
   var BaseController = require('app/net/BaseController'),
       DashboardView = require('app/ui/pageviews/DashboardView'),
       EmployeesView = require('app/ui/pageviews/EmployeesView'),
+      ProductsView = require('app/ui/pageviews/ProductsView'),
       Model = require('lavaca/mvc/Model'),
       Promise = require('lavaca/util/Promise'),
       timeRangeModel = require('app/models/TimeRangeModel'),
@@ -34,7 +35,7 @@ define(function(require) {
     },
     products: function(params, model) {
       return this
-        .view(null, EmployeesView, new Model())
+        .view(null, ProductsView, new Model())
         .then(this.updateState(model, 'Products', params.url));
     },
     zoom: function(params, model) {

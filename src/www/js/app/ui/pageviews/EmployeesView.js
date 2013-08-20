@@ -11,7 +11,7 @@ define(function(require) {
    * @class app.ui.pageviews.EmployeesView
    * @extends app.ui.pageviews.BasePageView
    */
-  var EmployeesView = BasePageView.extend(function() {
+  var EmployeesView = BasePageView.extend(function EmployeesView() {
     BasePageView.apply(this, arguments);
     this.mapChildView({
       '.employee-list': {

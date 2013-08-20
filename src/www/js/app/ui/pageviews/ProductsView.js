@@ -11,7 +11,7 @@ define(function(require) {
    * @class app.ui.pageviews.ProductsView
    * @extends app.ui.pageviews.BasePageView
    */
-  var ProductsView = BasePageView.extend(function() {
+  var ProductsView = BasePageView.extend(function ProductsView() {
     BasePageView.apply(this, arguments);
     this.mapChildView({
       '.product-list': {

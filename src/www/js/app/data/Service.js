@@ -4,7 +4,7 @@ define(function(require) {
       Config = require('lavaca/util/Config'),
       Promise = require('lavaca/util/Promise'),
       Connectivity = require('lavaca/net/Connectivity'),
-      hash = require('app/misc/util/hash'),
+      hash = require('app/misc/hash'),
       $ = require('jquery'),
       StringUtils = require('lavaca/util/StringUtils');
 

@@ -1,7 +1,13 @@
 <div class="detail-info">
   <div class="number"></div>
   <div class="overview" data-panel="overview">
-    <h1 class="name">{firstName}<span>{lastName}</span></h1>
+    <h1 class="name">
+      {?firstName}
+        {firstName}<span>{lastName}</span>
+      {:else}
+        {name}
+      {/firstName}
+    </h1>
     <div class="numeric-stats">
       <div class="numbers">
         <span class="percent">{percent|percent}</span>

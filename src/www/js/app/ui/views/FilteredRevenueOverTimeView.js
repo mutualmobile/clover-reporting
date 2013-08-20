@@ -3,6 +3,7 @@ define(function(require) {
   var BaseChartView = require('./BaseChartView'),
       RevenueOverTimeView = require('./RevenueOverTimeView'),
       timeRangeModel = require('app/models/TimeRangeModel'),
+      bucketData = require('app/misc/bucket_data'),
       d3 = require('d3'),
       nv = require('nv');
 
@@ -29,10 +30,10 @@ define(function(require) {
           data;
 
       // Filter and bucket values
-      if (this.parentView) {
+      if (this.parentView && this.parentView.model.filterCollectionItem) {
         filter = this.parentView.model.filterCollectionItem.bind(this.parentView.model);
       }
-      bucketedValues = this.model.bucketData(rangeData.start, rangeData.end, rangeData.ticks, 'modified', 'total', filter),
+      bucketedValues = bucketData(this.model, rangeData.start, rangeData.end, rangeData.ticks, 'modified', 'total', filter),
       bucketedValues.forEach(function(bucketedVal, index) {
         values.push({
           label: 'Time ' + index, // Will be hidden, must be unique

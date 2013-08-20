@@ -7,6 +7,7 @@ define(function(require) {
       d3 = require('d3'),
       nv = require('nv'),
       moment = require('moment'),
+      bucketData = require('app/misc/bucket_data'),
       timeRangeModel = require('app/models/TimeRangeModel'),
       $ = require('jquery');
   require('app/ui/widgets/CustomLineChart');
@@ -86,7 +87,7 @@ define(function(require) {
       data =[{
         area: true,
         key: 'Revenue',
-        values: this.model.bucketData(rangeData.start, rangeData.end, rangeData.ticks, 'modified', 'total')
+        values: bucketData(this.model, rangeData.start, rangeData.end, rangeData.ticks, 'modified', 'total')
       }];
       // Calcuate range for yAxis
       maxHeight = 0;
