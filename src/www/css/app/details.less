@@ -166,24 +166,29 @@
       }
       .detail-panels {
         height: 200px;
+        overflow: hidden;
       }
       &[data-active-panel="overview"] {
         div[data-panel="overview"] {
-          display: block;
+          z-index: 1;
+          opacity: 1;
         }
       }
       &[data-active-panel="bar"] {
         div[data-panel="bar"] {
-          display: block;
+          z-index: 1;
+          opacity: 1;
         }
       }
       &[data-active-panel="pie"] {
         div[data-panel="pie"] {
-          display: block;
+          z-index: 1;
+          opacity: 1;
         }
       }
     }
     .detail-panels {
+      position: relative;
       height: 0;
       .transition(all 300ms);
       background-color: #40484d;
@@ -191,7 +196,14 @@
       border-bottom-right-radius: 0.4rem;
       .detail-panel {
         border-top: 1px solid #51595e;
-        display: none;
+        .transition(opacity 300ms);
+        z-index: -1;
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
       }
       .detail-panel[data-panel="bar"] {
         .label {

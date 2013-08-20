@@ -3,7 +3,8 @@ define(function(require) {
       Collection = require('lavaca/mvc/Collection'),
       FilteredRevenueOverTimeView = require('app/ui/views/FilteredRevenueOverTimeView'),
       FilteredRevenueOverTimeFullView = require('app/ui/views/FilteredRevenueOverTimeFullView'),
-      SmallRevenueByEmployeeView = require('app/ui/views/SmallRevenueByEmployeeView');
+      SmallRevenueByEmployeeView = require('app/ui/views/SmallRevenueByEmployeeView'),
+      MetricsDetailView = require('app/ui/views/MetricsDetailView');
 
   require('rdust!templates/detail');
 
@@ -25,6 +26,10 @@ define(function(require) {
       },
       '.bar-chart-full': {
         TView: FilteredRevenueOverTimeFullView,
+        model: new Collection(this.model.get('orders'))
+      },
+      '.metrics': {
+        TView: MetricsDetailView,
         model: new Collection(this.model.get('orders'))
       }
     });
