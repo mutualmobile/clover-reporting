@@ -174,7 +174,6 @@ nv.models.pie = function() {
                   } else {
                     d.outerRadius = arcRadius + labelOffset; // Set Outer Coordinate
                     d.innerRadius = arcRadius + labelOffset + 5; // Set Inner Coordinate
-                    console.log('normal ' + d.innerRadius);
                     var translate = labelsArc.centroid(d);
                     if ((d.startAngle+d.endAngle)/2 < Math.PI) {
                       translate[0] += labelOverhang;
@@ -210,7 +209,6 @@ nv.models.pie = function() {
               } else {
                 d.outerRadius = arcRadius + labelOffset; // Set Outer Coordinate
                 d.innerRadius = arcRadius + labelOffset + 5; // Set Inner Coordinate
-                console.log('transition ' + d.innerRadius);
                 var translate = labelsArc.centroid(d);
                 if ((d.startAngle+d.endAngle)/2 < Math.PI) {
                  translate[0] += labelOverhang;
