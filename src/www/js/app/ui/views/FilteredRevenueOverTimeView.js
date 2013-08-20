@@ -70,13 +70,13 @@ define(function(require) {
                     .tooltips(false)
                     .showValues(false)
                     .showXAxis(false)
-                    .margin({top: 5, left: 5, right: 5, bottom: 5})
+                    .margin({top: 23, left: 20, right: 20, bottom: 5})
                     .showYAxis(false)
                     .color(function() {
                       return '#1ae08e';
                     })
-                    .width(126)
-                    .height(59);
+                    .width(133)
+                    .height(77);
       return chart;
     }
   });
