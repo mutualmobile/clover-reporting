@@ -3,7 +3,7 @@ define(function(require) {
       Collection = require('lavaca/mvc/Collection'),
       recentOrdersCollection = require('app/models/RecentOrdersCollection'),
       FilteredRevenueOverTimeView = require('app/ui/views/FilteredRevenueOverTimeView'),
-      SmallRevenueByCategoryView = require('app/ui/views/SmallRevenueByCategoryView');
+      SmallRevenueByEmployeeView = require('app/ui/views/SmallRevenueByEmployeeView');
 
   require('rdust!templates/detail');
 
@@ -16,7 +16,7 @@ define(function(require) {
     BaseView.apply(this, arguments);
     this.mapChildView({
       '.revenue-by-category': {
-        TView: SmallRevenueByCategoryView,
+        TView: SmallRevenueByEmployeeView,
         model: new Collection(this.model.get('employees'))
       },
       '.bar-chart': {

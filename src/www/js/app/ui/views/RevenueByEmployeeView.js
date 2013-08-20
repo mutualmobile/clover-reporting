@@ -22,6 +22,9 @@ define(function(require) {
   }, {
     template: 'templates/revenue_by_employee',
     className: 'base_pie revenue_by_employee',
+    handleOther: function(data) {
+      return data; // Don't group small items into 'other'
+    },
     getData: function() {
       var data = this.model.toObject();
 

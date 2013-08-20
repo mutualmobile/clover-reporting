@@ -431,7 +431,7 @@ function productData(req, res) {
         item.employees.push(item.employeeIds[employeeId]);
       }
       item.employees.sort(function(a, b) {
-        return b.total - a.total;
+        return a.name.localeCompare(b.name);
       });
       delete item.employeeIds;
 
