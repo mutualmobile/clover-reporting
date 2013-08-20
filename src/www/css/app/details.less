@@ -185,6 +185,9 @@
           z-index: 1;
           opacity: 1;
         }
+        .popover {
+          display: none!important;
+        }
       }
     }
     .detail-panels {
@@ -259,6 +262,12 @@
               display: none;
             }
           }
+        }
+      }
+      .detail-panel[data-panel="pie"] {
+        .pie-detail {
+          position: relative;
+          width: 70%;
         }
       }
     }
