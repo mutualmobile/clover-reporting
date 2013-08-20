@@ -14,7 +14,48 @@ define(function(require) {
     timeRangeModel.on('rangeUpdate', this._externalBoundHandler);
   }, {
     fetch: null,
-    fetchDelay: 10000,
+    fetchDelay: 5000,
+    bucketData: function(start, end, ticks, bucketAttr, sumAttr, filter) {
+      var buckets = [],
+          filteredItems = filter ? this.filter(filter) : this.models,
+          getBucketVal,
+          getSumVal;
+
+      ticks = [start].concat(ticks);
+
+      ticks.forEach(function(tick, i) {
+        buckets.push([
+          tick + (((ticks[i+1] || end) - tick) / 2),
+          0
+        ]);
+      });
+
+      if (typeof bucketAttr === 'string') {
+        getBucketVal = function(model) {
+          return model.get(bucketAttr);
+        };
+      } else {
+        getBucketVal = bucketAttr;
+      }
+      if (typeof sumAttr === 'string') {
+        getSumVal = function(model) {
+          return model.get(sumAttr);
+        };
+      } else {
+        getSumVal = sumAttr;
+      }
+
+      filteredItems.forEach(function(model) {
+        ticks.some(function(tick, i) {
+          var bucketVal = getBucketVal(model);
+          if (bucketVal > tick && bucketVal < (ticks[i+1] || end)) {
+            buckets[i][1] += getSumVal(model);
+          }
+        });
+      });
+
+      return buckets;
+    },
     dispose: function() {
       timeRangeModel.off('rangeUpdate', this._externalBoundHandler);
       return Collection.prototype.dispose.apply(this, arguments);
@@ -32,6 +73,8 @@ define(function(require) {
     }
     this._lastFetch = this.fetch(startTime, endTime)
       .then(function(data, hash) {
+        var currentStartTime = this.get('startTime'),
+            currentEndTime = this.get('endTime');
         if (data) {
           if (!this._lastHash || this._lastHash !== hash) {
             this.clearModels();
@@ -39,8 +82,12 @@ define(function(require) {
             this._lastHash = hash;
           }
         }
-        this.set('startTime', startTime);
-        this.set('endTime', endTime);
+        if (!currentStartTime || currentStartTime.valueOf() !== startTime.valueOf()) {
+          this.set('startTime', startTime);
+        }
+        if (!currentEndTime || currentEndTime.valueOf() !== endTime.valueOf()) {
+          this.set('endTime', endTime);
+        }
         this.set('error', false);
       }.bind(this), function(error) {
         if (error !== 'abort') {

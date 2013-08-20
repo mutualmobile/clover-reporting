@@ -13,11 +13,12 @@ define(function(require) {
   }, {
     fetch: function() {
       var promise = new Promise();
-      OrdersService.getOrdersForDateRange.apply(OrdersService, arguments).then(function(data) {
+      OrdersService.getOrdersForDateRange.apply(OrdersService, arguments).then(function(data, hash) {
+        var orders = [];
         if (data && data.orders) {
-          return promise.resolve(data.orders);
+          orders = data.orders;
         }
-        promise.reject();
+        promise.resolve(orders, hash);
       }, promise.rejector());
       return promise;
     }

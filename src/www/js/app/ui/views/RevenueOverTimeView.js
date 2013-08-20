@@ -83,7 +83,11 @@ define(function(require) {
       this.chart.yAxis
         .tickFormat(d3.format('$,.2f'));
       // Get Data
-      data = this.getData(rangeData.ticks, rangeData.start, rangeData.end.valueOf());
+      data =[{
+        area: true,
+        key: 'Revenue',
+        values: this.model.bucketData(rangeData.start, rangeData.end, rangeData.ticks, 'modified', 'total')
+      }];
       // Calcuate range for yAxis
       maxHeight = 0;
       data[0].values.forEach(function(item) {
@@ -119,11 +123,6 @@ define(function(require) {
           .style('stroke', 'rgba(0,0,0,.2)');
       });
     },
-    getData: function(ticks, start, end) {
-      ticks.unshift(start.valueOf());
-      var models = this.model.toObject().items;
-      return _getRevenueOverTimeByOrder.call(this, models, ticks, end);
-    },
     createChart: function() {
       var chart = nv.models.customLineChart()
             .x(function(d) { return d[0]; })
@@ -152,31 +151,6 @@ define(function(require) {
     }
 
   });
-
-  function _getRevenueOverTimeByOrder(models, ticks, end) {
-    var buckets = [];
-
-    ticks.forEach(function(tick, i) {
-      buckets.push([
-        tick + (((ticks[i+1] || end) - tick) / 2),
-        0
-      ]);
-    });
-    models.forEach(function(model) {
-      ticks.some(function(tick, i) {
-        if (model.modified > tick && model.modified < (ticks[i+1] || end)) {
-          buckets[i][1] += model.total;
-        }
-      });
-    });
-
-    return [{
-      area: true,
-      key: 'Revenue',
-      values: buckets
-    }];
-
-  }
 
   function _onTapTooltipButton(e) {
     var el = $(e.currentTarget);

@@ -1,7 +1,8 @@
 define(function(require) {
 
   var BasePieChartView = require('./BasePieChartView'),
-      PieChartPopoverView = require('./PieChartPopoverView');
+      PieChartPopoverView = require('./PieChartPopoverView'),
+      router = require('lavaca/mvc/Router');
   require('rdust!templates/revenue_by_employee');
 
   /**
@@ -39,8 +40,9 @@ define(function(require) {
       return chart;
     },
     onTapSeeMore: function(e) {
-      // e.stopPropagation();
-      // e.preventDefault();
+      e.stopPropagation();
+      e.preventDefault();
+      router.exec('/employees');
     }
   });
 
