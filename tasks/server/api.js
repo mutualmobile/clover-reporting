@@ -12,6 +12,18 @@ var accessToken = '8b8a19c5-1b13-dcbd-c9b3-36e3b24eccea',
     limiter = new RateLimiter(13, 'second');
 
 // ------ Utility functions ------
+function extend(target) {
+  var sources = [].slice.call(arguments, 1);
+  sources.forEach(function (source) {
+    for (var prop in source) {
+      if (source.hasOwnProperty(prop)) {
+        target[prop] = source[prop];
+      }
+    }
+  });
+  return target;
+}
+
 function makeRequest(path, query) {
   var options = {
         hostname: 'api.clover.com',
@@ -55,6 +67,17 @@ function makeRequest(path, query) {
   return deferred.promise;
 }
 
+function revenueForLineItem(lineItem) {
+  var revenue = (lineItem.price * lineItem.qty) + lineItem.discountAmount;
+  if (lineItem.taxable) {
+    revenue += Math.round((lineItem.price * lineItem.qty) * (lineItem.taxRate / 10000000));
+  }
+  if (lineItem.refunded) {
+    revenue = 0;
+  }
+  return revenue;
+}
+
 // ----------- Routes ------------
 // Note that all route functions return
 // a promise, so they can be used either
@@ -71,6 +94,8 @@ function allOrders(req, res) {
   if (req.allOrders) {
     deferred.resolve(req.allOrders);
     return deferred.promise;
+  } else {
+    req.allOrders = deferred.promise;
   }
 
   makeRequest('/v2/merchant/RZC2F4FMKFJ12/orders', req.query).then(function(data) {
@@ -86,13 +111,13 @@ function allOrders(req, res) {
         if (err) {
           deferred.reject(err);
         } else {
-          if (item && item.custom_modified === order.modified) {
+          if (item && item.modified === order.modified) {
             deferred.resolve(item);
           } else {
             makeRequest('/v2/merchant/RZC2F4FMKFJ12/orders/' + order.id).then(function(data) {
               var fullOrder = data && data.order ? data.order : null;
               if (fullOrder) {
-                fullOrder.custom_modified = order.modified;
+                fullOrder = extend({}, order, fullOrder);
                 deferred.resolve(fullOrder);
                 collection.update({id: fullOrder.id}, fullOrder, {upsert: true});
               } else {
@@ -109,7 +134,6 @@ function allOrders(req, res) {
       if (res) {
         res.send.apply(res, arguments);
       }
-      req.allOrders = arguments[0];
       deferred.resolve.apply(deferred, arguments);
     });
   }, function() {
@@ -131,6 +155,8 @@ function allCategories(req, res) {
   if (req.allCategories) {
     deferred.resolve(req.allCategories);
     return deferred.promise;
+  } else {
+    req.allCategories = deferred.promise;
   }
 
   makeRequest('/v2/merchant/RZC2F4FMKFJ12/inventory/categories', req.query).then(function(data) {
@@ -168,7 +194,6 @@ function allCategories(req, res) {
       if (res) {
         res.send.apply(res, arguments);
       }
-      req.allCategories = arguments[0];
       deferred.resolve.apply(deferred, arguments);
     });
   }, function() {
@@ -194,7 +219,7 @@ function revenueByItem(req, res) {
       if (employeeId && order.employeeId !== employeeId) { return; }
 
       lineItems.forEach(function(lineItem) {
-        var revenue = (lineItem.price * lineItem.qty) + lineItem.discountAmount,
+        var revenue = revenueForLineItem(lineItem),
             itemId = lineItem.itemId || 'manual';
         if (!totals[itemId]) {
           totals[itemId] = {
@@ -203,12 +228,6 @@ function revenueByItem(req, res) {
             total: 0,
             count: 0
           };
-        }
-        if (lineItem.taxable) {
-          revenue += Math.round((lineItem.price * lineItem.qty) * (lineItem.taxRate / 10000000));
-        }
-        if (lineItem.refunded) {
-          revenue = 0;
         }
         totals[itemId].total += revenue;
         totals[itemId].count++;
@@ -338,6 +357,103 @@ function employeeData(req, res) {
   });
   return deferred.promise;
 }
+function productData(req, res) {
+  var deferred = Q.defer(),
+      fetches = [allOrders(req), revenueByItem(req)],
+      data = [];
+
+  Q.all(fetches).then(function(response) {
+    var allOrders = response[0],
+        revenueByItem = response[1],
+        totalRevenue = 0,
+        items = {},
+        item;
+
+    // Add attributes to item objects
+    revenueByItem.forEach(function(item) {
+      totalRevenue += item.total;
+    });
+    revenueByItem.forEach(function(item) {
+      item.percent = item.total / totalRevenue;
+      item.orderIds = {};
+      item.employeeIds = {};
+      items[item.id] = item;
+    });
+
+    // Calculate order/employee data
+    allOrders.forEach(function(order) {
+      var lineItems = order.lineItems || [],
+          reducedOrder = {
+            id: order.id,
+            timestamp: order.timestamp,
+            modified: order.modified,
+            employeeId: order.employeeId,
+            employeeName: order.employeeName
+          };
+      lineItems.forEach(function(lineItem) {
+        var revenue = revenueForLineItem(lineItem),
+            item = items[lineItem.itemId] || items.manual;
+        if (item) {
+          // Update orders
+          if (!item.orderIds[order.id]) {
+            item.orderIds[order.id] = extend({total: 0}, reducedOrder);
+          }
+          item.orderIds[order.id].total += revenue;
+
+          // Update employee
+          if (!item.employeeIds[order.employeeId]) {
+            item.employeeIds[order.employeeId] = extend({total: 0}, {
+              id: order.employeeId,
+              name: order.employeeName
+            });
+          }
+          item.employeeIds[order.employeeId].total += revenue;
+        }
+      });
+    });
+
+    // Re-format objects as arrays
+    for (var itemId in items) {
+      item = items[itemId];
+      // Orders
+      item.orders = [];
+      for (var orderId in item.orderIds) {
+        item.orders.push(item.orderIds[orderId]);
+      }
+      item.orders.sort(function(a, b) {
+        return b.modified - a.modified;
+      });
+      delete item.orderIds;
+
+      // Employees
+      item.employees = [];
+      for (var employeeId in item.employeeIds) {
+        item.employees.push(item.employeeIds[employeeId]);
+      }
+      item.employees.sort(function(a, b) {
+        return b.total - a.total;
+      });
+      delete item.employeeIds;
+
+      data.push(item);
+    }
+    data.sort(function(a, b) {
+      return b.total - a.total;
+    });
+
+    if (res) {
+      res.send(data);
+    }
+    deferred.resolve(data);
+  }, function() {
+    if (res) {
+      res.send(500);
+    }
+    deferred.reject();
+  });
+
+  return deferred.promise;
+}
 
 
 exports.init = function(server) {
@@ -353,4 +469,5 @@ exports.init = function(server) {
   server.get('/revenue-by-item', revenueByItem);
   server.get('/revenue-by-category', revenueByCategory);
   server.get('/employee-data', employeeData);
+  server.get('/product-data', productData);
 };
