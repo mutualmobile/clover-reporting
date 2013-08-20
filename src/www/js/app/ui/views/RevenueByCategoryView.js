@@ -33,7 +33,7 @@ define(function(require) {
       });
 
       data.sort(function(a, b) {
-        return b.value - a.value;
+        return a.label.localeCompare(b.label);
       });
 
       if (data.length) {

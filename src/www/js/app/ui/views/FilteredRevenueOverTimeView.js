@@ -23,23 +23,22 @@ define(function(require) {
       var selected = d3.select(this.el[0]).select('svg'),
           rangeData = timeRangeModel.getRangeData(4, 9),
           values = [],
+          max = 0,
           filter,
           bucketedValues,
           data;
 
+      // Filter and bucket values
       if (this.parentView) {
         filter = this.parentView.model.filterCollectionItem.bind(this.parentView.model);
       }
-
       bucketedValues = this.model.bucketData(rangeData.start, rangeData.end, rangeData.ticks, 'modified', 'total', filter),
-
       bucketedValues.forEach(function(bucketedVal, index) {
         values.push({
           label: 'Time ' + index, // Will be hidden, must be unique
           value: bucketedVal[1]
         });
       });
-
       data = [
         {
           key: 'Revenue',
@@ -47,14 +46,18 @@ define(function(require) {
         }
       ];
 
-      if (!data) {
+      if (!data[0].values.length) {
         selected.text(null);
         this.el.addClass('empty');
       } else {
         this.el.removeClass('empty');
       }
 
-      this.chart.forceY([0, 7]);
+      // Find max and set y-scale
+      this.model.each(function(index, model) {
+        max = Math.max(model.get('total'), max);
+      });
+      this.chart.forceY([0, max]);
 
       selected
           .datum(data)
