@@ -4,6 +4,7 @@ define(function(require) {
       recentOrdersCollection = require('app/models/RecentOrdersCollection'),
       FilteredRevenueOverTimeView = require('app/ui/views/FilteredRevenueOverTimeView'),
       SmallRevenueByCategoryView = require('app/ui/views/SmallRevenueByCategoryView'),
+      FilteredRevenueOverTimeFullView = require('app/ui/views/FilteredRevenueOverTimeFullView'),
       $ = require('$');
 
   require('rdust!templates/detail');
@@ -16,7 +17,7 @@ define(function(require) {
   var EmployeeDetailView = BaseView.extend(function() {
     BaseView.apply(this, arguments);
     this.mapEvent({
-      '[data-panel]': {
+      '.detail-info > [data-panel]': {
         tap: _onTapTab.bind(this)
       }
     });
@@ -28,6 +29,10 @@ define(function(require) {
       '.bar-chart': {
         TView: FilteredRevenueOverTimeView,
         model: recentOrdersCollection
+      },
+      '.bar-chart-full': {
+        TView: FilteredRevenueOverTimeFullView,
+        model: recentOrdersCollection
       }
     });
     this.render();
@@ -37,6 +42,7 @@ define(function(require) {
     openPanel: function(panel) {
       this.el.addClass('detail-panel-active');
       this.el.attr('data-active-panel', panel);
+      this.trigger(panel);
     },
     closePanel: function() {
       this.el.removeClass('detail-panel-active');
