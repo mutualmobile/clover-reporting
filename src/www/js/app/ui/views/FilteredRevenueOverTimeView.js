@@ -22,14 +22,20 @@ define(function(require) {
     updateChart: function() {
       var selected = d3.select(this.el[0]).select('svg'),
           rangeData = timeRangeModel.getRangeData(4, 9),
-          filter = this.parentView.filter,
-          bucketedValues = this.model.bucketData(rangeData.start, rangeData.end, rangeData.ticks, 'modified', 'total', filter),
           values = [],
+          filter,
+          bucketedValues,
           data;
+
+      if (this.parentView) {
+        filter = this.parentView.model.filterCollectionItem.bind(this.parentView.model);
+      }
+
+      bucketedValues = this.model.bucketData(rangeData.start, rangeData.end, rangeData.ticks, 'modified', 'total', filter),
 
       bucketedValues.forEach(function(bucketedVal, index) {
         values.push({
-          label: 'Time ' + index, // Will be hidden, cannot be blank,
+          label: 'Time ' + index, // Will be hidden, must be unique
           value: bucketedVal[1]
         });
       });

@@ -27,10 +27,7 @@ define(function(require) {
     this.render();
   }, {
     template: 'templates/employee_detail',
-    className: 'employee',
-    filter: function(model) {
-      return true;
-    }
+    className: 'employee'
   });
 
   return EmployeeDetailView;

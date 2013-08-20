@@ -8,7 +8,9 @@ define(function(require) {
       'lastName': _lastName
     });
   }, {
-
+    filterCollectionItem: function(index, model) {
+      return model.get('employeeName') === this.get('name');
+    }
   });
 
   // Computed Properties
