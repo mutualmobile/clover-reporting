@@ -17,12 +17,14 @@ define(function(require) {
   }, {
     template: 'templates/revenue_over_time',
     className: 'small-revenue-over-time',
+    minDataRange: 4,
+    maxDataRange: 9,
     onRenderSuccess: function() {
       return BaseChartView.prototype.onRenderSuccess.apply(this, arguments);
     },
     updateChart: function() {
       var selected = d3.select(this.el[0]).select('svg'),
-          rangeData = timeRangeModel.getRangeData(4, 9),
+          rangeData = timeRangeModel.getRangeData(this.minDataRange, this.maxDataRange),
           values = [],
           max = 0,
           filter,
