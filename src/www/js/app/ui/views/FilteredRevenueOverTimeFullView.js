@@ -90,7 +90,7 @@ define(function(require) {
       setTimeout(function() {
         selected.selectAll('.nv-x .tick text')
           .attr('y', 10);
-      }, 100);
+      }, 10);
       
     },
     createChart: function() {

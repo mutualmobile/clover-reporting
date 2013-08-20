@@ -33,6 +33,10 @@ define(function(require) {
   function _onTapTab(e) {
     var tab = $(e.currentTarget),
         panel = tab.data('panel');
+    $('[data-active-panel]')
+      .removeClass('detail-panel-active')
+      .find('.active')
+        .removeClass('active');
     tab
       .toggleClass('active')
       .siblings()
