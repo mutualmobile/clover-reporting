@@ -42,6 +42,8 @@ define(function(require) {
     template: 'templates/base_pie',
     className: 'base_pie',
     updateChart: function() {
+      if (!this.model) { return; }
+
       var data = this.getData(),
           selected = d3.select(this.el[0]).select('svg');
 

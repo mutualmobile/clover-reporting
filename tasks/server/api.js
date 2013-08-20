@@ -400,18 +400,20 @@ function productData(req, res) {
         if (item) {
           // Update orders
           if (!item.orderIds[order.id]) {
-            item.orderIds[order.id] = extend({total: 0}, reducedOrder);
+            item.orderIds[order.id] = extend({total: 0, count: 0}, reducedOrder);
           }
           item.orderIds[order.id].total += revenue;
+          item.orderIds[order.id].count += lineItem.qty;
 
           // Update employee
           if (!item.employeeIds[order.employeeId]) {
-            item.employeeIds[order.employeeId] = extend({total: 0}, {
+            item.employeeIds[order.employeeId] = extend({total: 0, count: 0}, {
               id: order.employeeId,
               name: order.employeeName
             });
           }
           item.employeeIds[order.employeeId].total += revenue;
+          item.employeeIds[order.employeeId].count += lineItem.qty;
         }
       });
     });

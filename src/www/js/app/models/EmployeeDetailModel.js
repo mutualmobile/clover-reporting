@@ -6,7 +6,8 @@ define(function(require) {
     this.apply({
       'firstName': _firstName,
       'lastName': _lastName,
-      'barChartLabel': 'Employee Sales'
+      'pieDetailList': _pieDetailList,
+      'barChartLabel': 'Employee Sales',
     });
   }, {
     filterCollectionItem: function(index, model) {
@@ -32,6 +33,10 @@ define(function(require) {
       return spaceIndex > -1 ? fullName.substr(spaceIndex+1) : '';
     }
     return null;
+  }
+
+  function _pieDetailList() {
+    return this.get('revenueByItem');
   }
 
   return EmployeeDetailModel;

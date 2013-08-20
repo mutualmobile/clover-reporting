@@ -3,7 +3,8 @@ define(function(require) {
       Collection = require('lavaca/mvc/Collection'),
       FilteredRevenueOverTimeView = require('app/ui/views/FilteredRevenueOverTimeView'),
       FilteredRevenueOverTimeFullView = require('app/ui/views/FilteredRevenueOverTimeFullView'),
-      SmallRevenueByEmployeeView = require('app/ui/views/SmallRevenueByEmployeeView'),
+      SmallFilteredRevenueByEmployeeView = require('app/ui/views/SmallFilteredRevenueByEmployeeView'),
+      FilteredRevenueByEmployeeView = require('app/ui/views/FilteredRevenueByEmployeeView'),
       MetricsDetailView = require('app/ui/views/MetricsDetailView');
 
   require('rdust!templates/detail');
@@ -15,22 +16,28 @@ define(function(require) {
    */
   var EmployeeDetailView = DetailView.extend(function() {
     DetailView.apply(this, arguments);
+    var employeesCollection = new Collection(this.model.get('employees')),
+        ordersCollection = new Collection(this.model.get('orders'));
     this.mapChildView({
       '.revenue-by-category': {
-        TView: SmallRevenueByEmployeeView,
-        model: new Collection(this.model.get('employees'))
+        TView: SmallFilteredRevenueByEmployeeView,
+        model: employeesCollection
       },
       '.bar-chart': {
         TView: FilteredRevenueOverTimeView,
-        model: new Collection(this.model.get('orders'))
+        model: ordersCollection
       },
       '.bar-chart-full': {
         TView: FilteredRevenueOverTimeFullView,
-        model: new Collection(this.model.get('orders'))
+        model: ordersCollection
       },
       '.metrics': {
         TView: MetricsDetailView,
-        model: new Collection(this.model.get('orders'))
+        model: ordersCollection
+      },
+      '.pie-detail': {
+        TView: FilteredRevenueByEmployeeView,
+        model: employeesCollection
       }
     });
     this.render();
