@@ -3,12 +3,17 @@ define(function(require) {
       BaseChartDataCollection = require('app/models/BaseChartDataCollection'),
       OrdersService = require('app/data/OrdersService');
 
+  var _HOUR = 1000 * 60 * 60,
+      _MIN_DURATION = 1000 * 60 * 10;
+
   var RecentOrdersCollection = BaseChartDataCollection.extend(function RecentOrdersCollection() {
     BaseChartDataCollection.apply(this, arguments);
     this.apply({
       totalRevenue: _totalRevenue,
       revenuePerEmployee: _revenuePerEmployee,
-      revenuePerCustomer: _revenuePerCustomer
+      revenuePerCustomer: _revenuePerCustomer,
+      ordersPerHour: _ordersPerHour,
+      salesPerHour: _salesPerHour
     });
   }, {
     fetch: function() {
@@ -69,6 +74,32 @@ define(function(require) {
       return totalRevenue / customerCount;
     }
     return null;
+  }
+
+  function _ordersPerHour() {
+    var firstOrder = Number.MAX_VALUE,
+        lastOrder = Number.MIN_VALUE;
+    this.each(function(index, model) {
+      firstOrder = Math.min(firstOrder, model.get('timestamp'));
+      lastOrder = Math.max(lastOrder, model.get('modified'));
+    });
+    if (lastOrder - firstOrder > _MIN_DURATION) {
+      return (this.count() / ((lastOrder - firstOrder) / _HOUR)).toFixed(2);
+    }
+    return -1;
+  }
+
+  function _salesPerHour() {
+    var firstOrder = Number.MAX_VALUE,
+        lastOrder = Number.MIN_VALUE;
+    this.each(function(index, model) {
+      firstOrder = Math.min(firstOrder, model.get('timestamp'));
+      lastOrder = Math.max(lastOrder, model.get('modified'));
+    });
+    if (lastOrder - firstOrder > _MIN_DURATION) {
+      return (this.get('totalRevenue') / ((lastOrder - firstOrder) / _HOUR));
+    }
+    return -1;
   }
 
   return new RecentOrdersCollection();

@@ -10,17 +10,17 @@
       </div>
       <div class="info-container border-highlight">
         <div class="label">
-          <div>Goal</div>
-          <div>Met</div>
+          <div>Total</div>
+          <div>Orders</div>
         </div>
-        <div class="value">0<span class="light">%</span></div>
+        <div class="value">{items.length}</div>
       </div>
       <div class="info-container border-highlight">
         <div class="label">
-          <div>Daily</div>
-          <div>Goal</div>
+          <div>Orders per</div>
+          <div>Hour</div>
         </div>
-        <div class="value"><span class="light">$</span>0<span class="light">.00</span></div>
+        <div class="value">{@gt key="{ordersPerHour}" value="-1"}{ordersPerHour}{:else}N/A{/gt}</div>
       </div>
       <div class="info-container border-highlight">
         <div class="label">
@@ -50,10 +50,10 @@
       </div>
       <div class="info-container border-highlight">
         <div class="label">
-          <div>Open</div>
-          <div>Tabs</div>
+          <div>Sales per</div>
+          <div>Hour</div>
         </div>
-        <div class="value">0</div>
+        <div class="value">{@gt key="{salesPerHour}" value="-1"}{salesPerHour|cashMoney|s}{:else}N/A{/gt}</div>
       </div>
     {:else}
       <p>Error loading data</p>
