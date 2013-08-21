@@ -3,9 +3,33 @@
   .time-selector{
     margin-bottom: 5rem;
   }
+  .list-header {
+    margin: 0.8rem auto;
+    min-width:600px;
+    max-width: 630px;
+    & > div {
+      display: inline-block;
+      text-align: center;
+      margin-top: 30px;
+      font-family: helveticaUltraLight;
+      color: rgba(255,255,255,.2);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 12px;
+      line-height: 20px;
+    }
+    & > div:nth-child(1), & > div:nth-child(4) {
+      width: 15.5%;
+    }
+    & > div:nth-child(2) {
+      width: 47.5%;
+    }
+    & > div:nth-child(3) {
+      width: 21.5%;
+    }
+  }
   counter-reset: details;
   .detail{
-    width: 100%;
     margin: 0.8rem auto;
     min-height: 100px;
     min-width:600px;

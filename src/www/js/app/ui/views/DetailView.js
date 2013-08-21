@@ -36,6 +36,7 @@ define(function(require) {
     $('[data-active-panel]')
       .removeClass('detail-panel-active')
       .find('.active')
+        .not(tab)
         .removeClass('active');
     tab
       .toggleClass('active')
