@@ -3,26 +3,33 @@
   display: block;
   height: 64px;
   .date-range {
-    position: relative;
+    position: absolute;
+    left: 64px;
+    right: 64px;
+    top: 0;
     color: #FFFFFF;
     display: block;
-    float: left;
-    width: 50%;
     height: 64px;
     line-height: 64px;
     .border-highlight;
     font-family: helveticaUltraLight;
     text-transform: uppercase;
-    font-size: 28px;
+    font-size: 16px;
     text-align: center;
     time {
-      height: 64px;
-      line-height: 64px;
-      display: inline-block;
-      vertical-align: top;
+      display: block;
+      &:first-of-type {
+        margin-top: 15px;
+        margin-bottom: 2px;
+      }
+    }
+    &.start-only {
+      time {
+        margin-top: 24px;
+      }
     }
     .sep {
-      display: inline-block;
+      display: none;
       line-height: 64px;
       vertical-align: top;
     }
@@ -32,9 +39,15 @@
     .arrow {
       width: 64px;
       height: 64px;
-      display: inline-block;
-      position: relative;
       cursor: pointer;
+      position: absolute;
+      top: 0;
+      &.forward {
+        right: 0;
+      }
+      &.back {
+        left: 0;
+      }
       &:before {
         content: '';
         display: inline-block;
@@ -43,7 +56,7 @@
         height: 0;
         top: 50%;
         left: 50%;
-        margin-top: -(@dropDownArrowWidth / 2);
+        margin-top: -(@dropDownArrowWidth);
         margin-left: -@dropDownArrowWidth;
       }
       &.forward:before {
@@ -57,6 +70,41 @@
         border-right: @dropDownArrowWidth solid #FFF;
         border-top: @dropDownArrowWidth solid transparent;
         border-bottom: @dropDownArrowWidth solid transparent;
+      }
+    }
+    @media (min-width: 767px) {
+      width: 50%;
+      position: relative;
+      left: auto;
+      right: auto;
+      top: auto;
+      float: left;
+      .arrow {
+        display: inline-block;
+        position: relative;
+        top: auto;
+        &.forward {
+          right: auto;
+        }
+        &.back {
+          left: auto;
+        }
+      }
+      .sep {
+        display: inline-block;
+      }
+      time {
+        font-size: 28px;
+        height: 64px;
+        line-height: 64px;
+        display: inline-block;
+        vertical-align: top;
+        margin: 0;
+      }
+      &.start-only {
+        time {
+          margin-top: 0;
+        }
       }
     }
   }

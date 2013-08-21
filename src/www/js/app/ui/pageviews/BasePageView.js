@@ -5,6 +5,7 @@ define(function(require) {
       Promise = require('lavaca/util/Promise'),
       viewManager = require('lavaca/mvc/ViewManager'),
       common = require('app/ui/common'),
+      $ = require('$'),
       History = require('lavaca/net/History');
   require('lavaca/fx/Animation'); //jquery plugins
 
@@ -50,6 +51,12 @@ define(function(require) {
      *   that contains the template's rendered HTML output.
      */
     onRenderSuccess: function() {
+      // Scroll iPhone past url bar
+      if (!navigator.standalone && (Detection.iphone || Detection.ipod)) {
+        var height = document.documentElement.clientHeight;
+        $(document.body).height(height + 60);
+        setTimeout(scrollTo, 0, 0, 1);
+      }
       PageView.prototype.onRenderSuccess.apply(this, arguments);
     },
     /**

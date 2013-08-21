@@ -1,5 +1,12 @@
 <div class="label">
-  {timeRange.mode}
+  <span class="long-label">{mode}</span>
+  <span class="short-label">
+    {#timeRange}
+      {#modes}
+        {@eq key="{key}" value="{mode}"}{shortLabel}{/eq}
+      {/modes}
+    {/timeRange}
+  </span>
   <div class="popover select">
     <ul>
       {#timeRange}

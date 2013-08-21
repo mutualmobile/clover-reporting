@@ -1,6 +1,6 @@
 #pagemenu {
   display: block;
-  width: 25%;
+  width: 64px;
   float: left;
   height: 64px;
   line-height:64px;
@@ -17,17 +17,16 @@
   .menu{
     display: inline-block;
     position: relative;
-    left: 0rem;
     font-family: helveticaLight, Helvetica, Arial, sans-serif;
     font-size: 28px;
-    margin-right: 2rem;
-    top: 0.5rem;
+    line-height: 64px;
     .popover {
-      top: 118%;
+      top: 53px;
       left: 0;
       margin-bottom: 23px;
       margin-left: -10px;
       width: 196px;
+      display: none;
       &:after {
         border-left: 7px solid rgba(0, 0, 0, 0);
         border-right: 7px solid rgba(0, 0, 0, 0);
@@ -40,6 +39,20 @@
       &.active {
         display: block;
       }
+    }
+  }
+  .selected-page {
+    display: none;
+  }
+  @media (min-width: 767px) {
+    width: 25%;
+    .menu {
+      margin-right: 2rem;
+    }
+    .selected-page {
+      display: inline-block;
+      line-height: 64px;
+      vertical-align: top;
     }
   }
 }

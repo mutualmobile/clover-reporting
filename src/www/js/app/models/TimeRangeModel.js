@@ -8,9 +8,9 @@ define(function(require) {
       _LS_END_TIME = 'customEndTime';
 
   var _MODES = [
-        {key: 'day', label: 'Day'},
-        {key: 'week', label: 'Week'},
-        {key: 'month', label: 'Month'}
+        {key: 'day', label: 'Day', shortLabel: 'Day'},
+        {key: 'week', label: 'Week', shortLabel: 'Wk'},
+        {key: 'month', label: 'Month', shortLabel: 'Mo'}
         // {key: 'custom', label: 'Custom Range'}
       ],
       _DURATION_HASH = [{

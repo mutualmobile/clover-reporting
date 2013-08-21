@@ -1,12 +1,13 @@
 @dropDownArrowWidth: 7px;
 #time-range-select {
   display: block;
-  width: 25%;
-  float: left;
+  width: 64px;
+  float: right;
   height: 64px;
   position: relative;
   .border-highlight;
-  text-align: center;
+  text-align: left;
+  padding-left: 10px;
   cursor: pointer;
   .label {
     display: inline-block;
@@ -18,6 +19,9 @@
     font-size: 12px;
     letter-spacing:1px;
     color:#fff;
+    .long-label {
+      display: none;
+    }
     &:before {
       content: '';
       display: block;
@@ -25,7 +29,7 @@
       width: 0;
       height: 0;
       top: 50%;
-      right: -24px;
+      right: -17px;
       margin-top: -3px;
       margin-left: -@dropDownArrowWidth;
       border-left: @dropDownArrowWidth solid transparent;
@@ -49,6 +53,22 @@
       }
       &.active {
         display: block;
+      }
+    }
+  }
+  @media (min-width: 767px) {
+    width: 25%;
+    text-align: center;
+    padding-left: 0;
+    .label {
+      .long-label {
+        display: none;
+      }
+      .short-label {
+        display: inline-block;
+      }
+      &:before {
+        right: -24px;
       }
     }
   }

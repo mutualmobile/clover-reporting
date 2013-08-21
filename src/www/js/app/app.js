@@ -1,6 +1,7 @@
 define(function(require) {
   var History = require('lavaca/net/History'),
       DashboardController = require('app/net/DashboardController'),
+      Detection = require('lavaca/env/Detection'),
       Connectivity = require('lavaca/net/Connectivity'),
       Application = require('lavaca/mvc/Application'),
       Translation = require('lavaca/util/Translation'),

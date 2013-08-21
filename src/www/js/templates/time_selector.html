@@ -1,14 +1,14 @@
 <div id="pagemenu"></div>
-<div class="date-range">
+<div class="date-range {@eq value="{mode}" key="day"}start-only{/eq}">
   <div class="arrow back"></div>
-  <time datetime="{startTime|timestamp}">
+  <time datetime="{startTime|timestamp}" class="start">
     <span class="month">{@moment value="{startTime}" format="MMM"/}</span>
     <span class="day">{@moment value="{startTime}" format="D"/}</span>
-    <span class="year">&lsquo;{@moment value="{startTime}" format="YY"/}</span>
+    <span class="year">&rsquo;{@moment value="{startTime}" format="YY"/}</span>
   </time>
   {@ne value="{mode}" key="day"}
   <span class="sep">&thinsp;&ndash;&thinsp;</span>
-  <time datetime="{endTime|timestamp}">
+  <time datetime="{endTime|timestamp}" class="end">
     <span class="month">{@moment value="{endTime}" format="MMM"/}</span>
     <span class="day">{@moment value="{endTime}" format="D"/}</span>
     <span class="year">&lsquo;{@moment value="{endTime}" format="YY"/}</span>
