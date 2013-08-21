@@ -318,7 +318,10 @@ function employeeData(req, res) {
           name: order.employeeName,
           total: 0,
           count: 0,
-          percent: 0
+          percent: 0,
+          orderCount: 0,
+          firstOrder: Number.MAX_VALUE,
+          lastOrder: Number.MIN_VALUE
         };
         req.employeeId = employeeId;
         revenueByCategoryFetch = revenueByCategory(req);
@@ -339,13 +342,16 @@ function employeeData(req, res) {
         });
         fetches.push(revenueByCategoryFetch, revenueByItemFetch);
       }
+      totals[employeeId].firstOrder = Math.min(totals[employeeId].firstOrder, order.timestamp);
+      totals[employeeId].lastOrder = Math.max(totals[employeeId].lastOrder, order.modified);
+      totals[employeeId].orderCount++;
     });
     Q.all(fetches).then(function() {
       var item,
           highestPercent = 0;
       for (item in totals) {
         totals[item].percent = totals[item].total / totalRevenue;
-        highestPercent = totals[item].percent > highestPercent ? totals[item].percent : highestPercent;
+        highestPercent = Math.max(totals[item].percent, highestPercent);
       }
       for (item in totals) {
         totals[item].relativePercent = totals[item].percent / highestPercent;
@@ -388,6 +394,8 @@ function productData(req, res) {
       item.percent = item.total / totalRevenue;
       item.orderIds = {};
       item.employeeIds = {};
+      item.firstOrder = Number.MAX_VALUE;
+      item.lastOrder = Number.MIN_VALUE;
       items[item.id] = item;
       highestPercent = item.percent > highestPercent ? item.percent : highestPercent;
     });
@@ -426,6 +434,8 @@ function productData(req, res) {
           }
           item.employeeIds[order.employeeId].total += revenue;
           item.employeeIds[order.employeeId].count += lineItem.qty;
+          item.firstOrder = Math.min(item.firstOrder, order.timestamp);
+          item.lastOrder = Math.max(item.lastOrder, order.modified);
         }
       });
     });
@@ -472,7 +482,6 @@ function productData(req, res) {
 
   return deferred.promise;
 }
-
 
 exports.init = function(server) {
   db.open(function(err) {

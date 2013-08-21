@@ -1,14 +1,20 @@
 define(function(require) {
   var Model = require('lavaca/mvc/Model');
 
+
+  var _HOUR = 1000 * 60 * 60,
+      _MIN_DURATION = 1000 * 60 * 10;
+
   var EmployeeDetailModel = Model.extend(function EmployeeDetailModel() {
     Model.apply(this, arguments);
     this.apply({
       'firstName': _firstName,
       'lastName': _lastName,
       'pieDetailList': _pieDetailList,
-      'barChartLabel': 'Employee Sales',
-      'averageOrder': _averageOrder
+      'drinksPerOrder': _drinksPerOrder,
+      'salesPerHour': _salesPerHour,
+      'drinksPerHour': _drinksPerHour,
+      'barChartLabel': 'Employee Sales'
     });
   }, {
     filterCollectionItem: function(index, model) {
@@ -40,11 +46,33 @@ define(function(require) {
     return this.get('revenueByItem');
   }
 
-  function _averageOrder() {
-    var count = this.get('count');
-    if (count) {
-      return this.get('total') / count;
+  function _drinksPerOrder() {
+    var orderCount = this.get('orderCount');
+    if (orderCount) {
+      return (this.get('count') / orderCount).toFixed(2);
     }
+  }
+
+  function _salesPerHour() {
+    var firstOrder = this.get('firstOrder'),
+        lastOrder = this.get('lastOrder'),
+        total = this.get('total');
+
+    if (firstOrder && lastOrder && (lastOrder - firstOrder) > _MIN_DURATION) {
+      return total / ((lastOrder - firstOrder) / _HOUR);
+    }
+    return -1;
+  }
+
+  function _drinksPerHour() {
+    var firstOrder = this.get('firstOrder'),
+        lastOrder = this.get('lastOrder'),
+        count = this.get('count');
+
+    if (firstOrder && lastOrder && count) {
+      return (count / ((lastOrder - firstOrder) / _HOUR)).toFixed(2);
+    }
+    return -1;
   }
 
   return EmployeeDetailModel;

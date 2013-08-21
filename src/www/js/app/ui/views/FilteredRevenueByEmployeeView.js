@@ -25,6 +25,10 @@ define(function(require) {
         });
       });
 
+      data.sort(function(a, b) {
+        return b.label.localeCompare(a.label);
+      });
+
       if (data.length) {
         return data;
       } else {
