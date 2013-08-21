@@ -21,7 +21,7 @@ define(function(require) {
         TView: SmallRevenueByCategoryView,
         model: revenueByCategoryCollection
       },
-      '.bar-chart': {
+      '.bar-chart .inner': {
         TView: FilteredRevenueOverTimeView,
         model: recentOrdersCollection
       },

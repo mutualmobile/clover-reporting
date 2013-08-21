@@ -23,7 +23,7 @@ define(function(require) {
         TView: SmallFilteredRevenueByEmployeeView,
         model: employeesCollection
       },
-      '.bar-chart': {
+      '.bar-chart .inner': {
         TView: FilteredRevenueOverTimeView,
         model: ordersCollection
       },
