@@ -6,54 +6,28 @@
           <div>Total</div>
           <div>Sales</div>
         </div>
-        <div class="total-revenue value">{totalRevenue|cashMoney|s}</div>
+        <div class="total-revenue value">{total|cashMoney|s}</div>
       </div>
       <div class="info-container border-highlight">
         <div class="label">
-          <div>Goal</div>
-          <div>Met</div>
+          <div>Total</div>
+          <div>Orders</div>
         </div>
-        <div class="value">0<span class="light">%</span></div>
+        <div class="value">{count}</div>
       </div>
       <div class="info-container border-highlight">
         <div class="label">
-          <div>Daily</div>
-          <div>Goal</div>
+          <div>Overall Sales</div>
+          <div>Percentage</div>
         </div>
-        <div class="value"><span class="light">$</span>0<span class="light">.00</span></div>
+        <div class="value">{percent|percent}</div>
       </div>
       <div class="info-container border-highlight">
         <div class="label">
-          <div>Sales Per</div>
-          <div>Employee</div>
+          <div>Average</div>
+          <div>Order</div>
         </div>
-        <div class="value">
-          {?revenuePerEmployee}
-            {revenuePerEmployee|cashMoney|s}
-          {:else}
-            <span class="light">$</span>0<span class="light">.00</span>
-          {/revenuePerEmployee}
-        </div>
-      </div>
-      <div class="info-container border-highlight">
-        <div class="label">
-          <div>Sales</div>
-          <div>Per Head</div>
-        </div>
-        <div class="value">
-          {?revenuePerCustomer}
-            {revenuePerCustomer|cashMoney|s}
-          {:else}
-            <span class="light">$</span>0<span class="light">.00</span>
-          {/revenuePerCustomer}
-        </div>
-      </div>
-      <div class="info-container border-highlight">
-        <div class="label">
-          <div>Open</div>
-          <div>Tabs</div>
-        </div>
-        <div class="value">0</div>
+        <div class="value">{averageOrder|cashMoney|s}</div>
       </div>
     {:else}
       <p>Error loading data</p>

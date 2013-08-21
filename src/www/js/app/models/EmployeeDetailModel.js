@@ -8,6 +8,7 @@ define(function(require) {
       'lastName': _lastName,
       'pieDetailList': _pieDetailList,
       'barChartLabel': 'Employee Sales',
+      'averageOrder': _averageOrder
     });
   }, {
     filterCollectionItem: function(index, model) {
@@ -37,6 +38,13 @@ define(function(require) {
 
   function _pieDetailList() {
     return this.get('revenueByItem');
+  }
+
+  function _averageOrder() {
+    var count = this.get('count');
+    if (count) {
+      return this.get('total') / count;
+    }
   }
 
   return EmployeeDetailModel;

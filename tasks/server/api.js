@@ -341,8 +341,14 @@ function employeeData(req, res) {
       }
     });
     Q.all(fetches).then(function() {
-      for (var item in totals) {
+      var item,
+          highestPercent = 0;
+      for (item in totals) {
         totals[item].percent = totals[item].total / totalRevenue;
+        highestPercent = totals[item].percent > highestPercent ? totals[item].percent : highestPercent;
+      }
+      for (item in totals) {
+        totals[item].relativePercent = totals[item].percent / highestPercent;
         data.push(totals[item]);
       }
       data.sort(function(a, b) {
@@ -371,6 +377,7 @@ function productData(req, res) {
         revenueByItem = response[1],
         totalRevenue = 0,
         items = {},
+        highestPercent = 0,
         item;
 
     // Add attributes to item objects
@@ -382,6 +389,11 @@ function productData(req, res) {
       item.orderIds = {};
       item.employeeIds = {};
       items[item.id] = item;
+      highestPercent = item.percent > highestPercent ? item.percent : highestPercent;
+    });
+
+    revenueByItem.forEach(function(item) {
+      item.relativePercent = item.percent / highestPercent;
     });
 
     // Calculate order/employee data

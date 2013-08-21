@@ -21,7 +21,7 @@ define(function(require) {
       var selected = d3.select(this.el[0]).select('svg'),
           minTicks = 4,
           elWidth = this.el.width(),
-          maxTicks = Math.round(elWidth / 20),
+          maxTicks = Math.round(elWidth / 30),
           rangeData = timeRangeModel.getRangeData(minTicks, maxTicks),
           values = [],
           max = 0,
@@ -29,16 +29,6 @@ define(function(require) {
           filter,
           bucketedValues,
           data;
-      // Reset background
-      selected.select('#graph-background').remove();
-      selected
-        .insert('rect', '#area-gradient')
-        .attr('id', 'graph-background')
-        .attr('x', '0')
-        .attr('y', '0')
-        .attr('class', 'extent')
-        .attr('height', '120')
-        .attr('width', '110%');
 
       // Filter and bucket values
       if (this.parentView && this.parentView.model.filterCollectionItem) {
@@ -72,7 +62,8 @@ define(function(require) {
       this.chart.forceY([0, max]);
 
        this.chart.yAxis
-        .tickPadding(4)
+        .tickPadding(20)
+        .tickSubdivide(1)
         .tickFormat(function(d) { return '$' + commaFormat(d/100); });
 
       this.chart.xAxis

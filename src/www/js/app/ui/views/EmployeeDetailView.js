@@ -5,7 +5,8 @@ define(function(require) {
       FilteredRevenueOverTimeView = require('app/ui/views/FilteredRevenueOverTimeView'),
       RevenueByCategoryView = require('app/ui/views/RevenueByCategoryView'),
       SmallRevenueByCategoryView = require('app/ui/views/SmallRevenueByCategoryView'),
-      FilteredRevenueOverTimeFullView = require('app/ui/views/FilteredRevenueOverTimeFullView');
+      FilteredRevenueOverTimeFullView = require('app/ui/views/FilteredRevenueOverTimeFullView'),
+      MetricsDetailView = require('app/ui/views/MetricsDetailView');
 
   /**
    * Employee Detail View
@@ -27,6 +28,9 @@ define(function(require) {
       '.bar-chart-full': {
         TView: FilteredRevenueOverTimeFullView,
         model: recentOrdersCollection
+      },
+      '.metrics': {
+        TView: MetricsDetailView
       },
       '.pie-detail': {
         TView: RevenueByCategoryView,

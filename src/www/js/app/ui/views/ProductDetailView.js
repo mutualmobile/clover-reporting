@@ -32,8 +32,7 @@ define(function(require) {
         model: ordersCollection
       },
       '.metrics': {
-        TView: MetricsDetailView,
-        model: ordersCollection
+        TView: MetricsDetailView
       },
       '.pie-detail': {
         TView: FilteredRevenueByEmployeeView,

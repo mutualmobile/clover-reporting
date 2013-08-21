@@ -5,7 +5,8 @@ define(function(require) {
     Model.apply(this, arguments);
     this.apply({
       'pieDetailList': _pieDetailList,
-      'barChartLabel': 'Product Sales'
+      'barChartLabel': 'Product Sales',
+      'averageOrder': _averageOrder
     });
   });
 
@@ -16,6 +17,13 @@ define(function(require) {
       return b.count - a.count;
     });
     return data;
+  }
+
+  function _averageOrder() {
+    var count = this.get('count');
+    if (count) {
+      return this.get('total') / count;
+    }
   }
 
   return ProductDetailModel;
