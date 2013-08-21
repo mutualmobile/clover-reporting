@@ -33,9 +33,10 @@ define(function(require) {
       },
       model: {
         'addItem': debouncedChangeHandler,
-        'removeItem': debouncedChangeHandler
+        'removeItem': debouncedChangeHandler,
         // 'change.startTime': debouncedChangeHandler,
         // 'change.endTime': debouncedChangeHandler
+        'dataChange': debouncedChangeHandler
       }
     });
   }, {

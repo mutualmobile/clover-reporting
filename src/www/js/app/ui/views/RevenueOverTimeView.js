@@ -26,6 +26,7 @@ define(function(require) {
       model: {
         addItem: debouncedChangeHandler,
         removeItem: debouncedChangeHandler,
+        'dataChange': debouncedChangeHandler,
         'change.startTime': debouncedChangeHandler,
         'change.endTime': debouncedChangeHandler
       },

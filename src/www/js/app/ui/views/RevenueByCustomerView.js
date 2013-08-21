@@ -20,7 +20,8 @@ define(function(require) {
     this.mapEvent({
       model: {
         addItem: debouncedChangeHandler,
-        removeItem: debouncedChangeHandler
+        removeItem: debouncedChangeHandler,
+        dataChange: debouncedChangeHandler
       }
     });
     this.render();

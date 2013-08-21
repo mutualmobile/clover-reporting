@@ -17,6 +17,7 @@ define(function(require) {
       model: {
         addItem: debouncedChangeHandler,
         removeItem: debouncedChangeHandler,
+        dataChange: debouncedChangeHandler,
         'change.loading': debouncedChangeHandler
       }
     });

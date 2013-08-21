@@ -6,20 +6,20 @@ define(function(require) {
       RevenueByCategoryView = require('app/ui/views/RevenueByCategoryView'),
       SmallRevenueByCategoryView = require('app/ui/views/SmallRevenueByCategoryView'),
       FilteredRevenueOverTimeFullView = require('app/ui/views/FilteredRevenueOverTimeFullView'),
-      MetricsDetailView = require('app/ui/views/MetricsDetailView');
+      MetricsDetailView = require('app/ui/views/MetricsDetailView'),
+      debounce = require('mout/function/debounce');
 
   /**
    * Employee Detail View
    * @class app.ui.views.EmployeeDetailView
    * @extends app.ui.views.DetailView
    */
-  var EmployeeDetailView = DetailView.extend(function() {
+  var EmployeeDetailView = DetailView.extend(function EmployeeDetailView() {
     DetailView.apply(this, arguments);
-    var revenueByCategoryCollection = new Collection(this.model.get('revenueByCategory'));
     this.mapChildView({
       '.revenue-by-category': {
         TView: SmallRevenueByCategoryView,
-        model: revenueByCategoryCollection
+        // dynamic model in _updateChildViewModels
       },
       '.bar-chart .inner': {
         TView: FilteredRevenueOverTimeView,
@@ -33,12 +33,32 @@ define(function(require) {
         TView: MetricsDetailView
       },
       '.pie-detail': {
-        TView: RevenueByCategoryView,
-        model: revenueByCategoryCollection
+        TView: RevenueByCategoryView
+        // dynamic model in _updateChildViewModels
+      }
+    });
+    _updateChildViewModels.call(this);
+
+    this.mapEvent({
+      model: {
+        change: debounce(_onChange.bind(this), 0)
       }
     });
     this.render();
   });
+
+  // Event handlers
+  function _onChange() {
+    _updateChildViewModels.call(this);
+    this.redraw();
+  }
+
+  // Private functions
+  function _updateChildViewModels() {
+    var revenueByCategoryCollection = new Collection(this.model.get('revenueByCategory'));
+    this.childViewMap['.pie-detail'].model = revenueByCategoryCollection;
+    this.childViewMap['.revenue-by-category'].model = revenueByCategoryCollection;
+  }
 
   return EmployeeDetailView;
 

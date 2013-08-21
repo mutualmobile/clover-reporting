@@ -26,6 +26,12 @@ define(function(require) {
     closePanel: function() {
       this.el.removeClass('detail-panel-active');
       this.el.attr('data-active-panel', null);
+    },
+    redraw: function() {
+      var activePanel = this.el.find('[data-panel].active').attr('data-panel');
+      return BaseView.prototype.redraw.apply(this, arguments).then(function() {
+        this.el.find('[data-panel="' + activePanel + '"]').addClass('active');
+      }.bind(this));
     }
   });
 

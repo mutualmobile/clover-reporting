@@ -11,11 +11,13 @@ define(function(require) {
     this._externalBoundHandler = debounce(_onOrdersChange.bind(this), 0);
     recentOrdersCollection.on('addItem', this._externalBoundHandler);
     recentOrdersCollection.on('removeItem', this._externalBoundHandler);
+    recentOrdersCollection.on('dataChange', this._externalBoundHandler);
     this._externalBoundHandler();
   }, {
     dispose: function() {
       recentOrdersCollection.off('addItem', this._externalBoundHandler);
       recentOrdersCollection.off('removeItem', this._externalBoundHandler);
+      recentOrdersCollection.off('dataChange', this._externalBoundHandler);
       return Collection.prototype.dispose.apply(this, arguments);
     }
   });
@@ -60,6 +62,10 @@ define(function(require) {
 
     this.each(function(index, model) {
       data.items.push(model.toObject());
+    });
+
+    data.items.sort(function(a, b) {
+      return b.value - a.value;
     });
 
     data.items = data.items.slice(0, colors.length);

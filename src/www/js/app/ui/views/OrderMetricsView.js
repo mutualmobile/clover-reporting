@@ -17,6 +17,7 @@ define(function(require) {
       model: {
         addItem: debouncedRedraw,
         removeItem: debouncedRedraw,
+        dataChange: debouncedRedraw,
         change: debouncedRedraw
       }
     });
