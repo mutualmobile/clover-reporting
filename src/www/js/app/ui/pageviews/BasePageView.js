@@ -42,24 +42,6 @@ define(function(require) {
       'outReverse': ''
     },
     /**
-     * Executes when the template renders successfully. This implementation
-     * adds support for animations between views, based off of the animation
-     * property on the prototype.
-     * @method onRenderSuccess
-     *
-     * @param {Event} e  The render event. This object should have a string property named "html"
-     *   that contains the template's rendered HTML output.
-     */
-    onRenderSuccess: function() {
-      // Scroll iPhone past url bar
-      if (!navigator.standalone && (Detection.iphone || Detection.ipod)) {
-        var height = document.documentElement.clientHeight;
-        $(document.body).height(height + 60);
-        setTimeout(scrollTo, 0, 0, 1);
-      }
-      PageView.prototype.onRenderSuccess.apply(this, arguments);
-    },
-    /**
      * Handler for when a cancel control is tapped
      * @method onTapCancel
      *
