@@ -212,6 +212,17 @@ define(function(require) {
     }
   };
 
+  /**
+   * Gets the name of the transform CSS property
+   * @method transitionEndProperty
+   * @static
+   *
+   * @return {String}  The name of the CSS property
+   */
+  Transition.transitionEndProperty = function() {
+    return _cssProp;
+  };
+
   return Transition;
 
 });
