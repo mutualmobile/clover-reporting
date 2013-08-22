@@ -1,5 +1,8 @@
 .view.details {
   position: relative;
+  .overflow-scroll {
+    padding: 0 10px;
+  }
   .time-selector{
     margin-bottom: 5rem;
   }
@@ -10,7 +13,6 @@
     margin: 0.8rem auto;
     max-width: 630px;
     & > div {
-      display: inline-block;
       text-align: center;
       margin-top: 30px;
       font-family: helveticaUltraLight;
@@ -19,6 +21,10 @@
       letter-spacing: 1px;
       font-size: 12px;
       line-height: 20px;
+      display: none;
+      @media (min-width: @detailCollapseCutoff) {
+        display: inline-block;
+      }
     }
     & > div:nth-child(1), & > div:nth-child(4) {
       width: 15.5%;
@@ -58,47 +64,63 @@
         height: 100%;
         line-height: 100px;
         padding: 0;
-        width: 15.5%;
+        width: 87px;
         text-align: center;
         font-size:5.6rem;
         text-shadow:0px 1px 3px #111;
-        .border-highlight;
+        z-index: 2;
+        @media (min-width: @detailCollapseCutoff) {
+          z-index: auto;
+          width: 15.5%;
+          .border-highlight;
+        }
       }
       .overview {
-        .border-highlight;
         position: absolute;
         top: 0;
-        left: 15.5%;
-        width: 47.5%;
+        left: 0;
+        width: 100%;
         height: 100%;
-        .name{
+        @media (min-width: @detailCollapseCutoff) {
+          .border-highlight;
+          left: 15.5%;
+          width: 47.5%;
+        }
+        .name, .numeric-stats {
+          left: 67px;
+          @media (min-width: @detailCollapseCutoff) {
+            left: 0;
+          }
+        }
+        &.active .name {
+          top: 23px;
+        }
+        .name {
           position:absolute;
-          left: 0;
-          top: 2.4rem;
+          top: 24px;
           padding: 2px 20px;
           color:#fff;
           font-family: helveticaBold;
           font-weight: normal;
           text-transform: uppercase;
-          font-size: 2.4rem;
+          font-size: 24px;
           letter-spacing: 1px;
           text-shadow:0px 1px 3px #111;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
           max-width: 100%;
+          right: 0;
           span{
             font-family: helveticaUltraLight;
             font-weight: normal;
           }
         }
-        .numeric-stats{
+        .numeric-stats {
           color:#fff;
-          width:40%;
           position:absolute;
-          left: 0;
           top: 54%;
-          width: 100%;
+          right: 0;
           padding: 0 20px;
           .numbers{
             text-shadow:0px 1px 2px #212121;
@@ -132,6 +154,12 @@
               border-bottom:1px solid #e8207e;
             }
           }
+        }
+      }
+      .pie-chart, .bar-chart {
+        display: none;
+        @media (min-width: @detailCollapseCutoff) {
+          display: block;
         }
       }
       .bar-chart{

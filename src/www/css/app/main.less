@@ -25,7 +25,7 @@ body {
   color: #d3d3d3;
 }
 #vignette {
-  position: absolute; 
+  position: absolute;
   left: 0;
   top: 0;
   width: 100%;
@@ -33,6 +33,10 @@ body {
   background: url(../../assets/img/screen_shading.png);
   background-size: 100% 100%;
   pointer-events: none;
+  opacity: 0.5;
+  @media (min-width: 768px) {
+    opacity: 1;
+  }
 }
 
 #view-root {
