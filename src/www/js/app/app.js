@@ -7,6 +7,7 @@ define(function(require) {
       Translation = require('lavaca/util/Translation'),
       $ = require('$'),
       TimeSelectorView = require('app/ui/views/TimeSelectorView'),
+      TimeSwiperView = require('app/ui/views/TimeSwiperView'),
       timeRangeModel = require('app/models/TimeRangeModel');
   require('lavaca/ui/DustTemplate');
   require('jquery-mobile/events/orientationchange');
@@ -36,6 +37,7 @@ define(function(require) {
     Translation.init('en_US');
 
     this.timeSelector = new TimeSelectorView('#time-selector', timeRangeModel);
+    this.timeSwiper = new TimeSwiperView('#time-swiper', timeRangeModel);
   });
 
   // Setup offline AJAX handler

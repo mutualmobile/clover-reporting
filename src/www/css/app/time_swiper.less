@@ -1,0 +1,50 @@
+#time-swiper {
+  .clock {
+    position: absolute;
+    top: 50%;
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
+    margin-top: -32px;
+    border: 2px solid #FFFFFF;
+    &:after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-top: -2px;
+      margin-left: -2px;
+      width: 4px;
+      height: 4px;
+      border-radius: 2px;
+      background-color: #FFFFFF;
+    }
+    .long {
+      position: absolute;
+      left: 50%;
+      top: 7px;
+      border-left: 1px solid #FFFFFF;
+      margin-left: -1px;
+      height: 24px;
+      background-color: #FFFFFF;
+      .transform-origin(0 100%)
+    }
+    .short {
+      position: absolute;
+      left: 50%;
+      top: 11px;
+      height: 20px;
+      border-left: 1px solid #FFFFFF;
+      margin-left: -1px;
+      background-color: #FFFFFF;
+      .transform(rotate(20deg));
+      .transform-origin(0 100%)
+    }
+    &.left {
+      left: 2px;
+    }
+    &.right {
+      right: 2px;
+    }
+  }
+}
