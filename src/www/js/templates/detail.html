@@ -1,6 +1,6 @@
 <div class="detail-info">
   <div class="number"></div>
-  <div class="overview" data-panel="overview">
+  <div class="overview main-tab" data-panel="overview">
     <h1 class="name">
       {?firstName}
         {firstName}<span>{lastName}</span>
@@ -18,14 +18,19 @@
     </div>
     <div class="arrow"></div>
   </div>
-  <div class="bar-chart clearfix" data-panel="bar">
+  <div class="bar-chart main-tab clearfix" data-panel="bar">
     <div class="inner"></div>
     <div class="arrow"></div>
   </div>
-  <div class="pie-chart clearfix" data-panel="pie">
+  <div class="pie-chart main-tab clearfix" data-panel="pie">
     <div class="revenue-by-category"></div>
     <div class="arrow"></div>
   </div>
+</div>
+<div class="mobile-tabs">
+  <div data-panel="overview">Stats</div>
+  <div data-panel="bar">Over Time</div>
+  <div data-panel="pie">Category</div>
 </div>
 <div class="detail-panels">
   <div class="detail-panel" data-panel="overview">

@@ -1,9 +1,15 @@
 define(function() {
   return function(collection, start, end, ticks, bucketAttr, sumAttr, filter) {
     var buckets = [],
-        filteredItems = filter ? collection.filter(filter) : collection.models,
+        filteredItems,
         getBucketVal,
         getSumVal;
+
+    if (!collection) {
+      return buckets;
+    }
+
+    filteredItems = filter ? collection.filter(filter) : collection.models,
 
     ticks = [start].concat(ticks);
 

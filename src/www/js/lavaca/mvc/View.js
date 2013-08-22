@@ -268,6 +268,9 @@ define(function(require) {
         redrawPromise = new Promise(this),
         template = Template.get(this.template),
         replaceAll;
+      if (!template) {
+        return redrawPromise.reject();
+      }
       if (typeof selector === 'object' || selector instanceof Model) {
         model = selector;
         replaceAll = true;
