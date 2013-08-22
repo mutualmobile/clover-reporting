@@ -30,7 +30,7 @@ define(function(require) {
         'change.startTime': debouncedChangeHandler,
         'change.endTime': debouncedChangeHandler
       },
-      '.nvtooltip .button': {
+      '.nvtooltip': {
         'tap': _onTapTooltipButton.bind(this)
       }
     });
@@ -145,7 +145,7 @@ define(function(require) {
         content = '<time>' + time.format('MMMM DD') + '</time>' +
               '<div class="money">$' + parseFloat(y, 10).toFixed(2) + '</div><div class="triangle"></div>';
         if (!hideButton) {
-          content += '<div class="button" data-start="'+ start +'" data-end="'+ end +'">View</div>';
+          content += '<div class="button" data-start="'+ start +'" data-end="'+ end +'"></div>';
         }
         return content;
       }.bind(this));
@@ -156,11 +156,15 @@ define(function(require) {
   });
 
   function _onTapTooltipButton(e) {
-    var el = $(e.currentTarget);
+    var el = $(e.currentTarget),
+        button = el.find('.button');
+    if (!button.length) {
+      return;
+    }
     timeRangeModel.set('mode', 'day');
     router.exec('/zoom', null, {
-      startTime: el.data('start'),
-      endTime: el.data('end')
+      startTime: button.data('start'),
+      endTime: button.data('end')
     });
   }
 
