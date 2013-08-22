@@ -430,17 +430,34 @@
         }
       }
       .detail-panel[data-panel="pie"] {
+        .wrapper {
+          display: none;
+          @media (min-width: @detailCollapseCutoff) {
+            display: block;
+          }
+        }
         .pie-detail {
-          position: relative;
-          width: 70%;
-          float: left;
-          height: 200px;
+          display: none;
+          @media (min-width: @detailCollapseCutoff) {
+            display: block;
+            position: relative;
+            width: 70%;
+            float: left;
+            height: 200px;
+          }
+          svg {
+            height: 270px;
+          }
         }
         ol {
-          width: 30%;
-          float: left;
-          margin-top: 24px;
+          padding: 20px;
           counter-reset: items;
+          @media (min-width: @detailCollapseCutoff) {
+            padding: 0;
+            width: 30%;
+            float: left;
+            margin-top: 24px;
+          }
           li {
             font-size: 13px;
             font-weight: lighter;
