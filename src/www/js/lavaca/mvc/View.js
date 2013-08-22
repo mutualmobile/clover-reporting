@@ -44,7 +44,7 @@ define(function(require) {
      * @type String
      *
      */
-    this.id = this.className + '-' + uuid();
+    this.id = (this.className + '-' + uuid()).replace(' ', '-');
 
     /**
      * If the view is created in the context of a childView, the parent view is assigned to this view
