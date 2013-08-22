@@ -8,7 +8,8 @@ define(function(require) {
     getOrdersForDateRange: function(startTime, endTime) {
       var opts = {
         start_time: startTime.valueOf(),
-        end_time: endTime.valueOf()
+        end_time: endTime.valueOf(),
+        count: 999999999
       };
       return this.makeRequest('orders', opts);
     }
