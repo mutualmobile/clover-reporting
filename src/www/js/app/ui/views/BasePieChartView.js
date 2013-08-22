@@ -39,6 +39,8 @@ define(function(require) {
         'dataChange': debouncedChangeHandler
       }
     });
+
+    this.updateLegend = debounce(_redrawLegend.bind(this), 0);
   }, {
     template: 'templates/base_pie',
     className: 'base_pie',
@@ -59,6 +61,8 @@ define(function(require) {
           .datum(this.handleOther(data))
         .transition().duration(500)
           .call(this.chart);
+
+      this.updateLegend();
     },
     getData: function() {},
     handleOther: function(data) {
@@ -153,6 +157,10 @@ define(function(require) {
         this.el.find('.popover').hide();
       }
     }.bind(this), 0);
+  }
+
+  function _redrawLegend() {
+    this.redraw('.legend');
   }
 
   $(function() {

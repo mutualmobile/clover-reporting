@@ -3,6 +3,7 @@ define(function(require) {
   var BasePieChartView = require('./BasePieChartView'),
       PieChartPopoverView = require('./PieChartPopoverView'),
       revenueByItemCollection = require('app/models/RevenueByItemCollection'),
+      colors = require('app/misc/color_scheme'),
       router = require('lavaca/mvc/Router');
   require('rdust!templates/revenue_by_category');
 
@@ -44,8 +45,7 @@ define(function(require) {
       }
     },
     createChart: function() {
-      var colors = ['#af4f25', '#b79e16', '#2e9a59', '#2569af', '#cf1077', '#25adaf', '#700eaf'],
-          chart = BasePieChartView.prototype.createChart.apply(this, arguments);
+      var chart = BasePieChartView.prototype.createChart.apply(this, arguments);
       chart.color(function(d, i) {
         return colors[i % colors.length];
       });

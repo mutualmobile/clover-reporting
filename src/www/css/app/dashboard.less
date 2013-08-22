@@ -1,16 +1,44 @@
 .view.dashboard {
   position: relative;
-
   .revenue-graph {
     width: 100%;
     min-height: 20%;
     position: relative;
   }
-  .pie-chart > div {
-    position: relative;
-    @media (min-width: 1000px) {
-      width: 50%;
-      float: left;
+  .revenue-by-employee {
+    margin: 50px 0 30px;
+    @media (min-width: @pieChartLabelCutoff) {
+      margin-top: 0;
+    }
+  }
+  .pie-chart {
+    // .revenue-by-employee {
+    //   display: none;
+    //   @media (min-width: @pieChartLabelCutoff) {
+    //     display: block;
+    //   }
+    // }
+    h2.title {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 20px 0 10px;
+      @media (min-width: @pieChartLabelCutoff) {
+        display: none;
+      }
+    }
+    .nv-label {
+      display: none;
+      @media (min-width: @pieChartLabelCutoff) {
+        display: inline;
+      }
+    }
+    & > div {
+      position: relative;
+      @media (min-width: 1000px) {
+        width: 50%;
+        float: left;
+      }
     }
   }
 }

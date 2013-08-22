@@ -1,0 +1,27 @@
+.mobile_charts {
+  padding: 20px;
+  h2 {
+    font-size: 14px;
+    font-weight: lighter;
+    margin: 15px 0 5px;
+  }
+  ol {
+    counter-reset: chart;
+    li {
+      color: white;
+      font-weight: lighter;
+      &:before {
+        content: counter(chart);
+        counter-increment: chart;
+        font-weight: bold;
+        display: inline-block;
+        margin-right: 5px;
+      }
+      > span {
+        display: inline-block;
+        margin-left: 5px;
+        font-weight: bold;
+      }
+    }
+  }
+}

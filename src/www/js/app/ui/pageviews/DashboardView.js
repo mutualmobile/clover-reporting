@@ -6,9 +6,11 @@ define(function(require) {
       recentOrdersCollection = require('app/models/RecentOrdersCollection'),
       revenueByEmployeeCollection = require('app/models/RevenueByEmployeeCollection'),
       revenueByCategoryCollection = require('app/models/RevenueByCategoryCollection'),
+      // mobileChartsModel = require('app/models/MobileChartsModel'),
       RevenueByCategoryView = require('app/ui/views/RevenueByCategoryView'),
       RevenueByEmployeeView = require('app/ui/views/RevenueByEmployeeView'),
       RevenueOverTimeView = require('app/ui/views/RevenueOverTimeView');
+      // MobileChartsView = require('app/ui/views/MobileChartsView');
 
   require('rdust!templates/dashboard');
 
@@ -39,6 +41,10 @@ define(function(require) {
         TView: RevenueByEmployeeView,
         model: revenueByEmployeeCollection
       }
+      // '.mobile-charts': {
+      //   TView: MobileChartsView,
+      //   model: mobileChartsModel
+      // }
     });
   }, {
     /**

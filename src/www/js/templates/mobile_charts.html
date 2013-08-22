@@ -1,0 +1,18 @@
+<h2>Top Categories</h2>
+<ol>
+  {#categories}
+    <li>{name}<span>{percent|percent}</span></li>
+  {/categories}
+</ol>
+<h2>Top Drinks</h2>
+<ol>
+  {#items}
+    <li>{name}<span>{total|cashMoney|s}</span></li>
+  {/items}
+</ol>
+<h2>Top Employees</h2>
+<ol>
+  {#employees}
+    <li>{name}<span>{total|cashMoney|s}</span></li>
+  {/employees}
+</ol>

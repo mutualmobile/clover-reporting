@@ -1,12 +1,16 @@
 define(function(require) {
   var Collection = require('lavaca/mvc/Collection'),
       debounce = require('mout/function/debounce'),
+      colors = require('app/misc/color_scheme'),
       recentOrdersCollection = require('app/models/RecentOrdersCollection');
 
   var RevenueByEmployeeCollection = Collection.extend(function RevenueByEmployeeCollection() {
     Collection.apply(this, arguments);
 
-    this.set('popoverData', _popoverData);
+    this.apply({
+      popoverData: _popoverData,
+      legend: _legend
+    });
 
     this._externalBoundHandler = debounce(_onOrdersChange.bind(this), 0);
     recentOrdersCollection.on('addItem', this._externalBoundHandler);
@@ -57,8 +61,7 @@ define(function(require) {
     var data = {
           title: 'Top Sellers',
           items: []
-        },
-        colors = ['af4f25', 'b79e16', '2e9a59', '2569af', 'cf1077', '25adaf', '700eaf'];
+        };
 
     this.each(function(index, model) {
       data.items.push(model.toObject());
@@ -76,6 +79,27 @@ define(function(require) {
 
     return data;
 
+  }
+
+  function _legend() {
+    var data = [];
+
+    this.each(function(index, model) {
+      data.push({
+        name: model.get('label'),
+        total: model.get('value')
+      });
+    });
+
+    data.sort(function(a, b) {
+      return a.name.localeCompare(b.name);
+    });
+
+    data.forEach(function(item, index) {
+      item.color = colors[index % colors.length];
+    });
+
+    return data;
   }
 
   return new RevenueByEmployeeCollection();

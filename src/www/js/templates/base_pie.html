@@ -1,7 +1,14 @@
 <div class="wrapper">
   <svg class="{?loading}loading{/loading}"></svg>
   <div class="pie-overlay"></div>
+  <div class="pie-center"></div>
 </div>
 {?loading}
   <div class="loading-spinner center"></div>
 {/loading}
+<div class="popover"></div>
+<ul class="legend">
+  {#legend}
+    <li><div class="color" style="background:{color}"></div>{name}</li>
+  {/legend}
+</ul>

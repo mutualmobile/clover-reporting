@@ -1,5 +1,6 @@
 define(function(require) {
   var CustomService = require('app/data/CustomService'),
+      colors = require('app/misc/color_scheme'),
       BaseChartDataCollection = require('app/models/BaseChartDataCollection');
 
   var RevenueByItemCollection = BaseChartDataCollection.extend(function RevenueByItemCollection() {
@@ -15,8 +16,7 @@ define(function(require) {
     var data = {
           title: 'Top Drinks',
           items: []
-        },
-        colors = ['af4f25', 'b79e16', '2e9a59', '2569af', 'cf1077', '25adaf', '700eaf'];
+        };
 
     this.each(function(index, model) {
       data.items.push({
