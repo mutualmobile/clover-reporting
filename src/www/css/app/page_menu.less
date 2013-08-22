@@ -13,9 +13,16 @@
   color:#fff;
   position: relative;
   cursor: pointer;
-  &.touch {
+  &.touch:after {
+    content: '';
+    position: absolute;
+    left: -17px;
+    top: -21px;
+    width: 99px;
+    height: 99px;
     background: url(../../assets/img/touch_glow@2x.png) center center no-repeat;
     background-size: 99px 99px;
+    z-index: 1;
   }
   .border-highlight;
   .menu{
