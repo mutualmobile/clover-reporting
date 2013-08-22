@@ -43,7 +43,7 @@ define(function(require) {
           if (!moved && callback) {
             callback.apply(this, arguments);
           }
-          if ($el.attr('data-clear-touch') !== _UNDEFINED) {
+          if ($el.attr('data-persist-touch') === _UNDEFINED) {
             $el.removeClass(_TOUCH_CLASS);
           }
         });
