@@ -99,7 +99,7 @@ define(function(require) {
         }
       });
       maxHeight = (maxHeight/100);
-      maxHeight = maxHeight + (maxHeight * 0.2);
+      maxHeight = maxHeight * 2;
       this.chart.forceY([0, maxHeight || 1]);
 
       d3.select('.revenue_over_time svg')
