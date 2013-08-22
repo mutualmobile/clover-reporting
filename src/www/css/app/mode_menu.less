@@ -10,9 +10,11 @@
   cursor: pointer;
   &.touch:after {
     content: '';
+    margin-right: -17px; 
+    margin-top: -21px; 
     position: absolute;
-    right: -17px;
-    top: -21px;
+    right: 0;
+    top: 0;
     width: 99px;
     height: 99px;
     background: url(../../assets/img/touch_glow@2x.png) center center no-repeat;
@@ -56,6 +58,12 @@
     width: 25%;
     text-align: center;
     padding-left: 0;
+    &.touch {
+       background: rgba(255,255,255,.1);
+    }
+    &.touch:after {
+      background: none;
+    }
     .label {
       .long-label {
         display: inline-block;

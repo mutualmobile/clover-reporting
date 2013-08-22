@@ -2,7 +2,7 @@ define(function(require) {
   var $ = require('jquery');
 
   var _TOUCH_CLASS = 'touch',
-      _TOUCH_DELAY = 50,
+      _TOUCH_DELAY = 0,
       _MOVE_THRESHOLD = 10,
       _UNDEFINED;
 
@@ -43,6 +43,7 @@ define(function(require) {
           if (!moved && callback) {
             callback.apply(this, arguments);
           }
+          window.clearTimeout(touchTimer);
           if ($el.attr('data-persist-touch') === _UNDEFINED) {
             $el.removeClass(_TOUCH_CLASS);
           }
