@@ -16,6 +16,7 @@ define(function(require) {
     PopoverControlView.apply(this, arguments);
     this.mapEvent({
       li: {
+        touchstart: function(e) {e.stopPropagation();},
         tap: _onChangeRangeSelect.bind(this)
       }
     });
@@ -27,6 +28,7 @@ define(function(require) {
   });
 
   function _onChangeRangeSelect(e) {
+    e.stopPropagation();
     timeRangeModel.set('mode', $(e.currentTarget).data('value'));
   }
 

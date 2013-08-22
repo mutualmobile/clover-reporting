@@ -77,7 +77,7 @@ module.exports = function(grunt) {
       req.end();
     }
 
-    server.use(express.basicAuth('test', 'test'));
+    //server.use(express.basicAuth('test', 'test'));
 
     server.use(express['static'](base, {maxAge: hourMs}));
     server.use(express.directory(base, {icons: true}));
