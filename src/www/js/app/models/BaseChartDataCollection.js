@@ -16,7 +16,7 @@ define(function(require) {
     timeRangeModel.on('rangeUpdate', this._externalBoundHandler);
   }, {
     fetch: null,
-    fetchDelay: 5000,
+    fetchDelay: 30000,
     applyNewData: function(data) {
       var models;
       if (!data.length || !data[0].id) {
