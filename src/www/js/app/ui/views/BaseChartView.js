@@ -9,13 +9,6 @@ define(function(require) {
 
   require('rdust!templates/revenue_by_customer');
 
-  var _chartCache = [];
-  $(window).on('resize.baseChart', debounce(function() {
-    _chartCache.forEach(function(chart) {
-      chart.update();
-    });
-  }, 50));
-
   /**
    * Super class for all chart views
    * @class app.ui.views.BaseChartView
@@ -25,12 +18,15 @@ define(function(require) {
     BaseView.apply(this, arguments);
 
     this.chart = this.createChart();
-    _chartCache.push(this.chart);
     this.mapEvent({
       model: {
         'change.loading': _onChangeLoading.bind(this)
       }
     });
+
+    $(window).on('resize.baseChart'+this.id, debounce(function() {
+      this.updateChart();
+    }.bind(this), 50));
   }, {
     template: 'templates/revenue_by_customer',
     className: 'revenue_by_customer',
@@ -45,8 +41,8 @@ define(function(require) {
       }.bind(this));
     },
     dispose: function() {
+      $(window).off('resize.baseChart'+this.id);
       remove(nv.graphs, this.chart);
-      remove(_chartCache, this.chart);
       return BaseView.prototype.dispose.apply(this, arguments);
     }
   });

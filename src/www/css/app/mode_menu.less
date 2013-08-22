@@ -6,8 +6,7 @@
   height: 64px;
   position: relative;
   .border-highlight;
-  text-align: left;
-  padding-left: 10px;
+  text-align: center;
   cursor: pointer;
   .label {
     display: inline-block;
@@ -22,25 +21,11 @@
     .long-label {
       display: none;
     }
-    &:before {
-      content: '';
-      display: block;
-      position: absolute;
-      width: 0;
-      height: 0;
-      top: 50%;
-      right: -17px;
-      margin-top: -3px;
-      margin-left: -@dropDownArrowWidth;
-      border-left: @dropDownArrowWidth solid transparent;
-      border-right: @dropDownArrowWidth solid transparent;
-      border-top: @dropDownArrowWidth solid #fff;
-    }
     .popover {
-      top: 77%;
-      right: 0;
+      top: 83%;
+      right: 50%;
       margin-bottom: 23px;
-      margin-right: -28px;
+      margin-right: -18px;
       width: 196px;
       &:after {
         border-left: 7px solid rgba(0, 0, 0, 0);
@@ -68,10 +53,23 @@
         display: none;
       }
       .popover {
+        top: 77%;
         margin-right: -35px;
+        right: 0;
       }
       &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 0;
+        height: 0;
+        top: 50%;
         right: -24px;
+        margin-top: -3px;
+        margin-left: -@dropDownArrowWidth;
+        border-left: @dropDownArrowWidth solid transparent;
+        border-right: @dropDownArrowWidth solid transparent;
+        border-top: @dropDownArrowWidth solid #fff;
       }
     }
   }

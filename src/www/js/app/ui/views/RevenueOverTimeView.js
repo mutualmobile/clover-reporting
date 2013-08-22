@@ -52,12 +52,13 @@ define(function(require) {
           .attr('height', '192')
           .attr('width', '110%');
         svg
-          .insert('image', '.nv-lineChart')
+          .insert('image')
           .attr('xlink:href', '/assets/img/graphshadow_top.png')
           .attr('id', 'graph-bottom-shadow')
           .attr('x', '0')
           .attr('y', '192')
           .attr('class', 'extent')
+          .attr('preserveAspectRatio', 'defer none')
           .attr('height', '108')
           .attr('width', '100%');
       }.bind(this), 0);
@@ -65,7 +66,7 @@ define(function(require) {
     updateChart: function() {
       var minTicks = 4,
           elWidth = this.el.width(),
-          maxTicks = Math.round(elWidth / 20),
+          maxTicks = Math.round(elWidth / 30),
           rangeData = timeRangeModel.getRangeData(minTicks, maxTicks),
           maxHeight,
           data;
