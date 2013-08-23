@@ -114,12 +114,19 @@ body {
   border-width: 1px;
   border-style: solid;
 }
-
+.border-highlight-dark {
+  .border-highlight;
+  border-color: #2a2e2f #181b1c #181b1c #2a2e2f;
+}
+.border-highlight-grey {
+  .border-highlight;
+  border-color: #4e565a #2d3133 #2d3133 #4e565a;
+}
 body.hide-header {
   #view-root {
     top: 0;
   }
-  .time-selector {
+  #time-selector {
     display: none;
   }
   #vignette {

@@ -1,69 +1,128 @@
-.view.login {
+.view.login .overflow-scroll {
+
   position: relative;
-  form {
-    display: block;
-    padding: 50px 20px 20px;
-    @media (min-height: @loginModalCutoff) {
-      padding: 20px;
-      background: #f9f9f9; /* Old browsers */
-      background: -moz-linear-gradient(top, #f9f9f9 0%, #d8d8d8 100%); /* FF3.6+ */
-      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9f9f9), color-stop(100%,#d8d8d8)); /* Chrome,Safari4+ */
-      background: -webkit-linear-gradient(top, #f9f9f9 0%,#d8d8d8 100%); /* Chrome10+,Safari5.1+ */
-      background: -o-linear-gradient(top, #f9f9f9 0%,#d8d8d8 100%); /* Opera 11.10+ */
-      background: -ms-linear-gradient(top, #f9f9f9 0%,#d8d8d8 100%); /* IE10+ */
-      background: linear-gradient(to bottom, #f9f9f9 0%,#d8d8d8 100%); /* W3C */
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#d8d8d8',GradientType=0 ); /* IE6-9 */
-      position: absolute;
-      width: 320px;
-      height: 320px;
-      top: 50%;
-      left: 50%;
-      margin-top: -224px;
-      margin-left: -160px;
-      border-radius: 5px;
-      box-shadow: 0px 0px 14px 1px rgba(0, 0, 0, 0.7);
-      color: #444;
-    }
-    @media (min-width: 400px) and (max-height: (@loginModalCutoff - 1)) {
-      max-width: 350px;
-      margin: 0 auto;
-    }
+  color: #FFFFFF;
+  display: block;
+  @media (min-height: @loginModalCutoff) {
+    background-color: #373b3d;
+    border-bottom: 1px solid rgba(0,0,0,.4);
+    position: absolute;
+    width: 346px;
+    height: 293px;
+    top: 50%;
+    left: 50%;
+    margin-top: -224px;
+    margin-left: -173px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
   }
-  h1 {
-    display: none;
-    @media (min-height: @loginModalCutoff) {
-      display: block;
-      margin: 10px 0 20px;
+  @media (min-width: 400px) and (max-height: (@loginModalCutoff - 1)) {
+    max-width: 350px;
+    margin: 0 auto;
+    border-radius: 5px;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
+  }
+  .login-header {
+    height: 112px;
+    padding: 28px 10px 0;
+    position: relative;
+    border-bottom: 1px solid rgba(0,0,0,.4);
+    .horizontal-gradient(#373b3d,#2d3033);
+    h1 {
+      position: relative;
+      font-family: helveticaUltraLight;
+      font-size: 34px;
+      padding: 0;
+      font-weight: normal;
+      letter-spacing: 1px;
       text-align: center;
-      margin: 10px 0 40px;
+      .bold {
+        font-family: helveticaBold;
+        font-weight: normal;
+      }
+    }
+    .version {
+      display: none;
+      float: right;
+      text-transform: uppercase;
+      color: #939393;
+      font-size: 10px;
+      letter-spacing: 1px;
+      margin-right: 10px;
+    }
+    .note {
+      text-transform: uppercase;
+      color: #939393;
+      font-size: 10px;
+      position: absolute;
+      left: 10;
+      bottom: 10px;
+    }
+    @media (min-height: @loginModalCutoff) {
+      padding: 28px 38px 0;
+      .note {
+        left: 38;
+      }
+      .version {
+        display: block;
+        margin-right: 0;
+      }
+      h1 {
+        font-size: 34px;
+        text-align: left;
+      }
     }
   }
-  label {
-    display: block;
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  input {
-    margin-bottom: 15px;
-    border-radius: 3px;
-    border: 1px solid #999;
-    padding: 6px;
-    display: block;
-    width: 100%;
-  }
-  button {
-    display: block;
-    float: right;
-    border-radius: 4px;
-    border: 0;
-    background: #2E9A59;
-    color: white;
-    font-weight: bold;
-    font-size: 14px;
-    padding: 10px 20px;
-    @media (min-height: @loginModalCutoff) {
-      margin-top: 20px;
+  form {
+    .horizontal-gradient(#373b3d,#2d3033);
+    height: 181px;
+    .field {
+      background-color: #474c4f;
+      height: 68px;
+      padding: 0 10px;
+      position: relative;
+      border-top: 1px solid rgba(255,255,255,.1);
+      border-bottom: 1px solid rgba(0,0,0,.4);
+      @media (min-height: @loginModalCutoff) {
+        padding: 0 38px;
+      }
+      label {
+        display: block;
+        font-size: 14px;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        color: #9b9b9b;
+        text-transform: uppercase;
+      }
+      input {
+        border-radius: 3px;
+        border: 0;
+        background-color: transparent;
+        color: #FFFFFF;
+        padding: 0;
+        display: block;
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        font-size: 13px;
+        outline: 0;
+      }
+    }
+    input[type="submit"] {
+      display: block;
+      float: right;
+      border-radius: 4px;
+      border: 0;
+      border-top: 1px solid rgba(255,255,255,.1);
+      border-radius: 0;
+      background: transparent;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      width: 100%;
+      height: 44px;
+      font-family: helveticaBold;
     }
   }
 }

@@ -1,42 +1,42 @@
 <div class="wrapper clearfix">
   {^loading}
     {^error}
-      <div class="info-container border-highlight">
+      <div class="info-container border-highlight-grey">
         <div class="label">
           <div>Total</div>
           <div>Sales</div>
         </div>
         <div class="total-revenue value">{total|cashMoney|s}</div>
       </div>
-      <div class="info-container border-highlight">
+      <div class="info-container border-highlight-grey">
         <div class="label">
           <div>Total</div>
           <div>Drinks</div>
         </div>
         <div class="value">{count}</div>
       </div>
-      <div class="info-container border-highlight">
+      <div class="info-container border-highlight-grey">
         <div class="label">
           <div>Overall Sales</div>
           <div>Percentage</div>
         </div>
         <div class="value">{percent|percent}</div>
       </div>
-      <div class="info-container border-highlight">
+      <div class="info-container border-highlight-grey">
         <div class="label">
           <div>Drinks per</div>
           <div>Order</div>
         </div>
         <div class="value">{drinksPerOrder}</div>
       </div>
-      <div class="info-container border-highlight">
+      <div class="info-container border-highlight-grey">
         <div class="label">
           <div>Sales per</div>
           <div>Hour</div>
         </div>
         <div class="value">{@gt key="{salesPerHour}" value="-1"}{salesPerHour|cashMoney|s}{:else}N/A{/gt}</div>
       </div>
-      <div class="info-container border-highlight">
+      <div class="info-container border-highlight-grey">
         <div class="label">
           <div>Drinks per</div>
           <div>Hour</div>
