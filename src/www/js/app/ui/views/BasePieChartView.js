@@ -28,7 +28,7 @@ define(function(require) {
         'mouseenter': _enterCircle.bind(this),
         'mouseleave': _exitCircle.bind(this)
       },
-      '.see-more': {
+      '.popover-see-more': {
         'tap': this.onTapSeeMore.bind(this)
       },
       model: {
