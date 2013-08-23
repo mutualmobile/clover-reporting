@@ -8,7 +8,7 @@ define(function(require) {
       transition = require('lavaca/fx/Transition'),
       transform = require('lavaca/fx/Transform');
 
-  var _MOVE_THRESHOLD = 15,
+  var _MOVE_THRESHOLD = 20,
       _TRANSITION_PROP = transition.cssProperty(),
       _TRANSITION_DURATION_PROP = _TRANSITION_PROP + '-duration',
       _TRANSITION_END_PROP = transition.transitionEndProperty(),
@@ -37,11 +37,8 @@ define(function(require) {
     onRenderSuccess: function() {
       BaseView.prototype.onRenderSuccess.apply(this, arguments);
       this.leftClock = this.el.find('.clock.left');
-      this.leftLongHand = this.leftClock.find('.long');
-      this.leftShortHand = this.leftClock.find('.short');
       this.rightClock = this.el.find('.clock.right');
-      this.rightLongHand = this.rightClock.find('.long');
-      this.rightShortHand = this.rightClock.find('.short');
+      this.clocks = this.el.find('.clock');
     }
   });
 
@@ -77,8 +74,9 @@ define(function(require) {
     this.moved = false;
     this.startX = 0;
     this.startY = 0;
+    this.currentX = 0;
+    this.currentY = 0;
     this.translateX = 0;
-    this.container.find('.overflow-scroll').removeClass('disbale');
     _setTransitionDuration.call(this, 500);
     _translate.call(this, 0);
   }
@@ -94,11 +92,19 @@ define(function(require) {
   }
 
   function _translate(x) {
-    var clockModifier = x * 3;
-    this.rightLongHand.css(_TRANSFORM_PROP, 'rotate(' + -(clockModifier) + 'deg)');
-    this.leftLongHand.css(_TRANSFORM_PROP, 'rotate(' + -(clockModifier) + 'deg)');
-    this.rightShortHand.css(_TRANSFORM_PROP, 'rotate(' + -(clockModifier/10) + 'deg)');
-    this.leftShortHand.css(_TRANSFORM_PROP, 'rotate(' + -(clockModifier/10) + 'deg)');
+    var absoluteX = Math.abs(x);
+    if (absoluteX < 50) {
+      this.clocks.css(_TRANSITION_DURATION_PROP, '0');
+      this.leftClock
+        .css(_TRANSFORM_PROP, 'translateX(' + (x - 50) + 'px) rotate(180deg)');
+      this.rightClock
+        .css(_TRANSFORM_PROP, 'translateX(' + (x + 50) + 'px) rotate(180deg)');
+      
+    } else {
+      this.clocks
+        .css(_TRANSITION_DURATION_PROP, '300ms')
+        .css(_TRANSFORM_PROP, 'translateX(0px) rotate(0deg)');
+    }
     this.container.css(_TRANSFORM_PROP, 'translate3d(' + x + 'px, 0, 0)');
   }
 
