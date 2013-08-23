@@ -102,7 +102,6 @@ body {
 .view h1 {
   font-size: 2em;
   padding: 10px 20px .5em;
-  color: #5d798f;
   font-weight: bold;
   font-family: 'Helvetica Bold', Helvetica, 'Arial Bold', Arial, sans-serif;
 }
@@ -111,9 +110,21 @@ body {
   line-height: 1.4em;
 }
 .border-highlight {
-  border-color: rgba(255,255,255,.05) rgba(0,0,0,.2) rgba(0,0,0,.2) rgba(255,255,255,.05);
+  border-color: #383c3e #26292b #26292b #383c3e;
   border-width: 1px;
   border-style: solid;
+}
+
+body.hide-header {
+  #view-root {
+    top: 0;
+  }
+  .time-selector {
+    display: none;
+  }
+  #vignette {
+    display: none;
+  }
 }
 @font-face {
   font-family: helveticaUltraLight;

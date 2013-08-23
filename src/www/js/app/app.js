@@ -1,11 +1,8 @@
 define(function(require) {
-  var History = require('lavaca/net/History'),
-      DashboardController = require('app/net/DashboardController'),
-      Detection = require('lavaca/env/Detection'),
+  var DashboardController = require('app/net/DashboardController'),
       Connectivity = require('lavaca/net/Connectivity'),
       Application = require('lavaca/mvc/Application'),
       Translation = require('lavaca/util/Translation'),
-      $ = require('$'),
       TimeSelectorView = require('app/ui/views/TimeSelectorView'),
       TimeSwiperView = require('app/ui/views/TimeSwiperView'),
       timeRangeModel = require('app/models/TimeRangeModel');
@@ -30,7 +27,9 @@ define(function(require) {
       '/': [DashboardController, 'dashboard'],
       '/zoom': [DashboardController, 'zoom'],
       '/employees': [DashboardController, 'employees'],
-      '/products': [DashboardController, 'products']
+      '/products': [DashboardController, 'products'],
+      '/login': [DashboardController, 'login'],
+      '/logout': [DashboardController, 'logout']
     });
 
     // Initialize translations

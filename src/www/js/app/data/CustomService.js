@@ -1,6 +1,7 @@
 define(function(require) {
 
-  var Service = require('app/data/Service');
+  var Service = require('app/data/Service'),
+      localStore = require('app/cache/localStore');
 
   var CustomService = Service.extend(function CustomService() {
     Service.apply(this, arguments);
@@ -20,6 +21,15 @@ define(function(require) {
     },
     getProductDataForDateRange: function(startTime, endTime) {
       return _makeRequest.call(this, startTime, endTime, 'product-data');
+    },
+    defaultAjaxOptions: {
+      beforeSend: function(xhr) {
+        var merchantId = localStore.get('merchantId'),
+            accessToken = localStore.get('accessToken');
+
+        xhr.setRequestHeader('x-clover-merchant-id', merchantId);
+        xhr.setRequestHeader('x-clover-access-token', accessToken);
+      }
     }
   });
 

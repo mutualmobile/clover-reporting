@@ -15,7 +15,7 @@ function allCategories(req, res) {
     req.allCategories = deferred.promise;
   }
 
-  shared.makeRequest('/v2/merchant/RZC2F4FMKFJ12/inventory/categories', req.query).then(function(data) {
+  shared.makeRequest('inventory/categories', req).then(function(data) {
     var categories = data && data.categories ? data.categories : [],
         collection = shared.db.collection('categories'),
         fetchPromises = [],
@@ -30,7 +30,7 @@ function allCategories(req, res) {
           if (item && item.custom_last_updated > cacheThreshold) {
             deferred.resolve(item);
           } else {
-            shared.makeRequest('/v2/merchant/RZC2F4FMKFJ12/inventory/categories/' + category.id).then(function(data) {
+            shared.makeRequest('inventory/categories/' + category.id, req).then(function(data) {
               var fullCategory = data && data.category ? data.category : null;
               if (fullCategory) {
                 fullCategory.custom_last_updated = Date.now();

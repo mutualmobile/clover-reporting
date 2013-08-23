@@ -38,6 +38,8 @@ define(function(require) {
         'rangeUpdate': _onChangeModel.bind(this)
       }
     });
+    stateModel.on('change', 'hideHeader', _onChangeHidden.bind(this));
+    _onChangeHidden.call(this);
     this.render();
   }, {
     template: 'templates/time_selector',
@@ -60,6 +62,15 @@ define(function(require) {
         mode = this.model.get('mode'),
         newStart = start.subtract(mode, 1);
     router.exec('/zoom', null, {startTime: newStart.valueOf(), endTime: newStart.endOf(mode).valueOf()});
+  }
+
+  function _onChangeHidden() {
+    var hide = stateModel.get('hideHeader');
+    if (hide) {
+      $(document.body).addClass('hide-header');
+    } else {
+      $(document.body).removeClass('hide-header');
+    }
   }
 
   return TimeSelectorView;

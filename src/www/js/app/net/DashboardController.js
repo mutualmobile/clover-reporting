@@ -4,8 +4,10 @@ define(function(require) {
       DashboardView = require('app/ui/pageviews/DashboardView'),
       EmployeesView = require('app/ui/pageviews/EmployeesView'),
       ProductsView = require('app/ui/pageviews/ProductsView'),
+      LoginView = require('app/ui/pageviews/LoginView'),
       Model = require('lavaca/mvc/Model'),
       Promise = require('lavaca/util/Promise'),
+      localStore = require('app/cache/localStore'),
       timeRangeModel = require('app/models/TimeRangeModel'),
       moment = require('moment');
 
@@ -37,6 +39,16 @@ define(function(require) {
       return this
         .view(null, ProductsView, new Model())
         .then(this.updateState(model, 'Products', params.url));
+    },
+    login: function(params, model) {
+      return this
+        .view(null, LoginView, new Model())
+        .then(this.updateState(model, 'Login', params.url));
+    },
+    logout: function() {
+      localStore.remove('merchantId');
+      localStore.remove('accessToken');
+      return this.redirect('/login');
     },
     zoom: function(params, model) {
       if (params.startTime && params.endTime) {

@@ -6,6 +6,7 @@ define(function(require) {
       Connectivity = require('lavaca/net/Connectivity'),
       hash = require('app/misc/hash'),
       $ = require('jquery'),
+      merge = require('mout/object/merge'),
       StringUtils = require('lavaca/util/StringUtils');
 
   /**
@@ -45,6 +46,7 @@ define(function(require) {
      * @type String
      */
     artificialDelayKey: 'artificial_network_delay',
+    defaultAjaxOptions: {},
     /**
      * Makes a service request and returns a promise that will be
      * resolved with the data if the request succeeds.
@@ -95,49 +97,49 @@ define(function(require) {
         return promise.reject();
       }
 
-      var dataHash;
-
-      var ajax = $.ajax({
-        url: url,
-        dataType: 'json',
-        type: type,
-        data: data,
-        contentType: 'application/json',
-        dataFilter: function(data, type) {
-          // An empty string is technically invalid JSON
-          // so jQuery will fail to parse it and our promise
-          // will get rejected unless we first convert
-          // it to valid JSON
-          if (data === '' && type === 'json') {
-            return 'null';
-          }
-          dataHash = hash(data);
-          return data;
-        },
-        success: function(response, status) {
-          if (status === 'success') {
-            if (useMock && artificialDelay) {
-              setTimeout(function() {
-                promise.resolve(response, dataHash);
-              }, artificialDelay);
-            } else {
-              promise.resolve(response, dataHash);
+      var dataHash,
+          ajaxOptions = merge({}, this.defaultAjaxOptions, {
+            url: url,
+            dataType: 'json',
+            type: type,
+            data: data,
+            contentType: 'application/json',
+            dataFilter: function(data, type) {
+              // An empty string is technically invalid JSON
+              // so jQuery will fail to parse it and our promise
+              // will get rejected unless we first convert
+              // it to valid JSON
+              if (data === '' && type === 'json') {
+                return 'null';
+              }
+              dataHash = hash(data);
+              return data;
+            },
+            success: function(response, status) {
+              if (status === 'success') {
+                if (useMock && artificialDelay) {
+                  setTimeout(function() {
+                    promise.resolve(response, dataHash);
+                  }, artificialDelay);
+                } else {
+                  promise.resolve(response, dataHash);
+                }
+              } else {
+                promise.reject(response);
+              }
+            },
+            error: function() {
+              var args = Array.prototype.slice.call(arguments, 0);
+              if (useMock && artificialDelay) {
+                setTimeout(function() {
+                  promise.reject.apply(promise, args);
+                }, artificialDelay);
+              } else {
+                promise.reject.apply(promise, args);
+              }
             }
-          } else {
-            promise.reject(response);
-          }
-        },
-        error: function() {
-          var args = Array.prototype.slice.call(arguments, 0);
-          if (useMock && artificialDelay) {
-            setTimeout(function() {
-              promise.reject.apply(promise, args);
-            }, artificialDelay);
-          } else {
-            promise.reject.apply(promise, args);
-          }
-        }
-      });
+          }),
+          ajax = $.ajax(ajaxOptions);
 
       // If the promise is rejected, abort the ajax
       // request. This allows for manually aborting

@@ -15,7 +15,7 @@ function orderOverview(req, res) {
     req.orderOverview = deferred.promise;
   }
 
-  shared.makeRequest('/v2/merchant/RZC2F4FMKFJ12/orders', req.query).then(function() {
+  shared.makeRequest('orders', req).then(function() {
     if (res) {
       res.send.apply(res, arguments);
     }

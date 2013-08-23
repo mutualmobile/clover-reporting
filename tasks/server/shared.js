@@ -6,7 +6,7 @@ var https = require('https'),
     Db = mongo.Db,
     RateLimiter = require('limiter').RateLimiter;
 
-var accessToken = '8b8a19c5-1b13-dcbd-c9b3-36e3b24eccea',
+var baseURL = '/v2/merchant/',
     server = new Server('localhost', 27017, {auto_reconnect: true}),
     db = new Db('clover', server, {w: 'acknowledged'}),
     limiter = new RateLimiter(13, 'second');
@@ -23,19 +23,28 @@ function extend(target) {
   return target;
 }
 
-function makeRequest(path, query) {
+function makeRequest(path, req) {
   var options = {
         hostname: 'api.clover.com',
         port: 443,
         path: path,
         method: 'GET'
       },
+      query,
       deferred = Q.defer();
 
-  query = query || {};
-  query.access_token = accessToken;
+  if (!req) {
+    deferred.reject();
+    return deferred.promise;
+  } else if (!req.get) {
+    console.trace('no get');
+    console.log(req);
+  }
+
+  query = req.query || {};
+  query.access_token = req.get('x-clover-access-token');
   query.count = 999999999;
-  options.path = options.path + url.format({query: query});
+  options.path = baseURL + req.get('x-clover-merchant-id') + '/' + options.path + url.format({query: query});
 
   limiter.removeTokens(1, function() {
     https.get(options, function(apiRes) {
@@ -50,7 +59,7 @@ function makeRequest(path, query) {
       apiRes.on('end', function() {
         var data = null;
         if (apiRes.statusCode === 429) { // rate limited
-          deferred.resolve(makeRequest(path, query));
+          deferred.resolve(makeRequest(path, req));
         } else {
           try {
             data = JSON.parse(output);

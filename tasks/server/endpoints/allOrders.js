@@ -15,7 +15,7 @@ function allOrders(req, res) {
     req.allOrders = deferred.promise;
   }
 
-  shared.makeRequest('/v2/merchant/RZC2F4FMKFJ12/orders', req.query).then(function(data) {
+  shared.makeRequest('orders', req).then(function(data) {
     var orders = data && data.orders ? data.orders : [],
         collection = shared.db.collection('orders'),
         fetchPromises = [];
@@ -31,7 +31,7 @@ function allOrders(req, res) {
           if (item && item.modified === order.modified) {
             deferred.resolve(item);
           } else {
-            shared.makeRequest('/v2/merchant/RZC2F4FMKFJ12/orders/' + order.id).then(function(data) {
+            shared.makeRequest('orders/' + order.id, req).then(function(data) {
               var fullOrder = data && data.order ? data.order : null;
               if (fullOrder) {
                 fullOrder = shared.extend({}, order, fullOrder);

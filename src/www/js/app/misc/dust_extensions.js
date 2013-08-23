@@ -49,7 +49,7 @@ define(function(require) {
   dust.filters.cashMoney = function(value) {
     // value is in cents
     if (value > 99999) {
-      return '<span class="dollar light">$</span>' + _addCommas(value / 100000) + '<span class="light">K</span>';
+      return '<span class="dollar light">$</span>' + _addCommas(value / 100000, 2) + '<span class="light">K</span>';
     } else {
       value = _addCommas(value / 100, 2);
       value = (''+value).split('.');
