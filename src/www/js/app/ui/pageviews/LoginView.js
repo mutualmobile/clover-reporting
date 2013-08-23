@@ -14,8 +14,11 @@ define(function(require) {
   var LoginView = BasePageView.extend(function LoginView() {
     BasePageView.apply(this, arguments);
     this.mapEvent({
-      form: {
-        submit: _onFormSubmit.bind(this)
+      'button': {
+        tap: _onFormSubmit.bind(this)
+      },
+      'input': {
+        keypress: _onFormSubmit.bind(this)
       }
     });
   }, {
@@ -24,16 +27,17 @@ define(function(require) {
   });
 
   function _onFormSubmit(e) {
-    var $form = $(e.currentTarget),
+    var $form = $(e.currentTarget).parents('form'),
         merchantId = $form.find('#merchant-id').val().trim(),
         accessToken = $form.find('#access-token').val().trim();
-
-    if (merchantId && accessToken) {
-      localStore.set('merchantId', merchantId);
-      localStore.set('accessToken', accessToken);
-      router.exec('/');
+    if (e.type !== 'keypress' || (e.keyCode && e.keyCode === 13)) {
+      if (merchantId && accessToken) {
+        localStore.set('merchantId', merchantId);
+        localStore.set('accessToken', accessToken);
+        router.exec('/');
+      }
+      e.preventDefault();
     }
-    e.preventDefault();
   }
 
   return LoginView;
