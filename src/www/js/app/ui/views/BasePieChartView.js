@@ -1,7 +1,7 @@
 define(function(require) {
 
   var BaseChartView = require('./BaseChartView'),
-      debounce = require('mout/function/debounce'),
+      debounce = require('app/misc/debounce'),
       d3 = require('d3'),
       nv = require('nv'),
       $ = require('jquery');
@@ -40,7 +40,7 @@ define(function(require) {
       }
     });
 
-    this.updateLegend = debounce(_redrawLegend.bind(this), 0);
+    this.updateLegend = debounce(_redrawLegend, this, 0);
   }, {
     template: 'templates/base_pie',
     className: 'base_pie',

@@ -6,7 +6,7 @@ define(function(require) {
       SmallFilteredRevenueByEmployeeView = require('app/ui/views/SmallFilteredRevenueByEmployeeView'),
       FilteredRevenueByEmployeeView = require('app/ui/views/FilteredRevenueByEmployeeView'),
       MetricsDetailView = require('app/ui/views/MetricsDetailView'),
-      debounce = require('mout/function/debounce');
+      debounce = require('app/misc/debounce');
 
   require('rdust!templates/detail');
 
@@ -42,7 +42,7 @@ define(function(require) {
 
     this.mapEvent({
       model: {
-        change: debounce(_onChange.bind(this), 0)
+        change: debounce(_onChange, this, 0)
       }
     });
     this.render();

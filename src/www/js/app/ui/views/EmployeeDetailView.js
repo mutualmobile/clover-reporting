@@ -7,7 +7,7 @@ define(function(require) {
       SmallRevenueByCategoryView = require('app/ui/views/SmallRevenueByCategoryView'),
       FilteredRevenueOverTimeFullView = require('app/ui/views/FilteredRevenueOverTimeFullView'),
       MetricsDetailView = require('app/ui/views/MetricsDetailView'),
-      debounce = require('mout/function/debounce');
+      debounce = require('app/misc/debounce');
 
   /**
    * Employee Detail View
@@ -41,7 +41,7 @@ define(function(require) {
 
     this.mapEvent({
       model: {
-        change: debounce(_onChange.bind(this), 0)
+        change: debounce(_onChange, this, 0)
       }
     });
     this.render();

@@ -1,7 +1,7 @@
 define(function(require) {
 
   var BaseChartView = require('./BaseChartView'),
-      debounce = require('mout/function/debounce'),
+      debounce = require('app/misc/debounce'),
       Translation = require('lavaca/util/Translation'),
       router = require('lavaca/mvc/Router'),
       d3 = require('d3'),

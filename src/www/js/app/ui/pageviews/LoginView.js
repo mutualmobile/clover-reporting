@@ -2,6 +2,7 @@ define(function(require) {
 
   var BasePageView = require('./BasePageView'),
       localStore = require('app/cache/localStore'),
+      stateModel = require('app/models/StateModel'),
       $ = require('jquery'),
       router = require('lavaca/mvc/Router');
   require('rdust!templates/login');
@@ -19,12 +20,22 @@ define(function(require) {
       },
       'input': {
         keypress: _onFormSubmit.bind(this)
+      },
+      'self': {
+        touchmove: _onTouchmove
+      },
+      'form': {
+        submit: _onFormSubmit.bind(this)
       }
     });
   }, {
     template: 'templates/login',
     className: 'login'
   });
+
+  function _onTouchmove(e) {
+    e.stopPropagation();
+  }
 
   function _onFormSubmit(e) {
     var $form = $(e.currentTarget).parents('form'),
@@ -34,6 +45,7 @@ define(function(require) {
       if (merchantId && accessToken) {
         localStore.set('merchantId', merchantId);
         localStore.set('accessToken', accessToken);
+        stateModel.set('loggedIn', true);
         router.exec('/');
       }
       e.preventDefault();

@@ -15,7 +15,7 @@ define(function(require) {
     }, {
     exec: function(action, params) {
       var url = params.url;
-      if (url === '/login' || (localStore.get('merchantId') && localStore.get('accessToken'))) {
+      if (url === '/login' || url === '/zoom' || (localStore.get('merchantId') && localStore.get('accessToken'))) {
         return Controller.prototype.exec.apply(this, arguments);
       }
       return this.redirect('/login');

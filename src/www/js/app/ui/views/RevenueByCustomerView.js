@@ -1,7 +1,7 @@
 define(function(require) {
 
   var BaseChartView = require('./BaseChartView'),
-      debounce = require('mout/function/debounce'),
+      debounce = require('app/misc/debounce'),
       d3 = require('d3'),
       nv = require('nv');
 

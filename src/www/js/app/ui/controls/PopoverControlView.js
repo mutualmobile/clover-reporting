@@ -1,7 +1,7 @@
 define(function(require) {
 
   var BaseView = require('app/ui/views/BaseView'),
-      debounce = require('mout/function/debounce'),
+      debounce = require('app/misc/debounce'),
       $ = require('$');
 
   /**
@@ -12,7 +12,7 @@ define(function(require) {
    */
   var PopoverControlView = BaseView.extend(function PopoverControlView() {
     BaseView.apply(this, arguments);
-    var debouncedChangeHandler = debounce(this.updateMenu.bind(this), 0);
+    var debouncedChangeHandler = debounce(this.updateMenu, this, 0);
     this.mapEvent({
       self: {
         tap: _onTapPageMenu.bind(this)

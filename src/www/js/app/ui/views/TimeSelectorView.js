@@ -38,12 +38,17 @@ define(function(require) {
         'rangeUpdate': _onChangeModel.bind(this)
       }
     });
-    stateModel.on('change', 'hideHeader', _onChangeHidden.bind(this));
+    this._hideHeaderChangeHandler = _onChangeHidden.bind(this);
+    stateModel.on('change', 'hideHeader', this._hideHeaderChangeHandler);
     _onChangeHidden.call(this);
     this.render();
   }, {
     template: 'templates/time_selector',
-    className: 'time_selector'
+    className: 'time_selector',
+    dispose: function() {
+      stateModel.off('change', this._hideHeaderChangeHandler);
+      return BaseView.prototype.dispose.apply(this, arguments);
+    }
   });
 
   function _onChangeModel() {

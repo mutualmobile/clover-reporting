@@ -1,7 +1,7 @@
 define(function(require) {
 
   var BaseView = require('./BaseView'),
-      debounce = require('mout/function/debounce');
+      debounce = require('app/misc/debounce');
   require('rdust!templates/pie_popover');
 
   /**
@@ -12,7 +12,7 @@ define(function(require) {
   var PieChartPopoverView = BaseView.extend(function PieChartPopoverView() {
     BaseView.apply(this, arguments);
 
-    var debouncedChangeHandler = debounce(_redraw.bind(this), 0);
+    var debouncedChangeHandler = debounce(_redraw, this, 0);
     this.mapEvent({
       model: {
         addItem: debouncedChangeHandler,

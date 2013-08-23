@@ -3,7 +3,7 @@ define(function(require) {
   var BaseView = require('./BaseView'),
       $ = require('jquery'),
       remove = require('mout/array/remove'),
-      debounce = require('mout/function/debounce'),
+      debounce = require('app/misc/debounce'),
       d3 = require('d3'),
       nv = require('nv');
 
@@ -36,7 +36,9 @@ define(function(require) {
     onRenderSuccess: function() {
       BaseView.prototype.onRenderSuccess.apply(this, arguments);
       nv.addGraph(function() {
-        this.updateChart();
+        if (this.model) {
+          this.updateChart();
+        }
         return this.chart;
       }.bind(this));
     },

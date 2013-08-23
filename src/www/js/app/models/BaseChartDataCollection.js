@@ -2,6 +2,7 @@ define(function(require) {
   var Collection = require('lavaca/mvc/Collection'),
       timeRangeModel = require('app/models/TimeRangeModel'),
       clone = require('mout/lang/clone'),
+      stateModel = require('app/models/StateModel'),
       remove = require('mout/array/remove');
 
   var BaseChartDataCollection = Collection.extend(function BaseChartDataCollection() {
@@ -12,14 +13,16 @@ define(function(require) {
       startTime: timeRangeModel.get('startTime'),
       endTime: timeRangeModel.get('endTime')
     });
-    this._externalBoundHandler = _fetch.bind(this);
-    timeRangeModel.on('rangeUpdate', this._externalBoundHandler);
+    this._rangeUpdateHandler = _fetch.bind(this);
+    timeRangeModel.on('rangeUpdate', this._rangeUpdateHandler);
+    this._loggedInChangeHandler = _onChangeLoggedIn.bind(this);
+    stateModel.on('change', 'loggedIn', this._loggedInChangeHandler);
   }, {
     fetch: null,
     fetchDelay: 30000,
     applyNewData: function(data) {
       var models;
-      if (!data.length || !data[0].id) {
+      if (!data || !data.length || !data[0].id) {
         this.clearModels();
         this.add(data);
       } else {
@@ -59,20 +62,21 @@ define(function(require) {
       }
     },
     dispose: function() {
-      timeRangeModel.off('rangeUpdate', this._externalBoundHandler);
+      timeRangeModel.off('rangeUpdate', this._rangeUpdateHandler);
+      stateModel.off('change', this._loggedInChangeHandler);
       return Collection.prototype.dispose.apply(this, arguments);
     }
   });
 
-  // Private functions
   function _fetch() {
     var startTime = timeRangeModel.get('startTime'),
         endTime = timeRangeModel.get('endTime');
 
-    clearTimeout(this._fetchTimeout);
-    if (this._lastFetch) {
-      this._lastFetch.reject('abort');
+    _cancel.call(this);
+    if (!stateModel.get('loggedIn')) {
+      return;
     }
+
     this._lastFetch = this.fetch(startTime, endTime)
       .then(function(data, hash) {
         var currentStartTime = this.get('startTime'),
@@ -100,6 +104,27 @@ define(function(require) {
         this.set('loading', false);
         this._fetchTimeout = setTimeout(_fetch.bind(this), this.fetchDelay);
       }.bind(this));
+  }
+
+  function _onChangeLoggedIn(e) {
+    if (e.value) {
+      _fetch.call(this);
+    } else {
+      _reset.call(this);
+    }
+  }
+
+  function _cancel() {
+    clearTimeout(this._fetchTimeout);
+    if (this._lastFetch) {
+      this._lastFetch.reject('abort');
+    }
+  }
+
+  function _reset() {
+    _cancel.call(this);
+    this._lastHash = null;
+    // this.clearModels();
   }
 
   return BaseChartDataCollection;

@@ -9,6 +9,7 @@ define(function(require) {
       Promise = require('lavaca/util/Promise'),
       localStore = require('app/cache/localStore'),
       timeRangeModel = require('app/models/TimeRangeModel'),
+      stateModel = require('app/models/StateModel'),
       moment = require('moment');
 
   /**
@@ -48,6 +49,7 @@ define(function(require) {
     logout: function() {
       localStore.remove('merchantId');
       localStore.remove('accessToken');
+      stateModel.set('loggedIn', false);
       return this.redirect('/login');
     },
     zoom: function(params, model) {

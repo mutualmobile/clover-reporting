@@ -31,6 +31,8 @@ define(function(require) {
           bucketedValues,
           data;
 
+      if (!this.model) {return;}
+
       // Filter and bucket values
       if (this.parentView && this.parentView.model.filterCollectionItem) {
         filter = this.parentView.model.filterCollectionItem.bind(this.parentView.model);
