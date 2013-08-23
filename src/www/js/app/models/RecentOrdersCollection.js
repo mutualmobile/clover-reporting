@@ -1,7 +1,7 @@
 define(function(require) {
   var Promise = require('lavaca/util/Promise'),
       BaseChartDataCollection = require('app/models/BaseChartDataCollection'),
-      OrdersService = require('app/data/OrdersService');
+      CustomService = require('app/data/CustomService');
 
   var _HOUR = 1000 * 60 * 60,
       _MIN_DURATION = 1000 * 60 * 10;
@@ -18,7 +18,7 @@ define(function(require) {
   }, {
     fetch: function() {
       var promise = new Promise();
-      OrdersService.getOrdersForDateRange.apply(OrdersService, arguments).then(function(data, hash) {
+      CustomService.getOrdersForDateRange.apply(CustomService, arguments).then(function(data, hash) {
         var orders = [];
         if (data && data.orders) {
           orders = data.orders;

@@ -6,35 +6,30 @@ define(function(require) {
     Service.apply(this, arguments);
   }, {
     apiURLKey: 'custom_api_url',
+    getOrdersForDateRange: function(startTime, endTime) {
+      return _makeRequest.call(this, startTime, endTime, 'orders');
+    },
     getRevenueByItemForDateRange: function(startTime, endTime) {
-      var opts = {
-        start_time: startTime.valueOf(),
-        end_time: endTime.valueOf()
-      };
-      return this.makeRequest('revenue-by-item', opts);
+      return _makeRequest.call(this, startTime, endTime, 'revenue-by-item');
     },
     getRevenueByCategoryForDateRange: function(startTime, endTime) {
-      var opts = {
-        start_time: startTime.valueOf(),
-        end_time: endTime.valueOf()
-      };
-      return this.makeRequest('revenue-by-category', opts);
+      return _makeRequest.call(this, startTime, endTime, 'revenue-by-category');
     },
     getEmployeeDataForDateRange: function(startTime, endTime) {
-      var opts = {
-        start_time: startTime.valueOf(),
-        end_time: endTime.valueOf()
-      };
-      return this.makeRequest('employee-data', opts);
+      return _makeRequest.call(this, startTime, endTime, 'employee-data');
     },
     getProductDataForDateRange: function(startTime, endTime) {
-      var opts = {
-        start_time: startTime.valueOf(),
-        end_time: endTime.valueOf()
-      };
-      return this.makeRequest('product-data', opts);
+      return _makeRequest.call(this, startTime, endTime, 'product-data');
     }
   });
+
+  function _makeRequest(startTime, endTime, url) {
+    var opts = {
+      start_time: startTime.valueOf(),
+      end_time: endTime.valueOf()
+    };
+    return this.makeRequest(url, opts);
+  }
 
   return new CustomService();
 });
