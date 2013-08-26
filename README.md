@@ -58,7 +58,13 @@ Clover Dasboard - Reporting App
 
         $ npm install -g forever
 
-3. __Run Production Server__
+3. __Run MongoDB Server__
+
+    If you have not set your MongoDB server to run at startup, you'll need to run it manually.
+
+        $ mongod
+
+4. __Run Production Server__
 
         $ forever start index.js
 
