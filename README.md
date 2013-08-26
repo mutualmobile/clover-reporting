@@ -6,23 +6,27 @@ Clover Dasboard - Reporting App
 ## Setup Local Environment
 
 1. __Get the code__
+
 ```bash
 $ mkdir [clover_app] && cd [clover_app]
 $ git clone https://stash.r.mutualmobile.com/scm/clov/clover.git .
 ```
 
 2. __Install grunt-cli globally__
+
 Note: this may require sudo
 ```bash
 $ npm install -g grunt-cli
 ```
 
 3. __Install dev dependencies for our tasks to work__
+
 ```bash
 $ npm install
 ```
 
 4. __Start Development Server__
+
 ```bash
 $ grunt
 ```
@@ -31,39 +35,46 @@ Your application should now be running on `localhost:8080`.
 ## Deploying to Production
 
 1. __Install NodeJS__
+
 Instructions: https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#ubuntu-mint
 
 2. __Get the code__
+
 ```bash
 $ mkdir var/node/[clover_app] && cd var/node/[clover_app]
 $ git clone https://stash.r.mutualmobile.com/scm/clov/clover.git .
 ```
 
 3. __Install grunt-cli globally__
+
 Note: this may require sudo
 ```bash
 $ npm install -g grunt-cli
 ```
 
 4. __Install dev dependencies for our tasks to work__
+
 Note: this may require sudo
 ```bash
 $ npm install
 ```
 
 5. __Build Production__
+
 Note: this may require sudo
 ```bash
 $ npm build:production
 ```
 
 6. __Install Forever for Production Server__
+
 Note: this may require sudo
 ```bash
 $ npm install -g forever
 ```
 
 7. __Run Production Server__
+
 Note: this may require sudo
 ```bash
 $ forever start index.js
