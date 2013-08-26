@@ -1,7 +1,7 @@
 define(function(require) {
 
   var BaseChartView = require('./BaseChartView'),
-      debounce = require('app/misc/debounce'),
+      batchCalls = require('app/misc/batch_calls'),
       Translation = require('lavaca/util/Translation'),
       router = require('lavaca/mvc/Router'),
       d3 = require('d3'),
@@ -21,14 +21,14 @@ define(function(require) {
   var RevenueOverTimeView = BaseChartView.extend(function() {
     BaseChartView.apply(this, arguments);
 
-    var debouncedChangeHandler = debounce(this.updateChart.bind(this), 0);
+    var batchedChangeHandler = batchCalls(this.updateChart, this);
     this.mapEvent({
       model: {
-        addItem: debouncedChangeHandler,
-        removeItem: debouncedChangeHandler,
-        'dataChange': debouncedChangeHandler,
-        'change.startTime': debouncedChangeHandler,
-        'change.endTime': debouncedChangeHandler
+        addItem: batchedChangeHandler,
+        removeItem: batchedChangeHandler
+        // 'dataChange': batchedChangeHandler
+        // 'change.startTime': batchedChangeHandler,
+        // 'change.endTime': batchedChangeHandler
       },
       '.nvtooltip': {
         'tap': _onTapTooltipButton.bind(this)
@@ -67,11 +67,15 @@ define(function(require) {
       var minTicks = 4,
           elWidth = this.el.width(),
           maxTicks = Math.round(elWidth / 30),
-          rangeData = timeRangeModel.getRangeData(minTicks, maxTicks),
+          rangeData,
           maxHeight,
           data;
       // Remove tooldtips
       nv.tooltip.cleanup();
+
+      if (!elWidth) { return; }
+
+      rangeData = timeRangeModel.getRangeData(minTicks, maxTicks);
 
       this.key = rangeData.key;
 

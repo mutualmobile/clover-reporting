@@ -124,7 +124,7 @@ define(function(require) {
   function _reset() {
     _cancel.call(this);
     this._lastHash = null;
-    // this.clearModels();
+    this.clearModels();
   }
 
   return BaseChartDataCollection;

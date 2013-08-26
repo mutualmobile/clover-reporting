@@ -3,7 +3,7 @@ define(function(require) {
   var BaseView = require('./BaseView'),
       $ = require('jquery'),
       remove = require('mout/array/remove'),
-      debounce = require('app/misc/debounce'),
+      debounce = require('mout/function/debounce'),
       d3 = require('d3'),
       nv = require('nv');
 

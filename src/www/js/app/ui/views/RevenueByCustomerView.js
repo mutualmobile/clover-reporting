@@ -1,7 +1,7 @@
 define(function(require) {
 
   var BaseChartView = require('./BaseChartView'),
-      debounce = require('app/misc/debounce'),
+      batchCalls = require('app/misc/batch_calls'),
       d3 = require('d3'),
       nv = require('nv');
 
@@ -16,12 +16,12 @@ define(function(require) {
   var RevenueByCustomerView = BaseChartView.extend(function RevenueByCustomerView() {
     BaseChartView.apply(this, arguments);
 
-    var debouncedChangeHandler = debounce(this.updateChart.bind(this), 0);
+    var batchedChangeHandler = batchCalls(this.updateChart, this);
     this.mapEvent({
       model: {
-        addItem: debouncedChangeHandler,
-        removeItem: debouncedChangeHandler,
-        dataChange: debouncedChangeHandler
+        addItem: batchedChangeHandler,
+        removeItem: batchedChangeHandler,
+        dataChange: batchedChangeHandler
       }
     });
     this.render();

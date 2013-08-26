@@ -1,7 +1,7 @@
 define(function(require) {
 
   var BaseView = require('app/ui/views/BaseView'),
-      debounce = require('app/misc/debounce'),
+      batchCalls = require('app/misc/batch_calls'),
       $ = require('$');
 
   /**
@@ -12,13 +12,13 @@ define(function(require) {
    */
   var PopoverControlView = BaseView.extend(function PopoverControlView() {
     BaseView.apply(this, arguments);
-    var debouncedChangeHandler = debounce(this.updateMenu, this, 0);
+    var batchedChangeHandler = batchCalls(this.updateMenu, this);
     this.mapEvent({
       self: {
         tap: _onTapPageMenu.bind(this)
       },
       model: {
-        change: debouncedChangeHandler
+        change: batchedChangeHandler
       }
     });
     this.render();

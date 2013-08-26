@@ -1,7 +1,7 @@
 define(function(require) {
 
   var BaseView = require('./BaseView'),
-      debounce = require('app/misc/debounce');
+      batchCalls = require('app/misc/batch_calls');
 
   require('rdust!templates/order_metrics');
 
@@ -12,13 +12,13 @@ define(function(require) {
    */
   var OrderMetricsView = BaseView.extend(function() {
     BaseView.apply(this, arguments);
-    var debouncedRedraw = debounce(_onChange, this, 0);
+    var batchedRedraw = batchCalls(_onChange, this);
     this.mapEvent({
       model: {
-        addItem: debouncedRedraw,
-        removeItem: debouncedRedraw,
-        dataChange: debouncedRedraw,
-        change: debouncedRedraw
+        addItem: batchedRedraw,
+        removeItem: batchedRedraw,
+        dataChange: batchedRedraw,
+        change: batchedRedraw
       }
     });
     this.render();

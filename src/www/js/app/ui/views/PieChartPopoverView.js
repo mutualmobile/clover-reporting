@@ -1,7 +1,7 @@
 define(function(require) {
 
   var BaseView = require('./BaseView'),
-      debounce = require('app/misc/debounce');
+      batchCalls = require('app/misc/batch_calls');
   require('rdust!templates/pie_popover');
 
   /**
@@ -12,13 +12,13 @@ define(function(require) {
   var PieChartPopoverView = BaseView.extend(function PieChartPopoverView() {
     BaseView.apply(this, arguments);
 
-    var debouncedChangeHandler = debounce(_redraw, this, 0);
+    var batchedChangeHandler = batchCalls(_redraw, this);
     this.mapEvent({
       model: {
-        addItem: debouncedChangeHandler,
-        removeItem: debouncedChangeHandler,
-        dataChange: debouncedChangeHandler,
-        'change.loading': debouncedChangeHandler
+        addItem: batchedChangeHandler,
+        removeItem: batchedChangeHandler,
+        dataChange: batchedChangeHandler,
+        'change.loading': batchedChangeHandler
       }
     });
     this.render();

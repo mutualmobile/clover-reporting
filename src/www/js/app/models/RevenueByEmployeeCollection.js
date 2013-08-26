@@ -1,6 +1,6 @@
 define(function(require) {
   var Collection = require('lavaca/mvc/Collection'),
-      debounce = require('app/misc/debounce'),
+      batchCalls = require('app/misc/batch_calls'),
       colors = require('app/misc/color_scheme'),
       recentOrdersCollection = require('app/models/RecentOrdersCollection');
 
@@ -12,7 +12,7 @@ define(function(require) {
       legend: _legend
     });
 
-    this._externalBoundHandler = debounce(_onOrdersChange, this, 0);
+    this._externalBoundHandler = batchCalls(_onOrdersChange, this);
     recentOrdersCollection.on('addItem', this._externalBoundHandler);
     recentOrdersCollection.on('removeItem', this._externalBoundHandler);
     recentOrdersCollection.on('dataChange', this._externalBoundHandler);

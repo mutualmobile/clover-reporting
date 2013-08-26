@@ -1,7 +1,7 @@
 define(function(require) {
 
   var BaseChartView = require('./BaseChartView'),
-      debounce = require('app/misc/debounce'),
+      batchCalls = require('app/misc/batch_calls'),
       d3 = require('d3'),
       nv = require('nv'),
       $ = require('jquery');
@@ -16,7 +16,7 @@ define(function(require) {
   var BasePieChartView = BaseChartView.extend(function BasePieChartView() {
     BaseChartView.apply(this, arguments);
 
-    var debouncedChangeHandler = debounce(this.updateChart.bind(this), 0);
+    var batchedChangeHandler = batchCalls(this.updateChart, this);
     this.mapEvent({
       '.popover': {
         'tap': _tapInPopover,
@@ -32,15 +32,15 @@ define(function(require) {
         'tap': this.onTapSeeMore.bind(this)
       },
       model: {
-        'addItem': debouncedChangeHandler,
-        'removeItem': debouncedChangeHandler,
-        // 'change.startTime': debouncedChangeHandler,
-        // 'change.endTime': debouncedChangeHandler
-        'dataChange': debouncedChangeHandler
+        'addItem': batchedChangeHandler,
+        'removeItem': batchedChangeHandler,
+        // 'change.startTime': batchedChangeHandler,
+        // 'change.endTime': batchedChangeHandler
+        'dataChange': batchedChangeHandler
       }
     });
 
-    this.updateLegend = debounce(_redrawLegend, this, 0);
+    this.updateLegend = batchCalls(_redrawLegend, this);
   }, {
     template: 'templates/base_pie',
     className: 'base_pie',

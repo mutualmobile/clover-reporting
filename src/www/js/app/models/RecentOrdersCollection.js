@@ -17,14 +17,18 @@ define(function(require) {
     });
   }, {
     fetch: function() {
-      var promise = new Promise();
-      CustomService.getOrdersForDateRange.apply(CustomService, arguments).then(function(data, hash) {
+      var promise = new Promise(),
+          servicePromise;
+      servicePromise = CustomService.getOrdersForDateRange.apply(CustomService, arguments).then(function(data, hash) {
         var orders = [];
         if (data && data.orders) {
           orders = data.orders;
         }
         promise.resolve(orders, hash);
-      }, promise.rejector());
+      });
+      promise.error(function() {
+        servicePromise.reject.apply(servicePromise, arguments);
+      });
       return promise;
     }
   });

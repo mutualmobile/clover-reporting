@@ -75,30 +75,32 @@ define(function(require) {
           format,
           duration;
 
-      // Find appropriate units (minutes / hours / etc) based on minTicks
-      for (i = 1; i < _DURATION_HASH.length; i++) {
-        if (Math.ceil(totalDuration / _DURATION_HASH[i].duration) < minTicks) {
-          break;
+      if (maxTicks >= minTicks) {
+        // Find appropriate units (minutes / hours / etc) based on minTicks
+        for (i = 1; i < _DURATION_HASH.length; i++) {
+          if (Math.ceil(totalDuration / _DURATION_HASH[i].duration) < minTicks) {
+            break;
+          }
         }
-      }
-      i--;
-      key = _DURATION_HASH[i].key;
-      format = _DURATION_HASH[i].format;
-      duration = _DURATION_HASH[i].duration;
+        i--;
+        key = _DURATION_HASH[i].key;
+        format = _DURATION_HASH[i].format;
+        duration = _DURATION_HASH[i].duration;
 
-      // Batch units as necessary (1 hour / 2 hours / etc) based on maxTicks
-      while (Math.ceil(totalDuration / (duration * batchSize)) > maxTicks) {
-        batchSize++;
-      }
+        // Batch units as necessary (1 hour / 2 hours / etc) based on maxTicks
+        while (Math.ceil(totalDuration / (duration * batchSize)) > maxTicks) {
+          batchSize++;
+        }
 
-      // Round the start and end times to whole units
-      start.startOf(key);
-      end.startOf(key).add(key, 1);
+        // Round the start and end times to whole units
+        start.startOf(key);
+        end.startOf(key).add(key, 1);
 
-      // Generate the intermediate ticks
-      currentTime = start.clone();
-      while (+(currentTime = currentTime.add(key, batchSize)) < endMillis) {
-        ticks.push(currentTime.valueOf());
+        // Generate the intermediate ticks
+        currentTime = start.clone();
+        while (+(currentTime = currentTime.add(key, batchSize)) < endMillis) {
+          ticks.push(currentTime.valueOf());
+        }
       }
 
       return {
