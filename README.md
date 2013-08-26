@@ -3,80 +3,79 @@ Clover Dasboard - Reporting App
 
 # Getting Started
 
-## Setup Local Environment
-
-1. __Get the code__
-
-```bash
-$ mkdir [clover_app] && cd [clover_app]
-$ git clone https://stash.r.mutualmobile.com/scm/clov/clover.git .
-```
-
-2. __Install grunt-cli globally__
-
-Note: this may require sudo
-
-```bash
-$ npm install -g grunt-cli
-```
-
-3. __Install dev dependencies for our tasks to work__
-
-```bash
-$ npm install
-```
-
-4. __Start Development Server__
-
-```bash
-$ grunt
-```
-Your application should now be running on `localhost:8080`.
-
-## Deploying to Production
+## Installing Dependencies
 
 1. __Install NodeJS__
 
-Instructions: https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#ubuntu-mint
+  Instructions: https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#ubuntu-mint
 
-2. __Get the code__
+2. __Install MongoDB__
 
-```bash
-$ mkdir var/node/[clover_app] && cd var/node/[clover_app]
-$ git clone https://stash.r.mutualmobile.com/scm/clov/clover.git .
-```
+  Instructions: http://docs.mongodb.org/manual/installation/
 
-3. __Install grunt-cli globally__
+3. __Get the code__
 
-Note: this may require sudo
+  ```bash
+  $ mkdir [clover_app] && cd [clover_app]
+  $ git clone https://stash.r.mutualmobile.com/scm/clov/clover.git .
+  ```
 
-```bash
-$ npm install -g grunt-cli
-```
+4. __Install grunt-cli globally__
 
-4. __Install dev dependencies for our tasks to work__
+  Note: this may require sudo
 
-```bash
-$ npm install
-```
+  ```bash
+  $ npm install -g grunt-cli
+  ```
 
-5. __Build Production__
+5. __Install dev dependencies for our tasks to work__
 
-```bash
-$ npm build:production
-```
+  ```bash
+  $ npm install
+  ```
 
-6. __Install Forever for Production Server__
+## Running Locally
 
-```bash
-$ npm install -g forever
-```
+1. __Start MongoDB Server__
 
-7. __Run Production Server__
+  If you have not set your MongoDB server to run at startup, you'll need to run it manually.
 
-```bash
-$ forever start index.js
-```
+  ```bash
+  $ mongod
+  ```
+
+2. __Start Development Server__
+
+  If you started MongoDB manually, make sure to run this command in a seperate shell.
+
+  ```bash
+  $ grunt
+  ```
+  Your application should now be running on `localhost:8080`.
+
+
+## Deploying to Production
+
+1. __Build Production__
+
+  ```bash
+  $ grunt build:production
+  ```
+
+2. __Install Forever for Production Server__
+
+  Note: Forever will only need to be installed once. After it is installed, you can
+  skip this step for subsequent deployments.
+
+  ```bash
+  $ npm install -g forever
+  ```
+
+3. __Run Production Server__
+
+  ```bash
+  $ forever start index.js
+  ```
 
 ## Grunt Tasks
 
@@ -104,7 +103,7 @@ $ grunt server
 
 ### Build
 
-Precompiles LESS and Dust templates, concats and minifies all CSS and JavaScript files, and builds all related files to `www`, `android/assets/www` and `ios/www` directories. 
+Precompiles LESS and Dust templates, concats and minifies all CSS and JavaScript files, and builds all related files to the `www` directory.
 
 - __Build with local config__
 
