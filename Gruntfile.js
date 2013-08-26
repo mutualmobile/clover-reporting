@@ -486,7 +486,7 @@ module.exports = function( grunt ) {
   grunt.loadNpmTasks('grunt-chmod');
   grunt.loadNpmTasks('grunt-concurrent');
 
-  grunt.registerTask('default', 'starts local server and watches', ['concurrent']);
+  grunt.registerTask('default', 'starts local server and watches', ['less:src', 'concurrent']);
 
   grunt.registerTask('test', 'generates runner and runs the tests', ['amd-test', 'jasmine']);
 
