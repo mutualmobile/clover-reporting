@@ -6,32 +6,28 @@ Clover Dasboard - Reporting App
 ## Installing Dependencies
 
 1. __Install NodeJS__
-
-  Instructions: https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#ubuntu-mint
-
+    
+    Instructions: https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#ubuntu-mint
+    
 2. __Install MongoDB__
-
-  Instructions: http://docs.mongodb.org/manual/installation/
-
+    
+    Instructions: http://docs.mongodb.org/manual/installation/
+    
 3. __Get the code__
-
+    
         $ mkdir [clover_app] && cd [clover_app]
         $ git clone https://stash.r.mutualmobile.com/scm/clov/clover.git .
-
-
+    
 4. __Install grunt-cli globally__
-
-  Note: this may require sudo
-
+    
+    Note: this may require sudo
 
         $ npm install -g grunt-cli
-
-
+    
 5. __Install dev dependencies for our tasks to work__
-
-
+    
         $ npm install
-
+    
 
 ## Running Locally
 
