@@ -15,6 +15,7 @@ $ git clone https://stash.r.mutualmobile.com/scm/clov/clover.git .
 2. __Install grunt-cli globally__
 
 Note: this may require sudo
+
 ```bash
 $ npm install -g grunt-cli
 ```
@@ -48,34 +49,31 @@ $ git clone https://stash.r.mutualmobile.com/scm/clov/clover.git .
 3. __Install grunt-cli globally__
 
 Note: this may require sudo
+
 ```bash
 $ npm install -g grunt-cli
 ```
 
 4. __Install dev dependencies for our tasks to work__
 
-Note: this may require sudo
 ```bash
 $ npm install
 ```
 
 5. __Build Production__
 
-Note: this may require sudo
 ```bash
 $ npm build:production
 ```
 
 6. __Install Forever for Production Server__
 
-Note: this may require sudo
 ```bash
 $ npm install -g forever
 ```
 
 7. __Run Production Server__
 
-Note: this may require sudo
 ```bash
 $ forever start index.js
 ```
