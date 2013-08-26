@@ -15,24 +15,23 @@ Clover Dasboard - Reporting App
 
 3. __Get the code__
 
-  ```bash
-  $ mkdir [clover_app] && cd [clover_app]
-  $ git clone https://stash.r.mutualmobile.com/scm/clov/clover.git .
-  ```
+        $ mkdir [clover_app] && cd [clover_app]
+        $ git clone https://stash.r.mutualmobile.com/scm/clov/clover.git .
+
 
 4. __Install grunt-cli globally__
 
   Note: this may require sudo
 
-  ```bash
-  $ npm install -g grunt-cli
-  ```
+
+        $ npm install -g grunt-cli
+
 
 5. __Install dev dependencies for our tasks to work__
 
-  ```bash
-  $ npm install
-  ```
+
+        $ npm install
+
 
 ## Running Locally
 
@@ -40,17 +39,17 @@ Clover Dasboard - Reporting App
 
   If you have not set your MongoDB server to run at startup, you'll need to run it manually.
 
-  ```bash
-  $ mongod
-  ```
+
+        $ mongod
+
 
 2. __Start Development Server__
 
   If you started MongoDB manually, make sure to run this command in a seperate shell.
 
-  ```bash
-  $ grunt
-  ```
+
+        $ grunt
+
   Your application should now be running on `localhost:8080`.
 
 
@@ -58,24 +57,24 @@ Clover Dasboard - Reporting App
 
 1. __Build Production__
 
-  ```bash
-  $ grunt build:production
-  ```
+
+        $ grunt build:production
+
 
 2. __Install Forever for Production Server__
 
   Note: Forever will only need to be installed once. After it is installed, you can
   skip this step for subsequent deployments.
 
-  ```bash
-  $ npm install -g forever
-  ```
+
+        $ npm install -g forever
+
 
 3. __Run Production Server__
 
-  ```bash
-  $ forever start index.js
-  ```
+
+        $ forever start index.js
+
 
 ## Grunt Tasks
 
@@ -87,9 +86,9 @@ A task that concurrently runs a static server for local development and watches 
 
 - __Run the default static server and watch less__
 
-```bash
-$ grunt
-```
+
+        $ grunt
+
 
 ### Server
 
@@ -97,9 +96,9 @@ A task that simply runs a static server for local development and testing. Defau
 
 - __Run the default static server__
 
-```bash
-$ grunt server
-```
+
+        $ grunt server
+
 
 ### Build
 
@@ -107,21 +106,21 @@ Precompiles LESS and Dust templates, concats and minifies all CSS and JavaScript
 
 - __Build with local config__
 
-```bash
-$ grunt build
-```
+
+        $ grunt build
+
 
 - __Build with staging config__ (a copy of the build will be available in `www` folder)
 
-```bash
-$ grunt build:staging
-```
+
+        $ grunt build:staging
+
 
 - __Build with production config__ (a copy of the build will be available in `www` folder)
 
-```bash
-$ grunt build:production
-```
+
+        $ grunt build:production
+
 
 ### Test
 
@@ -129,9 +128,9 @@ Runs unit tests defined in `test/unit` directory with [Jasmine](http://pivotal.g
 
 - __Run unit tests from `test/unit`__
 
-```bash
-$ grunt test
-```
+
+        $ grunt test
+
 
 ### Docs
 
@@ -139,6 +138,5 @@ Generates JavaScript documentation using [yuidoc](https://github.com/gruntjs/gru
 
 - __Generate JavaScript Documentation__
 
-```bash
-$ grunt yuidoc
-```
+
+        $ grunt yuidoc
