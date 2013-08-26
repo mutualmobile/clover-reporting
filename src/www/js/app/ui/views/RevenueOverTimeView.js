@@ -25,10 +25,10 @@ define(function(require) {
     this.mapEvent({
       model: {
         addItem: batchedChangeHandler,
-        removeItem: batchedChangeHandler
-        // 'dataChange': batchedChangeHandler
-        // 'change.startTime': batchedChangeHandler,
-        // 'change.endTime': batchedChangeHandler
+        removeItem: batchedChangeHandler,
+        'dataChange': batchedChangeHandler,
+        'change.startTime': batchedChangeHandler,
+        'change.endTime': batchedChangeHandler
       },
       '.nvtooltip': {
         'tap': _onTapTooltipButton.bind(this)
