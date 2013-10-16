@@ -1,6 +1,6 @@
 define(function(require) {
   var View = require('lavaca/mvc/View');
-  var BaseView = require('app/ui/views/BaseView');
+  var BaseView = require('app/ui/BaseView');
   var Promise = require('lavaca/util/Promise');
   var clone = require('mout/lang/clone');
   var $ = require('$');

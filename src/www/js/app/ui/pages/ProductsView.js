@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var BasePageView = require('./BasePageView'),
+  var BaseView = require('app/ui/BaseView'),
       ProductCollectionView = require('app/ui/views/ProductCollectionView'),
       productCollection = require('app/models/ProductCollection');
 
@@ -8,11 +8,11 @@ define(function(require) {
 
   /**
    * Product View
-   * @class app.ui.pageviews.ProductsView
-   * @extends app.ui.pageviews.BasePageView
+   * @class app.ui.pages.ProductsView
+   * @extends app.ui.views.BaseView
    */
-  var ProductsView = BasePageView.extend(function ProductsView() {
-    BasePageView.apply(this, arguments);
+  var ProductsView = BaseView.extend(function ProductsView() {
+    BaseView.apply(this, arguments);
     this.mapChildView({
       '.product-list': {
         TView: ProductCollectionView,

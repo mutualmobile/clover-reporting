@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var BaseView = require('app/ui/views/BaseView'),
+  var BaseView = require('app/ui/BaseView'),
       batchCalls = require('app/misc/batch_calls'),
       $ = require('$');
 

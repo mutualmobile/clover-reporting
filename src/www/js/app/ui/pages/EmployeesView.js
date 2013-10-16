@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var BasePageView = require('./BasePageView'),
+  var BaseView = require('app/ui/BaseView'),
       EmployeeCollectionView = require('app/ui/views/EmployeeCollectionView'),
       employeeCollection = require('app/models/EmployeeCollection');
 
@@ -8,11 +8,11 @@ define(function(require) {
 
   /**
    * Employee View
-   * @class app.ui.pageviews.EmployeesView
-   * @extends app.ui.pageviews.BasePageView
+   * @class app.ui.pages.EmployeesView
+   * @extends app.ui.views.BaseView
    */
-  var EmployeesView = BasePageView.extend(function EmployeesView() {
-    BasePageView.apply(this, arguments);
+  var EmployeesView = BaseView.extend(function EmployeesView() {
+    BaseView.apply(this, arguments);
     this.mapChildView({
       '.employee-list': {
         TView: EmployeeCollectionView,

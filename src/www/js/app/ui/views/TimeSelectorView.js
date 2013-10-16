@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var BaseView = require('./BaseView'),
+  var BaseView = require('app/ui/BaseView'),
       $ = require('$'),
       moment = require('moment'),
       router = require('lavaca/mvc/Router'),

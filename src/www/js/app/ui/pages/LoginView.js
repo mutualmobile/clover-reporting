@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var BasePageView = require('./BasePageView'),
+  var BaseView = require('app/ui/BaseView'),
       localStore = require('app/cache/localStore'),
       stateModel = require('app/models/StateModel'),
       $ = require('jquery'),
@@ -9,11 +9,11 @@ define(function(require) {
 
   /**
    * Login View
-   * @class app.ui.pageviews.LoginView
-   * @extends app.ui.pageviews.BasePageView
+   * @class app.ui.pages.LoginView
+   * @extends app.ui.views.BaseView
    */
-  var LoginView = BasePageView.extend(function LoginView() {
-    BasePageView.apply(this, arguments);
+  var LoginView = BaseView.extend(function LoginView() {
+    BaseView.apply(this, arguments);
     this.mapEvent({
       'button': {
         tap: _onFormSubmit.bind(this)

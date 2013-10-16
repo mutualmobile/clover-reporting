@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var BasePageView = require('./BasePageView'),
+  var BaseView = require('app/ui/BaseView'),
       Scrollable = require('lavaca/ui/Scrollable'),
       OrderMetricsView = require('app/ui/views/OrderMetricsView'),
       recentOrdersCollection = require('app/models/RecentOrdersCollection'),
@@ -14,11 +14,11 @@ define(function(require) {
 
   /**
    * Dashboard View
-   * @class app.ui.pageviews.DashboardView
-   * @extends app.ui.pageviews.BasePageView
+   * @class app.ui.pages.DashboardView
+   * @extends app.ui.views.BaseView
    */
-  var DashboardView = BasePageView.extend(function() {
-    BasePageView.apply(this, arguments);
+  var DashboardView = BaseView.extend(function() {
+    BaseView.apply(this, arguments);
     this.mapWidget({
       'self': Scrollable
     });

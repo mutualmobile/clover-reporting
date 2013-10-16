@@ -1,11 +1,10 @@
 define(function(require) {
 
   var Detection = require('lavaca/env/Detection'),
-      PageView = require('lavaca/mvc/PageView'),
+      View = require('lavaca/mvc/View'),
       Promise = require('lavaca/util/Promise'),
+      Spinner = require('app/ui/widgets/Spinner'),
       viewManager = require('lavaca/mvc/ViewManager'),
-      common = require('app/ui/common'),
-      $ = require('$'),
       History = require('lavaca/net/History');
   require('lavaca/fx/Animation'); //jquery plugins
 
@@ -13,14 +12,19 @@ define(function(require) {
    * A View from which all other application Views can extend.
    * Adds support for animating between views.
    *
-   * @class app.ui.views.BasePageView
+   * @class app.ui.views.BaseView
    * @extends Lavaca.mvc.View
    *
    */
-  var BasePageView = PageView.extend(function() {
-    PageView.apply(this, arguments);
+  var BaseView = View.extend(function() {
+    View.apply(this, arguments);
     this.mapEvent('.cancel', 'tap', this.onTapCancel);
-    common.mapGlobals.call(this);
+    this.mapWidget({
+      '.loading-spinner': {
+        TWidget: Spinner,
+        args: this.spinnerArgs
+      }
+    });
   }, {
 
     /**
@@ -62,7 +66,7 @@ define(function(require) {
      * @return {Lavaca.util.Promise} A promise
      */
     enter: function(container, exitingViews) {
-      return PageView.prototype.enter.apply(this, arguments)
+      return View.prototype.enter.apply(this, arguments)
         .then(function() {
           if (History.isRoutingBack) {
             if (History.animationBreadcrumb.length > 0) {
@@ -140,7 +144,7 @@ define(function(require) {
 
         this.shell
           .nextAnimationEnd(function() {
-            PageView.prototype.exit.apply(this, arguments).then(function() {
+            View.prototype.exit.apply(this, arguments).then(function() {
               this.exitPromise.resolve();
             });
             this.shell.removeClass(animation + ' current');
@@ -150,11 +154,11 @@ define(function(require) {
         return this.exitPromise;
       } else {
         this.shell.removeClass('current');
-        return PageView.prototype.exit.apply(this, arguments);
+        return View.prototype.exit.apply(this, arguments);
       }
     }
   });
 
-  return BasePageView;
+  return BaseView;
 
 });

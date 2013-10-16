@@ -1,10 +1,10 @@
 define(function(require) {
 
   var BaseController = require('app/net/BaseController'),
-      DashboardView = require('app/ui/pageviews/DashboardView'),
-      EmployeesView = require('app/ui/pageviews/EmployeesView'),
-      ProductsView = require('app/ui/pageviews/ProductsView'),
-      LoginView = require('app/ui/pageviews/LoginView'),
+      DashboardView = require('app/ui/pages/DashboardView'),
+      EmployeesView = require('app/ui/pages/EmployeesView'),
+      ProductsView = require('app/ui/pages/ProductsView'),
+      LoginView = require('app/ui/pages/LoginView'),
       Model = require('lavaca/mvc/Model'),
       Promise = require('lavaca/util/Promise'),
       localStore = require('app/cache/localStore'),
