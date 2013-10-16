@@ -1,30 +1,7 @@
 define(function(require) {
   var dust = require('dust'),
       moment = require('moment');
-
   require('dust-helpers');
-
-  var _UNDEFINED;
-
-  dust.helpers.loop = function(chunk, context, bodies, params) {
-    var times = parseInt(dust.helpers.tap(params.times, chunk, context), 10) || 0;
-
-    if (context.stack.head) {
-      context.stack.head['$len'] = times;
-    }
-    for (var i = 0; i < times; i++) {
-      if (context.stack.head) {
-        context.stack.head['$idx'] = i;
-      }
-      chunk.render(bodies.block, context);
-    }
-    if (context.stack.head) {
-      context.stack.head['$len'] = _UNDEFINED;
-      context.stack.head['$idx'] = _UNDEFINED;
-    }
-
-    return chunk;
-  };
 
   dust.helpers.moment = function(chunk, context, bodies, params) {
     var val = parseInt(dust.helpers.tap(params.value, chunk, context) || 0, 10),
@@ -57,51 +34,35 @@ define(function(require) {
     }
   };
   dust.filters.dateTime = function(value) {
-    if (!moment.isMoment(value)) {
-      value = moment(value);
-    }
+    value = _ensureMoment(value);
     return value.format('hh:mm A dddd, MMMM DD YYYY');
   };
   dust.filters.shortMonthDayTime = function(value) {
-    if (!moment.isMoment(value)) {
-      value = moment(value);
-    }
+    value = _ensureMoment(value);
     return value.format('MMM DD hh:mm A');
   };
   dust.filters.scopeDay = function(value) {
-    if (!moment.isMoment(value)) {
-      value = moment(value);
-    }
+    value = _ensureMoment(value);
     return value.format('MMMM DD YYYY');
   };
   dust.filters.scopeWeek = function(value) {
-    if (!moment.isMoment(value)) {
-      value = moment(value);
-    }
+    value = _ensureMoment(value);
     return value.format('MMMM YYYY');
   };
   dust.filters.scopeMonth = function(value) {
-    if (!moment.isMoment(value)) {
-      value = moment(value);
-    }
+    value = _ensureMoment(value);
     return value.format('MMMM YYYY');
   };
   dust.filters.timestamp = function(value) {
-    if (!moment.isMoment(value)) {
-      value = moment(value);
-    }
+    value = _ensureMoment(value);
     return value.toISOString();
   };
   dust.filters.ymd = function(value) {
-    if (!moment.isMoment(value)) {
-      value = moment(value);
-    }
+    value = _ensureMoment(value);
     return value.format('YYYY-MM-DD');
   };
   dust.filters.hm = function(value) {
-    if (!moment.isMoment(value)) {
-      value = moment(value);
-    }
+    value = _ensureMoment(value);
     return value.format('HH:mm');
   };
 
@@ -121,5 +82,12 @@ define(function(require) {
       output = output.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
     }
     return output + decimal;
+  }
+
+  function _ensureMoment(value) {
+    if (!moment.isMoment(value)) {
+      value = moment(value);
+    }
+    return value;
   }
 });
