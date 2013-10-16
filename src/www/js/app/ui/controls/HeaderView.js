@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var View = require('lavaca/mvc/View'),
+  var BaseView = require('app/ui/BaseView'),
       TimeSelectorView = require('app/ui/views/TimeSelectorView'),
       timeRangeModel = require('app/models/TimeRangeModel'),
       stateModel = require('app/models/StateModel');
@@ -9,10 +9,10 @@ define(function(require) {
   /**
    * Header view type
    * @class app.ui.views.globalUI.HeaderView
-   * @super Lavaca.mvc.View
+   * @super app.ui.BaseView
    */
-  var HeaderView = View.extend(function(){
-      View.apply(this, arguments);
+  var HeaderView = BaseView.extend(function(){
+      BaseView.apply(this, arguments);
 
       this.mapEvent({
         model: {
