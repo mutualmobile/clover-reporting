@@ -12,20 +12,16 @@ define(function(require) {
    */
   var PopoverControlView = BaseView.extend(function PopoverControlView() {
     BaseView.apply(this, arguments);
-    var batchedChangeHandler = batchCalls(this.updateMenu, this);
     this.mapEvent({
       self: {
         tap: _onTapPageMenu.bind(this)
       },
       model: {
-        change: batchedChangeHandler
+        change: batchCalls(_updateMenu, this)
       }
     });
     this.render();
   }, {
-    updateMenu: function() {
-      this.redraw();
-    },
     open: function() {
       setTimeout(function() {
         $(window).one('tap.'+this.id, function() {
@@ -40,10 +36,16 @@ define(function(require) {
     }
   });
 
+  // Event handlers
+
   function _onTapPageMenu() {
     if (!this.el.find('.popover').hasClass('active')) {
       this.open.call(this);
     }
+  }
+
+  function _updateMenu() {
+    this.redraw();
   }
 
   return PopoverControlView;
