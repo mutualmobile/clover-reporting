@@ -1,23 +1,21 @@
 require.config({
   baseUrl: 'js',
   paths: {
-    'es5-shim': 'libs/es5-shim',
-    '$': 'libs/jquery-2.0.0',
-    'jquery': 'libs/jquery-2.0.0',
-    'jquery-mobile': 'libs/jquery-mobile',
-    'cordova': 'libs/cordova',
-    'mout': 'libs/mout/src',
-    'docCookies': 'libs/docCookies',
-    'dust': 'libs/dust-full-1.2.4',
-    'dust-helpers': 'libs/dust-helpers-1.1.1',
-    'rdust': 'libs/require-dust',
-    'iScroll': 'libs/iscroll-lite-4.1.6',
-    'spin': 'libs/spin',
-    'jquery-spin': 'libs/jquery.spin',
-    'd3': 'libs/d3.v3',
-    'nv': 'libs/nv.d3',
-    'moment': 'libs/moment',
-    'lavaca': 'lavaca'
+    'es5-shim': '../components/es5-shim/es5-shim',
+    '$': '../components/jquery/index',
+    'jquery': '../components/jquery/index',
+    'hammer': '../components/hammerjs/dist/jquery.hammer',
+    'mout': '../components/mout/src',
+    'dust': '../components/dustjs-linkedin/dist/dust-full-2.0.4',
+    'dust-helpers': '../components/dustjs-linkedin-helpers/dist/dust-helpers-1.1.1',
+    'rdust': '../components/require-dust/require-dust',
+    'iScroll': '../components/iscroll/dist/iscroll-lite-min',
+    'spin': '../components/spinjs/dist/spin',
+    'jquery-spin': '../components/spinjs/jquery.spin',
+    'moment': '../components/momentjs/moment',
+    'd3': '../components/d3/d3',
+    'nv': '../components/nvd3/nv.d3',
+    'lavaca': '../components/lavaca/src'
   },
   shim: {
     $: {

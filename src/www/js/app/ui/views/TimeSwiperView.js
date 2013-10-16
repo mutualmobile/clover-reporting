@@ -2,18 +2,14 @@ define(function(require) {
 
   var BaseView = require('./BaseView'),
       $ = require('$'),
-      moment = require('moment'),
       router = require('lavaca/mvc/Router'),
-      stateModel = require('app/models/StateModel'),
       transition = require('lavaca/fx/Transition'),
       transform = require('lavaca/fx/Transform');
 
   var _MOVE_THRESHOLD = 20,
       _TRANSITION_PROP = transition.cssProperty(),
       _TRANSITION_DURATION_PROP = _TRANSITION_PROP + '-duration',
-      _TRANSITION_END_PROP = transition.transitionEndProperty(),
-      _TRANSFORM_PROP = transform.cssProperty(),
-      _UNDEFINED;
+      _TRANSFORM_PROP = transform.cssProperty();
 
   require('rdust!templates/time_swiper');
 

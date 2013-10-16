@@ -7,7 +7,6 @@ define(function(require) {
       TimeSwiperView = require('app/ui/views/TimeSwiperView'),
       timeRangeModel = require('app/models/TimeRangeModel');
   require('lavaca/ui/DustTemplate');
-  require('jquery-mobile/events/orientationchange');
   require('app/misc/dust_extensions');
   require('app/misc/tap_handler');
 
