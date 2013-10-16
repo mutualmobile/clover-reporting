@@ -1,15 +1,15 @@
 define(function(require) {
 
-  var CollectionView = require('app/ui/views/CollectionView'),
+  var BaseCollectionView = require('app/ui/views/BaseCollectionView'),
       ProductDetailView = require('app/ui/views/ProductDetailView');
 
   /**
    * A collection of ProductDetailViews
    * @class app.ui.views.ProductCollectionView
-   * @super app.ui.views.CollectionView
+   * @super app.ui.views.BaseCollectionView
    */
-  var ProductCollectionView = CollectionView.extend(function ProductCollectionView() {
-    CollectionView.apply(this, arguments);
+  var ProductCollectionView = BaseCollectionView.extend(function ProductCollectionView() {
+    BaseCollectionView.apply(this, arguments);
     this.render();
   },{
     TView: ProductDetailView
