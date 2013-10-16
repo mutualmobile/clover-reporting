@@ -1,5 +1,10 @@
 define(function() {
 
+  // Acts like debounce with a (nearly) zero
+  // second delay, except that it will call
+  // the `fn` parameter in the specified
+  // context, and will cancel the debounced call
+  // if `dispose()` is called on the context
   return function(fn, context) {
     var scheduled = false,
         args,
