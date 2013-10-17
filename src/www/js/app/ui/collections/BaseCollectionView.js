@@ -9,8 +9,8 @@ define(function(require) {
 
   /**
    * A view for synchronizing a collection of models with sub views
-   * @class app.ui.views.BaseCollectionView
-   * @super app.ui.views.BaseView
+   * @class app.ui.collections.BaseCollectionView
+   * @super app.ui.BaseView
    */
   var BaseCollectionView = BaseView.extend(function BaseCollectionView() {
     // Call the super class' constructor

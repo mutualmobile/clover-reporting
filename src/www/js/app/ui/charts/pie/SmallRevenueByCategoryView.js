@@ -1,12 +1,12 @@
 define(function(require) {
 
-  var RevenueByCategoryView = require('./RevenueByCategoryView');
+  var RevenueByCategoryView = require('app/ui/charts/pie/RevenueByCategoryView');
 
   /**
    * Renders a smaller pie chart showing revenue
    * breakdown by category
-   * @class app.ui.views.SmallRevenueByCategoryView
-   * @extends app.ui.views.RevenueByCategoryView
+   * @class app.ui.charts.pie.SmallRevenueByCategoryView
+   * @extends app.ui.charts.pie.RevenueByCategoryView
    */
 
   var SmallRevenueByCategoryView = RevenueByCategoryView.extend({

@@ -1,7 +1,7 @@
 define(function(require) {
 
-  var BaseChartView = require('./BaseChartView'),
-      RevenueOverTimeView = require('./RevenueOverTimeView'),
+  var BaseChartView = require('app/ui/charts/BaseChartView'),
+      RevenueOverTimeView = require('app/ui/charts/chronological/RevenueOverTimeView'),
       timeRangeModel = require('app/models/TimeRangeModel'),
       bucketData = require('app/misc/bucket_data'),
       d3 = require('d3'),
@@ -9,8 +9,8 @@ define(function(require) {
 
   /**
    * Recent Orders View
-   * @class app.ui.views.FilteredRevenueOverTimeView
-   * @extends app.ui.views.BaseChartView
+   * @class app.ui.charts.chronological.FilteredRevenueOverTimeView
+   * @extends app.ui.charts.BaseChartView
    */
   var FilteredRevenueOverTimeView = RevenueOverTimeView.extend(function FilteredRevenueOverTimeView() {
     RevenueOverTimeView.apply(this, arguments);

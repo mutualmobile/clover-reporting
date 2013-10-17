@@ -1,7 +1,7 @@
 define(function(require) {
 
   var BaseView = require('app/ui/BaseView'),
-      ProductCollectionView = require('app/ui/views/ProductCollectionView'),
+      ProductCollectionView = require('app/ui/collections/ProductCollectionView'),
       productCollection = require('app/models/ProductCollection');
 
   require('rdust!templates/products');
@@ -9,7 +9,7 @@ define(function(require) {
   /**
    * Product View
    * @class app.ui.pages.ProductsView
-   * @extends app.ui.views.BaseView
+   * @extends app.ui.BaseView
    */
   var ProductsView = BaseView.extend(function ProductsView() {
     BaseView.apply(this, arguments);

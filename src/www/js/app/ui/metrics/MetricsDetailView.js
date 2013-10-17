@@ -4,8 +4,8 @@ define(function(require) {
 
   /**
    * Employee Detail View
-   * @class app.ui.views.MetricsDetailView
-   * @extends app.ui.views.BaseView
+   * @class app.ui.metrics.MetricsDetailView
+   * @extends app.ui.BaseView
    */
   var MetricsDetailView = BaseView.extend(function MetricsDetailView() {
     BaseView.apply(this, arguments);

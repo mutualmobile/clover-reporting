@@ -1,12 +1,12 @@
 define(function(require) {
 
-  var FilteredRevenueByEmployeeView = require('./FilteredRevenueByEmployeeView');
+  var FilteredRevenueByEmployeeView = require('app/ui/charts/pie/FilteredRevenueByEmployeeView');
 
   /**
    * Renders a pie chart showing revenue
    * breakdown by employee
-   * @class app.ui.views.SmallFilteredRevenueByEmployeeView
-   * @extends app.ui.views.FilteredRevenueByEmployeeView
+   * @class app.ui.charts.pie.SmallFilteredRevenueByEmployeeView
+   * @extends app.ui.charts.pie.FilteredRevenueByEmployeeView
    */
   var SmallFilteredRevenueByEmployeeView = FilteredRevenueByEmployeeView.extend(function SmallFilteredRevenueByEmployeeView() {
     FilteredRevenueByEmployeeView.apply(this, arguments);

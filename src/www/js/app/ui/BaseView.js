@@ -12,7 +12,7 @@ define(function(require) {
    * A View from which all other application Views can extend.
    * Adds support for animating between views.
    *
-   * @class app.ui.views.BaseView
+   * @class app.ui.BaseView
    * @extends Lavaca.mvc.View
    *
    */

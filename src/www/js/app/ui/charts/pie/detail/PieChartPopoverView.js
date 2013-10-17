@@ -6,8 +6,8 @@ define(function(require) {
 
   /**
    * Renders a pie chart
-   * @class app.ui.views.PieChartPopoverView
-   * @extends app.ui.views.BaseView
+   * @class app.ui.charts.pie.detail.PieChartPopoverView
+   * @extends app.ui.BaseView
    */
   var PieChartPopoverView = BaseView.extend(function PieChartPopoverView() {
     BaseView.apply(this, arguments);
@@ -35,5 +35,4 @@ define(function(require) {
   }
 
   return PieChartPopoverView;
-
 });

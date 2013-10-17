@@ -7,8 +7,8 @@ define(function(require) {
   /**
    * Renders a pie chart showing revenue
    * breakdown by employee
-   * @class app.ui.views.PopoverControlView
-   * @extends app.ui.views.BaseView
+   * @class app.ui.navigation.PopoverControlView
+   * @extends app.ui.BaseView
    */
   var PopoverControlView = BaseView.extend(function PopoverControlView() {
     BaseView.apply(this, arguments);

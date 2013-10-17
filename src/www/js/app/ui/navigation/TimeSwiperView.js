@@ -14,9 +14,9 @@ define(function(require) {
   require('rdust!templates/time_swiper');
 
   /**
-   * Time selector view
-   * @class app.ui.views.TimeSwiperView
-   * @extends app.ui.views.BaseView
+   * Time swiper view
+   * @class app.ui.navigation.TimeSwiperView
+   * @extends app.ui.BaseView
    */
   var TimeSwiperView = BaseView.extend(function() {
     BaseView.apply(this, arguments);
@@ -95,7 +95,7 @@ define(function(require) {
         .css(_TRANSFORM_PROP, 'translateX(' + (x - 50) + 'px) rotate(180deg)');
       this.rightClock
         .css(_TRANSFORM_PROP, 'translateX(' + (x + 50) + 'px) rotate(180deg)');
-      
+
     } else {
       this.clocks
         .css(_TRANSITION_DURATION_PROP, '300ms')

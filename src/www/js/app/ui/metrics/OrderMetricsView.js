@@ -7,8 +7,8 @@ define(function(require) {
 
   /**
    * Recent Orders View
-   * @class app.ui.views.OrderMetricsView
-   * @extends app.ui.views.BaseView
+   * @class app.ui.metrics.OrderMetricsView
+   * @extends app.ui.BaseView
    */
   var OrderMetricsView = BaseView.extend(function() {
     BaseView.apply(this, arguments);

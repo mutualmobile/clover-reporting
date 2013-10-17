@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var BaseChartView = require('./BaseChartView'),
+  var BaseChartView = require('app/ui/charts/BaseChartView'),
       batchCalls = require('app/misc/batch_calls'),
       d3 = require('d3'),
       nv = require('nv'),
@@ -10,8 +10,8 @@ define(function(require) {
 
   /**
    * Renders a pie chart
-   * @class app.ui.views.BasePieChartView
-   * @extends app.ui.views.BaseChartView
+   * @class app.ui.charts.pie.BasePieChartView
+   * @extends app.ui.charts.BaseChartView
    */
   var BasePieChartView = BaseChartView.extend(function BasePieChartView() {
     BaseChartView.apply(this, arguments);

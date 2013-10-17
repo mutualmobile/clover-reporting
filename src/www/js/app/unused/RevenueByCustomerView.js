@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var BaseChartView = require('./BaseChartView'),
+  var BaseChartView = require('app/ui/charts/BaseChartView'),
       batchCalls = require('app/misc/batch_calls'),
       d3 = require('d3'),
       nv = require('nv');
@@ -11,7 +11,7 @@ define(function(require) {
    * Renders a bar chart showing revenue
    * breakdown by customer
    * @class app.ui.views.RevenueByCustomerView
-   * @extends app.ui.views.BaseChartView
+   * @extends app.ui.charts.BaseChartView
    */
   var RevenueByCustomerView = BaseChartView.extend(function RevenueByCustomerView() {
     BaseChartView.apply(this, arguments);

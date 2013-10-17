@@ -1,7 +1,7 @@
 define(function(require) {
 
-  var BasePieChartView = require('./BasePieChartView'),
-      PieChartPopoverView = require('./PieChartPopoverView'),
+  var BasePieChartView = require('app/ui/charts/pie/BasePieChartView'),
+      PieChartPopoverView = require('app/ui/charts/pie/detail/PieChartPopoverView'),
       revenueByItemCollection = require('app/models/RevenueByItemCollection'),
       colors = require('app/misc/color_scheme'),
       router = require('lavaca/mvc/Router');
@@ -10,8 +10,8 @@ define(function(require) {
   /**
    * Renders a pie chart showing revenue
    * breakdown by category
-   * @class app.ui.views.RevenueByCategoryView
-   * @extends app.ui.views.BasePieChartView
+   * @class app.ui.charts.pie.RevenueByCategoryView
+   * @extends app.ui.charts.pie.BasePieChartView
    */
   var RevenueByCategoryView = BasePieChartView.extend(function RevenueByCategoryView() {
     BasePieChartView.apply(this, arguments);

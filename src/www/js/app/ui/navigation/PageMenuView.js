@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var PopoverControlView = require('app/ui/controls/PopoverControlView'),
+  var PopoverControlView = require('app/ui/navigation/PopoverControlView'),
       $ = require('$'),
       router = require('lavaca/mvc/Router');
   require('rdust!templates/page_menu');
@@ -8,8 +8,8 @@ define(function(require) {
   /**
    * Renders a pie chart showing revenue
    * breakdown by employee
-   * @class app.ui.views.PageMenuView
-   * @extends app.ui.views.BaseView
+   * @class app.ui.navigation.PageMenuView
+   * @extends app.ui.BaseView
    */
   var PageMenuView = PopoverControlView.extend(function PageMenuView() {
     PopoverControlView.apply(this, arguments);

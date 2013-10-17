@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var BaseChartView = require('./BaseChartView'),
+  var BaseChartView = require('app/ui/charts/BaseChartView'),
       batchCalls = require('app/misc/batch_calls'),
       Translation = require('lavaca/util/Translation'),
       router = require('lavaca/mvc/Router'),
@@ -15,8 +15,8 @@ define(function(require) {
 
   /**
    * Recent Orders View
-   * @class app.ui.views.RevenueOverTimeView
-   * @extends app.ui.views.BaseChartView
+   * @class app.ui.charts.chronological.RevenueOverTimeView
+   * @extends app.ui.charts.BaseChartView
    */
   var RevenueOverTimeView = BaseChartView.extend(function() {
     BaseChartView.apply(this, arguments);

@@ -11,8 +11,8 @@ define(function(require) {
 
   /**
    * Super class for all chart views
-   * @class app.ui.views.BaseChartView
-   * @extends app.ui.views.BaseView
+   * @class app.ui.charts.BaseChartView
+   * @extends app.ui.BaseView
    */
   var BaseChartView = BaseView.extend(function BaseChartView() {
     BaseView.apply(this, arguments);

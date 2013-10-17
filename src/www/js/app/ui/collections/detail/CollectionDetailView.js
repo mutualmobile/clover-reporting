@@ -5,11 +5,11 @@ define(function(require) {
   require('rdust!templates/detail');
 
   /**
-   * Employee Detail View
-   * @class app.ui.views.DetailView
-   * @extends app.ui.views.BaseView
+   * Collection Detail View
+   * @class app.ui.collections.detail.CollectionDetailView
+   * @extends app.ui.BaseView
    */
-  var DetailView = BaseView.extend(function() {
+  var CollectionDetailView = BaseView.extend(function() {
     BaseView.apply(this, arguments);
     this.mapEvent({
       '.detail-info > [data-panel], .mobile-tabs [data-panel]': {
@@ -70,6 +70,6 @@ define(function(require) {
     }
   }
 
-  return DetailView;
+  return CollectionDetailView;
 
 });

@@ -2,20 +2,20 @@ define(function(require) {
 
   var BaseView = require('app/ui/BaseView'),
       Scrollable = require('lavaca/ui/Scrollable'),
-      OrderMetricsView = require('app/ui/views/OrderMetricsView'),
+      OrderMetricsView = require('app/ui/metrics/OrderMetricsView'),
       recentOrdersCollection = require('app/models/RecentOrdersCollection'),
       revenueByEmployeeCollection = require('app/models/RevenueByEmployeeCollection'),
       revenueByCategoryCollection = require('app/models/RevenueByCategoryCollection'),
-      RevenueByCategoryView = require('app/ui/views/RevenueByCategoryView'),
-      RevenueByEmployeeView = require('app/ui/views/RevenueByEmployeeView'),
-      RevenueOverTimeView = require('app/ui/views/RevenueOverTimeView');
+      RevenueByCategoryView = require('app/ui/charts/pie/RevenueByCategoryView'),
+      RevenueByEmployeeView = require('app/ui/charts/pie/RevenueByEmployeeView'),
+      RevenueOverTimeView = require('app/ui/charts/chronological/RevenueOverTimeView');
 
   require('rdust!templates/dashboard');
 
   /**
    * Dashboard View
    * @class app.ui.pages.DashboardView
-   * @extends app.ui.views.BaseView
+   * @extends app.ui.BaseView
    */
   var DashboardView = BaseView.extend(function() {
     BaseView.apply(this, arguments);

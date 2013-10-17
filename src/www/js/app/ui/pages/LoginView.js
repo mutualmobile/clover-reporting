@@ -10,7 +10,7 @@ define(function(require) {
   /**
    * Login View
    * @class app.ui.pages.LoginView
-   * @extends app.ui.views.BaseView
+   * @extends app.ui.BaseView
    */
   var LoginView = BaseView.extend(function LoginView() {
     BaseView.apply(this, arguments);

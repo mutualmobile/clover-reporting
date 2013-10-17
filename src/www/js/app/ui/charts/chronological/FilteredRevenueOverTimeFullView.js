@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var FilteredRevenueOverTimeView = require('./FilteredRevenueOverTimeView'),
+  var FilteredRevenueOverTimeView = require('app/ui/charts/chronological/FilteredRevenueOverTimeView'),
       d3 = require('d3'),
       nv = require('nv'),
       moment = require('moment'),
@@ -10,8 +10,8 @@ define(function(require) {
   /**
    * Renders a smaller pie chart showing revenue
    * breakdown by category
-   * @class app.ui.views.SmallRevenueByCategoryView
-   * @extends app.ui.views.FilteredRevenueOverTimeView
+   * @class app.ui.charts.pie.SmallRevenueByCategoryView
+   * @extends app.ui.charts.chronological.FilteredRevenueOverTimeView
    */
 
   var FilteredRevenueOverTimeFullView = FilteredRevenueOverTimeView.extend(function() {

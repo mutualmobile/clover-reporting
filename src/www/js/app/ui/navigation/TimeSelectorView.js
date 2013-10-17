@@ -2,18 +2,17 @@ define(function(require) {
 
   var BaseView = require('app/ui/BaseView'),
       $ = require('$'),
-      moment = require('moment'),
       router = require('lavaca/mvc/Router'),
-      PageMenuView = require('app/ui/controls/PageMenuView'),
-      ModeMenuView = require('app/ui/controls/ModeMenuView'),
+      PageMenuView = require('app/ui/navigation/PageMenuView'),
+      ModeMenuView = require('app/ui/navigation/ModeMenuView'),
       stateModel = require('app/models/StateModel');
 
   require('rdust!templates/time_selector');
 
   /**
    * Time selector view
-   * @class app.ui.views.TimeSelectorView
-   * @extends app.ui.views.BaseView
+   * @class app.ui.navigation.TimeSelectorView
+   * @extends app.ui.BaseView
    */
   var TimeSelectorView = BaseView.extend(function() {
     BaseView.apply(this, arguments);

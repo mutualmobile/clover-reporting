@@ -1,7 +1,7 @@
 define(function(require) {
 
   var BaseView = require('app/ui/BaseView'),
-      EmployeeCollectionView = require('app/ui/views/EmployeeCollectionView'),
+      EmployeeCollectionView = require('app/ui/collections/EmployeeCollectionView'),
       employeeCollection = require('app/models/EmployeeCollection');
 
   require('rdust!templates/employees');
@@ -9,7 +9,7 @@ define(function(require) {
   /**
    * Employee View
    * @class app.ui.pages.EmployeesView
-   * @extends app.ui.views.BaseView
+   * @extends app.ui.BaseView
    */
   var EmployeesView = BaseView.extend(function EmployeesView() {
     BaseView.apply(this, arguments);

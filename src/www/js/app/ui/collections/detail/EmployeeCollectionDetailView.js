@@ -1,21 +1,21 @@
 define(function(require) {
-  var DetailView = require('./DetailView'),
+  var CollectionDetailView = require('app/ui/collections/detail/CollectionDetailView'),
       Collection = require('lavaca/mvc/Collection'),
       recentOrdersCollection = require('app/models/RecentOrdersCollection'),
-      FilteredRevenueOverTimeView = require('app/ui/views/FilteredRevenueOverTimeView'),
-      RevenueByCategoryView = require('app/ui/views/RevenueByCategoryView'),
-      SmallRevenueByCategoryView = require('app/ui/views/SmallRevenueByCategoryView'),
-      FilteredRevenueOverTimeFullView = require('app/ui/views/FilteredRevenueOverTimeFullView'),
-      MetricsDetailView = require('app/ui/views/MetricsDetailView'),
+      FilteredRevenueOverTimeView = require('app/ui/charts/chronological/FilteredRevenueOverTimeView'),
+      RevenueByCategoryView = require('app/ui/charts/pie/RevenueByCategoryView'),
+      SmallRevenueByCategoryView = require('app/ui/charts/pie/SmallRevenueByCategoryView'),
+      FilteredRevenueOverTimeFullView = require('app/ui/charts/chronological/FilteredRevenueOverTimeFullView'),
+      MetricsDetailView = require('app/ui/metrics/MetricsDetailView'),
       batchCalls = require('app/misc/batch_calls');
 
   /**
    * Employee Detail View
-   * @class app.ui.views.EmployeeDetailView
-   * @extends app.ui.views.DetailView
+   * @class app.ui.collections.detail.EmployeeCollectionDetailView
+   * @extends app.ui.collections.detail.CollectionDetailView
    */
-  var EmployeeDetailView = DetailView.extend(function EmployeeDetailView() {
-    DetailView.apply(this, arguments);
+  var EmployeeCollectionDetailView = CollectionDetailView.extend(function EmployeeCollectionDetailView() {
+    CollectionDetailView.apply(this, arguments);
     this.mapChildView({
       '.revenue-by-category': {
         TView: SmallRevenueByCategoryView,
@@ -60,6 +60,6 @@ define(function(require) {
     this.childViewMap['.revenue-by-category'].model = revenueByCategoryCollection;
   }
 
-  return EmployeeDetailView;
+  return EmployeeCollectionDetailView;
 
 });

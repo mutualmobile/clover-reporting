@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var PopoverControlView = require('app/ui/controls/PopoverControlView'),
+  var PopoverControlView = require('app/ui/navigation/PopoverControlView'),
       timeRangeModel = require('app/models/TimeRangeModel'),
       clone = require('mout/lang/clone'),
       $ = require('$');
@@ -9,8 +9,8 @@ define(function(require) {
   /**
    * Renders a pie chart showing revenue
    * breakdown by employee
-   * @class app.ui.views.ModeMenuView
-   * @extends app.ui.controls.PopoverControlView
+   * @class app.ui.navigation.ModeMenuView
+   * @extends app.ui.navigation.PopoverControlView
    */
   var ModeMenuView = PopoverControlView.extend(function ModeMenuView() {
     PopoverControlView.apply(this, arguments);

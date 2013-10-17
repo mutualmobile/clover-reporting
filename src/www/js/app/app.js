@@ -3,8 +3,8 @@ define(function(require) {
       Connectivity = require('lavaca/net/Connectivity'),
       Application = require('lavaca/mvc/Application'),
       Translation = require('lavaca/util/Translation'),
-      TimeSelectorView = require('app/ui/views/TimeSelectorView'),
-      TimeSwiperView = require('app/ui/views/TimeSwiperView'),
+      TimeSelectorView = require('app/ui/navigation/TimeSelectorView'),
+      TimeSwiperView = require('app/ui/navigation/TimeSwiperView'),
       timeRangeModel = require('app/models/TimeRangeModel');
   require('lavaca/ui/DustTemplate');
   require('app/misc/dust_extensions');
