@@ -1,6 +1,7 @@
 {
-  "api_url": "/api/v2/merchant/RZC2F4FMKFJ12/{0}",
-  "custom_api_url": "/{0}",
+  "api_url": "https://api.clover.com/v2/merchant/{0}/{1}",
+  "auth_url": "https://clover.com/{0}",
   "mock_url": "/assets/mock/{0}.json",
-  "artificial_network_delay": 700
+  "app_id": "H3XNANEEP9ATC",
+  "artificial_network_delay": 1000
 }
