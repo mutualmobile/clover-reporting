@@ -4,12 +4,9 @@ define(function(require) {
       DashboardView = require('app/ui/pages/DashboardView'),
       EmployeesView = require('app/ui/pages/EmployeesView'),
       ProductsView = require('app/ui/pages/ProductsView'),
-      LoginView = require('app/ui/pages/LoginView'),
       Model = require('lavaca/mvc/Model'),
       Promise = require('lavaca/util/Promise'),
-      localStore = require('app/cache/localStore'),
       timeRangeModel = require('app/models/TimeRangeModel'),
-      stateModel = require('app/models/StateModel'),
       moment = require('moment');
 
   /**
@@ -23,36 +20,25 @@ define(function(require) {
      * @method dashboard
      *
      * @param {Object} params  Action arguments
-     * @param {Object} model  History state model
+     * @param {Object} history  History state model
      * @return {Lavaca.util.Promise}  A promise
      */
-    dashboard: function(params, model) {
+    dashboard: function(params, history) {
       return this
         .view(null, DashboardView, new Model())
-        .then(this.updateState(model, 'Dashboard', params.url));
+        .then(this.updateState(history, 'Dashboard', params.url));
     },
-    employees: function(params, model) {
+    employees: function(params, history) {
       return this
         .view(null, EmployeesView, new Model())
-        .then(this.updateState(model, 'Employees', params.url));
+        .then(this.updateState(history, 'Employees', params.url));
     },
-    products: function(params, model) {
+    products: function(params, history) {
       return this
         .view(null, ProductsView, new Model())
-        .then(this.updateState(model, 'Products', params.url));
+        .then(this.updateState(history, 'Products', params.url));
     },
-    login: function(params, model) {
-      return this
-        .view(null, LoginView, new Model())
-        .then(this.updateState(model, 'Login', params.url));
-    },
-    logout: function() {
-      localStore.remove('merchantId');
-      localStore.remove('accessToken');
-      stateModel.set('loggedIn', false);
-      return this.redirect('/login');
-    },
-    zoom: function(params, model) {
+    zoom: function(params, history) {
       if (params.startTime && params.endTime) {
         timeRangeModel.suppressEvents = true;
         timeRangeModel.apply({

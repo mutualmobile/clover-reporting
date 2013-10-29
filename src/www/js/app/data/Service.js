@@ -47,26 +47,18 @@ define(function(require) {
      */
     artificialDelayKey: 'artificial_network_delay',
     defaultAjaxOptions: {},
+    formatURL: function(endpoint, useMock) {
+      return StringUtils.format(Config.get(useMock ? this.mockURLKey : this.apiURLKey), endpoint);
+    },
     /**
      * Makes a service request and returns a promise that will be
      * resolved with the data if the request succeeds.
      * @method makeRequest
      *
+     * @param {Boolean} [useMock]  (Optional) True if the mock url should be used
      * @param {String} endpoint  The value to substitute into the url string
-     * @param {Object} params  A hash of data to send along with the request
-     * @param {String} type  (Optional) Type of request (GET, POST, etc). Defaults to GET.
-     * @return {Lavaca.util.Promise}  A promise
-     */
-    /**
-     * Makes a service request and returns a promise that will be
-     * resolved with the data if the request succeeds. To use mock
-     * data, pass true for the first parameter.
-     * @method makeRequest
-     *
-     * @param {Boolean} useMock  True if the mock url should be used
-     * @param {String} endpoint  The value to substitute into the url string
-     * @param {Object} params  A hash of data to send along with the request
-     * @param {String} type  (Optional) Type of request (GET, POST, etc). Defaults to GET.
+     * @param {Object} [params]  (Optional) A hash of data to send along with the request
+     * @param {String} [type]  (Optional) Type of request (GET, POST, etc). Defaults to GET.
      * @return {Lavaca.util.Promise}  A promise
      */
     makeRequest: function(useMock, endpoint, params, type) {
@@ -84,7 +76,7 @@ define(function(require) {
 
       params = params || {};
 
-      url = StringUtils.format(Config.get(useMock ? this.mockURLKey : this.apiURLKey), endpoint);
+      url = this.formatURL(endpoint, useMock);
       type = useMock ? 'GET' : type || 'GET';
 
       if (type === 'GET') {
@@ -103,7 +95,6 @@ define(function(require) {
             dataType: 'json',
             type: type,
             data: data,
-            contentType: 'application/json',
             dataFilter: function(data, type) {
               // An empty string is technically invalid JSON
               // so jQuery will fail to parse it and our promise

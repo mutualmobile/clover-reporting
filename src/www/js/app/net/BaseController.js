@@ -3,6 +3,7 @@ define(function(require) {
   var Controller = require('lavaca/mvc/Controller'),
       merge = require('mout/object/merge'),
       stateModel = require('app/models/StateModel'),
+      getParam = require('mout/queryString/getParam'),
       localStore = require('app/cache/localStore');
 
   /**
@@ -14,11 +15,17 @@ define(function(require) {
       Controller.apply(this, arguments);
     }, {
     exec: function(action, params) {
-      var url = params.url;
-      if (url === '/login' || url === '/zoom' || (localStore.get('merchantId') && localStore.get('accessToken'))) {
-        return Controller.prototype.exec.apply(this, arguments);
+      var accessToken = getParam(location.href, 'access_token'),
+          merchantId = getParam(location.href, 'merchant_id');
+
+      if (accessToken && merchantId) {
+        _authenticate(accessToken, merchantId);
       }
-      return this.redirect('/login');
+
+      if (!_isAuthorized() && !params.bypassAuth) {
+        return this.redirect('/login');
+      }
+      return Controller.prototype.exec.apply(this, arguments);
     },
     updateState: function(historyState, title, url, stateProps){
       var defaultStateProps = {pageTitle: title};
@@ -31,6 +38,15 @@ define(function(require) {
       stateModel.trigger('change');
     }
   });
+
+  function _isAuthorized() {
+    return localStore.get('accessToken') && localStore.get('merchantId');
+  }
+
+  function _authenticate(accessToken, merchantId) {
+    localStore.setItem('accessToken', accessToken);
+    localStore.setItem('merchantId', merchantId);
+  }
 
   return BaseController;
 

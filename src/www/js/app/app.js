@@ -1,34 +1,30 @@
 define(function(require) {
   var DashboardController = require('app/net/DashboardController'),
+      AuthenticationController = require('app/net/AuthenticationController'),
       Connectivity = require('lavaca/net/Connectivity'),
-      Application = require('lavaca/mvc/Application'),
+      CloverApplication = require('app/mvc/CloverApplication'),
       Translation = require('lavaca/util/Translation'),
+      History = require('lavaca/net/History'),
       TimeSelectorView = require('app/ui/navigation/TimeSelectorView'),
       TimeSwiperView = require('app/ui/navigation/TimeSwiperView'),
       timeRangeModel = require('app/models/TimeRangeModel');
   require('lavaca/ui/DustTemplate');
   require('app/misc/dust_extensions');
   require('app/misc/tap_handler');
+  require('app/misc/authentication_handler');
 
+  // Use hash-based history since there's no server-side component supporting the app's routes.
+  History.overrideStandardsMode();
 
-  // Uncomment this section to use hash-based browser history instead of HTML5 history.
-  // You should use hash-based history if there's no server-side component supporting your app's routes.
-  // History.overrideStandardsMode();
-
-  /**
-   * Global application-specific object
-   * @class app
-   * @extends Lavaca.mvc.Application
-   */
-  var app = new Application(function() {
+  var app = new CloverApplication(function() {
     // Initialize the routes
     this.router.add({
       '/': [DashboardController, 'dashboard'],
-      '/zoom': [DashboardController, 'zoom'],
+      '/zoom': [DashboardController, 'zoom',  {bypassAuth: true}],
       '/employees': [DashboardController, 'employees'],
       '/products': [DashboardController, 'products'],
-      '/login': [DashboardController, 'login'],
-      '/logout': [DashboardController, 'logout']
+      '/login': [AuthenticationController, 'login', {bypassAuth: true}],
+      '/logout': [AuthenticationController, 'logout']
     });
 
     // Initialize translations
