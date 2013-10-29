@@ -1,4 +1,5 @@
 var Q = require('q'),
+    pick = require('mout/object/pick'),
     shared = require('../shared');
 
 function allOrders(req, res) {
@@ -35,6 +36,34 @@ function allOrders(req, res) {
               var fullOrder = data && data.order ? data.order : null;
               if (fullOrder) {
                 fullOrder = shared.extend({}, order, fullOrder);
+                fullOrder = pick(fullOrder,
+                  'id',
+                  'total', //!
+                  'paid', //!
+                  'refunded', //!
+                  'credited', //!
+                  'timestamp',
+                  'modified', //!
+                  'isDeleted', //!
+                  'employeeName',
+                  'employeeId', //*
+                  // 'customer',
+                  'paymentState',
+                  // 'customerId',
+                  'lineItems', //*
+                  // 'adjustments',
+                  // 'payments',
+                  // 'refunds',
+                  // 'credits',
+                  // 'currency',
+                  // 'clientTimestamp',
+                  // 'address',
+                  // 'taxRemoved'
+                  // 'manualTransaction',
+                  // 'timezone',
+                  // 'groupLineItems',
+                  // 'testMode'
+                  null);
                 deferred.resolve(fullOrder);
                 collection.update({id: fullOrder.id}, fullOrder, {upsert: true});
               } else {

@@ -22,6 +22,15 @@ exports.init = function(server) {
       console.log('Connected to clover database');
     }
   });
+  server.get('*', function(req, res, next) {
+    if (!req._hasAttachedClose) {
+      req.connection.on('close', function() {
+        req._hasClosed = true;
+      });
+      req._hasAttachedClose = true;
+    }
+    next();
+  });
   server.get('/orders', orderOverview);
   server.get('/all-orders', allOrders);
   server.get('/all-categories', allCategories);
