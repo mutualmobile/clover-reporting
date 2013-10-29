@@ -89,9 +89,9 @@ module.exports = function(grunt) {
 
     server.all(apiPrefix + '*', proxyRequest);
 
-    server.get('/*', function(req, res) {
-      res.redirect(util.format('/#%s#', req.originalUrl));
-    });
+    // server.get('/*', function(req, res) {
+    //   res.redirect(util.format('/#%s#', req.originalUrl));
+    // });
 
     if (vhost) {
       server.use(express.vhost(vhost, server));
