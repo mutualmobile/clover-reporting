@@ -34,36 +34,28 @@ define(function(require) {
     }
   };
   dust.filters.dateTime = function(value) {
-    value = _ensureMoment(value);
-    return value.format('hh:mm A dddd, MMMM DD YYYY');
+    return _ensureMoment(value).format('hh:mm A dddd, MMMM DD YYYY');
   };
   dust.filters.shortMonthDayTime = function(value) {
-    value = _ensureMoment(value);
-    return value.format('MMM DD hh:mm A');
+    return _ensureMoment(value).format('MMM DD hh:mm A');
   };
   dust.filters.scopeDay = function(value) {
-    value = _ensureMoment(value);
-    return value.format('MMMM DD YYYY');
+    return _ensureMoment(value).format('MMMM DD YYYY');
   };
   dust.filters.scopeWeek = function(value) {
-    value = _ensureMoment(value);
-    return value.format('MMMM YYYY');
+    return _ensureMoment(value).format('MMMM YYYY');
   };
   dust.filters.scopeMonth = function(value) {
-    value = _ensureMoment(value);
-    return value.format('MMMM YYYY');
+    return _ensureMoment(value).format('MMMM YYYY');
   };
   dust.filters.timestamp = function(value) {
-    value = _ensureMoment(value);
-    return value.toISOString();
+    return _ensureMoment(value).toISOString();
   };
   dust.filters.ymd = function(value) {
-    value = _ensureMoment(value);
-    return value.format('YYYY-MM-DD');
+    return _ensureMoment(value).format('YYYY-MM-DD');
   };
   dust.filters.hm = function(value) {
-    value = _ensureMoment(value);
-    return value.format('HH:mm');
+    return _ensureMoment(value).format('HH:mm');
   };
 
   // Private functions
