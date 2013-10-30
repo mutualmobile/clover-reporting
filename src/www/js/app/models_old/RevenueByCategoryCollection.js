@@ -1,8 +1,8 @@
 define(function(require) {
   var CustomService = require('app/service/CustomService'),
-      revenueByItemCollection = require('app/models/RevenueByItemCollection'),
+      revenueByItemCollection = require('app/models_old/RevenueByItemCollection'),
       colors = require('app/misc/color_scheme'),
-      BaseChartDataCollection = require('app/models/BaseChartDataCollection');
+      BaseChartDataCollection = require('app/models_old/BaseChartDataCollection');
 
   var RevenueByCategoryCollection = BaseChartDataCollection.extend(function RevenueByCategoryCollection() {
     BaseChartDataCollection.apply(this, arguments);

@@ -2,7 +2,7 @@ define(function(require) {
 
   var BaseView = require('app/ui/BaseView'),
       ProductCollectionView = require('app/ui/collections/ProductCollectionView'),
-      productCollection = require('app/models/ProductCollection');
+      productCollection = require('app/models_old/ProductCollection');
 
   require('rdust!templates/products');
 

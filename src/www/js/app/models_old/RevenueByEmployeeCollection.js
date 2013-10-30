@@ -2,7 +2,7 @@ define(function(require) {
   var Collection = require('lavaca/mvc/Collection'),
       batchCalls = require('app/misc/batch_calls'),
       colors = require('app/misc/color_scheme'),
-      recentOrdersCollection = require('app/models/RecentOrdersCollection');
+      recentOrdersCollection = require('app/models_old/RecentOrdersCollection');
 
   var RevenueByEmployeeCollection = Collection.extend(function RevenueByEmployeeCollection() {
     Collection.apply(this, arguments);

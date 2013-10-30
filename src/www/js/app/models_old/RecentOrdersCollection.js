@@ -1,6 +1,6 @@
 define(function(require) {
   var Promise = require('lavaca/util/Promise'),
-      BaseChartDataCollection = require('app/models/BaseChartDataCollection'),
+      BaseChartDataCollection = require('app/models_old/BaseChartDataCollection'),
       CustomService = require('app/service/CustomService');
 
   var _HOUR = 1000 * 60 * 60,

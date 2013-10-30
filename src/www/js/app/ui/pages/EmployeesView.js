@@ -2,7 +2,7 @@ define(function(require) {
 
   var BaseView = require('app/ui/BaseView'),
       EmployeeCollectionView = require('app/ui/collections/EmployeeCollectionView'),
-      employeeCollection = require('app/models/EmployeeCollection');
+      employeeCollection = require('app/models_old/EmployeeCollection');
 
   require('rdust!templates/employees');
 

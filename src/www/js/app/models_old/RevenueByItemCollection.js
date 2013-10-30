@@ -1,7 +1,7 @@
 define(function(require) {
   var CustomService = require('app/service/CustomService'),
       colors = require('app/misc/color_scheme'),
-      BaseChartDataCollection = require('app/models/BaseChartDataCollection');
+      BaseChartDataCollection = require('app/models_old/BaseChartDataCollection');
 
   var RevenueByItemCollection = BaseChartDataCollection.extend(function RevenueByItemCollection() {
     BaseChartDataCollection.apply(this, arguments);

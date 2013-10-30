@@ -1,7 +1,7 @@
 define(function(require) {
   var CollectionDetailView = require('app/ui/collections/detail/CollectionDetailView'),
       Collection = require('lavaca/mvc/Collection'),
-      recentOrdersCollection = require('app/models/RecentOrdersCollection'),
+      recentOrdersCollection = require('app/models_old/RecentOrdersCollection'),
       FilteredRevenueOverTimeView = require('app/ui/charts/chronological/FilteredRevenueOverTimeView'),
       RevenueByCategoryView = require('app/ui/charts/pie/RevenueByCategoryView'),
       SmallRevenueByCategoryView = require('app/ui/charts/pie/SmallRevenueByCategoryView'),

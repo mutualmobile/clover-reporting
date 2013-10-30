@@ -25,7 +25,7 @@ define(function(require) {
       if (start !== startTime || end !== endTime) {
         startTime = start;
         endTime = end;
-        sendLoading(true);
+        sendStatus('loading');
         fetch();
       }
     }
@@ -34,11 +34,11 @@ define(function(require) {
       if (!handles[id]) {
         handles[id] = [];
       }
-      // When a success/error callback is attached, we send
+      // When a 'done' callback is attached, we send
       // a message to the WebWorker so that it can run through
       // the handlers immediately, in case there is already
       // data loaded
-      if (method === 'success' || method === 'error') {
+      if (method === 'done') {
         processHandle(id, handles[id]);
       } else {
         handles[id].push({
@@ -70,7 +70,7 @@ define(function(require) {
           result = reduce(result, handle.cb, handle.initialValue);
         }
       });
-      sendSuccess(id, result);
+      sendDone(id, result);
     }
 
     function map(data, cb) {
@@ -97,12 +97,12 @@ define(function(require) {
               lastHash = newHash;
               update();
             }
+            sendStatus('ready');
           })
-          .error(function(result) {
-            sendError(result);
+          .error(function() {
+            sendStatus('error');
           })
           .always(function() {
-            sendLoading(false);
             fetchTimer = setTimeout(fetch, 30000);
           });
       }
@@ -124,25 +124,18 @@ define(function(require) {
 
     // ------------------ Message Sending -------------------
 
-    function sendSuccess(id, result) {
+    function sendDone(id, result) {
       self.postMessage({
-        status: 'success',
+        type: 'done',
         id: id,
         result: result
       });
     }
 
-    function sendError(result) {
+    function sendStatus(status) {
       self.postMessage({
-        status: 'error',
-        result: result
-      });
-    }
-
-    function sendLoading(isLoading) {
-      self.postMessage({
-        status: 'loading',
-        isLoading: isLoading
+        type: 'status',
+        status: 'status'
       });
     }
 
@@ -162,7 +155,7 @@ define(function(require) {
 
     // --------------- Process client message ----------------
 
-    var handlerMethods = ['map', 'reduce', 'success', 'error'];
+    var handlerMethods = ['map', 'reduce', 'done'];
     self.onmessage = function(e) {
       var method = e.data.method,
           data = e.data.data;

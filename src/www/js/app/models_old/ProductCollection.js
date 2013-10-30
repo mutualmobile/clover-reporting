@@ -1,7 +1,7 @@
 define(function(require) {
   var CustomService = require('app/service/CustomService'),
-      ProductDetailModel = require('app/models/ProductDetailModel'),
-      BaseChartDataCollection = require('app/models/BaseChartDataCollection');
+      ProductDetailModel = require('app/models_old/ProductDetailModel'),
+      BaseChartDataCollection = require('app/models_old/BaseChartDataCollection');
 
   var ProductCollection = BaseChartDataCollection.extend(function ProductCollection() {
     BaseChartDataCollection.apply(this, arguments);

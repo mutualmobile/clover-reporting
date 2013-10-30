@@ -18,7 +18,7 @@ define(function(require) {
     stateModel.on('change', 'loggedIn', _onChangeLoggedIn.bind(this));
 
     // Listen for updates to the loading state and update stateModel
-    _listenForLoadingChanges.call(this);
+    _listenForStatusChanges.call(this);
 
     // Set initial time range and listen for updates
     _onRangeUpdate.call(this);
@@ -52,11 +52,11 @@ define(function(require) {
     }
   }
 
-  function _listenForLoadingChanges() {
+  function _listenForStatusChanges() {
     this._worker.addMessageHandler(function(e) {
       var data = e.data;
-      if (data.status === 'loading') {
-        stateModel.set('loading', data.isLoading);
+      if (data.type === 'status') {
+        stateModel.set('dataStatus', data.status);
       }
     });
   }

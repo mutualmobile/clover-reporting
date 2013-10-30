@@ -3,9 +3,9 @@ define(function(require) {
   var BaseView = require('app/ui/BaseView'),
       Scrollable = require('lavaca/ui/Scrollable'),
       OrderMetricsView = require('app/ui/metrics/OrderMetricsView'),
-      recentOrdersCollection = require('app/models/RecentOrdersCollection'),
-      revenueByEmployeeCollection = require('app/models/RevenueByEmployeeCollection'),
-      revenueByCategoryCollection = require('app/models/RevenueByCategoryCollection'),
+      recentOrdersCollection = require('app/models_old/RecentOrdersCollection'),
+      revenueByEmployeeCollection = require('app/models_old/RevenueByEmployeeCollection'),
+      revenueByCategoryCollection = require('app/models_old/RevenueByCategoryCollection'),
       RevenueByCategoryView = require('app/ui/charts/pie/RevenueByCategoryView'),
       RevenueByEmployeeView = require('app/ui/charts/pie/RevenueByEmployeeView'),
       RevenueOverTimeView = require('app/ui/charts/chronological/RevenueOverTimeView');
