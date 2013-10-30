@@ -6,6 +6,7 @@ define(function(require) {
   var CloverApplication = Application.extend(function CloverApplication() {
     Application.apply(this, arguments);
   }, {
+    // Override default link handling behavior
     onTapLink: function(e) {
       var link = $(e.currentTarget),
           defaultPrevented = e.isDefaultPrevented(),

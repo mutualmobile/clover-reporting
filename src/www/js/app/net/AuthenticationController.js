@@ -16,7 +16,7 @@ define(function(require) {
     login: function(params, history) {
       return this
         .view(null, LoginView, new Model())
-        .then(this.updateState(history, 'Login', params.url));
+        .then(this.updateState(history, 'Login', params.url, {hideHeader: true}));
     },
     logout: function() {
       localStore.remove('merchantId');

@@ -7,8 +7,7 @@ define(function(require) {
   var Spinner = Widget.extend(function Spinner(el, options) {
     Widget.apply(this, arguments);
 
-    var opts = this.defaults,
-        ie8 = $('html').hasClass('ie8');
+    var opts = this.defaults;
     if (options) {
       opts = merge(this.defaults, options);
     }
@@ -16,7 +15,7 @@ define(function(require) {
       if (this && this.el) {
         this.el.spin(opts);
       }
-    }.bind(this), ie8 ? 500 : 0);
+    }.bind(this), 0);
   }, {
     defaults: {
       color: '#fff',
