@@ -31,7 +31,6 @@ define(function(require) {
     Translation.init('en_US');
 
     this.timeSelector = new TimeSelectorView('#time-selector', timeRangeModel);
-    this.timeSwiper = new TimeSwiperView('#time-swiper', timeRangeModel);
   });
 
   // Setup offline AJAX handler
