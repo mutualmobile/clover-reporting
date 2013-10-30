@@ -6,7 +6,6 @@ define(function(require) {
       Translation = require('lavaca/util/Translation'),
       History = require('lavaca/net/History'),
       TimeSelectorView = require('app/ui/navigation/TimeSelectorView'),
-      TimeSwiperView = require('app/ui/navigation/TimeSwiperView'),
       timeRangeModel = require('app/models/TimeRangeModel');
   require('lavaca/ui/DustTemplate');
   require('app/misc/dust_extensions');

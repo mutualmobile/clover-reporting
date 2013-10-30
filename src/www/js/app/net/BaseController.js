@@ -31,7 +31,7 @@ define(function(require) {
       var defaultStateProps = {pageTitle: title};
       this.history(historyState, title, url)();
 
-      stateModel.set('hideHeader', url === '/login');
+      stateModel.set('hideHeader', !!(stateProps && stateProps.hideHeader));
 
       stateProps = merge(stateProps || {}, defaultStateProps);
       stateModel.apply(stateProps, true);
