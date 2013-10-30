@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var Service = require('app/data/Service'),
+  var Service = require('app/service/Service'),
       localStore = require('app/cache/localStore');
 
   var CustomService = Service.extend(function CustomService() {

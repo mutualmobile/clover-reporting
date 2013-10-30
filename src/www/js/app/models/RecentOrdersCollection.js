@@ -1,7 +1,7 @@
 define(function(require) {
   var Promise = require('lavaca/util/Promise'),
       BaseChartDataCollection = require('app/models/BaseChartDataCollection'),
-      CustomService = require('app/data/CustomService');
+      CustomService = require('app/service/CustomService');
 
   var _HOUR = 1000 * 60 * 60,
       _MIN_DURATION = 1000 * 60 * 10;

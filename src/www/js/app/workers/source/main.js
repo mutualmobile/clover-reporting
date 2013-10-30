@@ -1,0 +1,180 @@
+define(function(require) {
+  // When running in a real worker, this source
+  // will be injected into the worker source
+  // and expose the xhr function globally
+  var xhr = require('app/workers/source/xhr');
+
+  // When used in a FakeWorker, 'self' will be
+  // passed in and will expose 'onmessage' and
+  // 'postMessage' functions. In the context of
+  // a WebWorker, only the function body will
+  // be used and 'self' will refer to the built-in
+  // global object.
+  return function(self) {
+    var handles = {},
+        data = [],
+        url, lastFetch, fetchTimer, startTime, endTime, lastHash;
+
+    // --------- Direct calls from the main thread ---------
+
+    function setURL(newURL) {
+      url = newURL;
+    }
+
+    function setTimeRange(start, end) {
+      if (start !== startTime || end !== endTime) {
+        startTime = start;
+        endTime = end;
+        sendLoading(true);
+        fetch();
+      }
+    }
+
+    function addHandler(id, method, callback, initialValue) {
+      if (!handles[id]) {
+        handles[id] = [];
+      }
+      // When a success/error callback is attached, we send
+      // a message to the WebWorker so that it can run through
+      // the handlers immediately, in case there is already
+      // data loaded
+      if (method === 'success' || method === 'error') {
+        processHandle(id, handles[id]);
+      } else {
+        handles[id].push({
+          method: method,
+          cb: funcFromSource(callback),
+          initialValue: initialValue
+        });
+      }
+    }
+
+    // ------------------- Process Data --------------------
+
+    // Update all DataHandles
+    function update() {
+      for (var id in handles) {
+        processHandle(id);
+      }
+    }
+
+    // Update a single DataHandle
+    function processHandle(id) {
+      var result = data,
+          handleData = handles[id];
+      handleData.forEach(function(handle) {
+        var method = handle.method;
+        if (method === 'map') {
+          result = map(result, handle.cb);
+        } else if (method === 'reduce') {
+          result = reduce(result, handle.cb, handle.initialValue);
+        }
+      });
+      sendSuccess(id, result);
+    }
+
+    function map(data, cb) {
+      data = Array.isArray(data) ? data : [];
+      return data.map(cb);
+    }
+
+    function reduce(data, cb, initialValue) {
+      data = Array.isArray(data) ? data : [];
+      return data.reduce(cb, initialValue);
+    }
+
+    // --------------------- Fetching ----------------------
+
+    function fetch() {
+      var fullUrl;
+      if (url) {
+        cancel();
+        fullUrl = url + '&startTime=' + startTime + '&endTime=' + endTime;
+        lastFetch = xhr(fullUrl)
+          .success(function(newData, newHash) {
+            if (newData && newData.orders && newHash !== lastHash) {
+              data = newData.orders;
+              lastHash = newHash;
+              update();
+            }
+          })
+          .error(function(result) {
+            sendError(result);
+          })
+          .always(function() {
+            sendLoading(false);
+            fetchTimer = setTimeout(fetch, 30000);
+          });
+      }
+    }
+
+    function cancel() {
+      clearTimeout(fetchTimer);
+      if (lastFetch) {
+        lastFetch.abort();
+      }
+    }
+
+    function reset() {
+      cancel();
+      lastHash = null;
+      data = [];
+      update();
+    }
+
+    // ------------------ Message Sending -------------------
+
+    function sendSuccess(id, result) {
+      self.postMessage({
+        status: 'success',
+        id: id,
+        result: result
+      });
+    }
+
+    function sendError(result) {
+      self.postMessage({
+        status: 'error',
+        result: result
+      });
+    }
+
+    function sendLoading(isLoading) {
+      self.postMessage({
+        status: 'loading',
+        isLoading: isLoading
+      });
+    }
+
+    // In a WebWorker, functions are passed as strings
+    // and converted back to functions using the Function
+    // constructor, which is much faster than eval and has
+    // nearly identical performance to normally-declared
+    // functions. In a FakeWorker, functions will be passed
+    // as normal functions and this is a no-op.
+    function funcFromSource(src) {
+      if (typeof src === 'string') {
+        return (new Function('return(' + src + ')')());
+      } else { // normal function
+        return src;
+      }
+    }
+
+    // --------------- Process client message ----------------
+
+    var handlerMethods = ['map', 'reduce', 'success', 'error'];
+    self.onmessage = function(e) {
+      var method = e.data.method,
+          data = e.data.data;
+      if (method === 'setTimeRange') {
+        setTimeRange(data.startTime, data.endTime);
+      } else if (handlerMethods.indexOf(method) > -1) {
+        addHandler(data.id, method, data.fn, data.initialValue);
+      } else if (method === 'reset') {
+        reset();
+      } else if (method === 'setURL') {
+        setURL(data);
+      }
+    };
+  };
+});

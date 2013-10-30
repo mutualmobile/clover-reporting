@@ -12,6 +12,7 @@ define(function(require) {
   require('app/misc/dust_extensions');
   require('app/misc/tap_handler');
   require('app/misc/authentication_handler');
+  require('app/data/dataHub');
 
   // Use hash-based history since there's no server-side component supporting the app's routes.
   History.overrideStandardsMode();

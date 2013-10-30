@@ -1,5 +1,5 @@
 define(function(require) {
-  var CustomService = require('app/data/CustomService'),
+  var CustomService = require('app/service/CustomService'),
       BaseChartDataCollection = require('app/models/BaseChartDataCollection'),
       EmployeeDetailModel = require('app/models/EmployeeDetailModel');
 

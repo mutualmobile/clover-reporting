@@ -7,7 +7,7 @@ define(function(require) {
 
   var BaseChartDataCollection = Collection.extend(function BaseChartDataCollection() {
     Collection.apply(this, arguments);
-    _fetch.call(this);
+    // _fetch.call(this);
     this.apply({
       loading: true,
       startTime: timeRangeModel.get('startTime'),
@@ -19,7 +19,7 @@ define(function(require) {
     stateModel.on('change', 'loggedIn', this._loggedInChangeHandler);
   }, {
     fetch: null,
-    fetchDelay: 30000,
+    fetchDelay: 10000,
     applyNewData: function(data) {
       var models;
       if (!data || !data.length || !data[0].id) {

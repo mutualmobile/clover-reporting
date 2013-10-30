@@ -1,5 +1,5 @@
 define(function(require) {
-  var Service = require('app/data/Service');
+  var Service = require('app/service/Service');
 
   var CloverService = Service.extend(function CloverService() {
     Service.apply(this, arguments);
