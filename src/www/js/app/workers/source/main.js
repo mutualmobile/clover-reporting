@@ -68,6 +68,8 @@ define(function(require) {
           result = map(result, handle.cb);
         } else if (method === 'reduce') {
           result = reduce(result, handle.cb, handle.initialValue);
+        } else if (method === 'sort') {
+          result = sort(result, handle.cb);
         }
       });
       sendDone(id, result);
@@ -81,6 +83,10 @@ define(function(require) {
     function reduce(data, cb, initialValue) {
       data = Array.isArray(data) ? data : [];
       return data.reduce(cb, initialValue);
+    }
+
+    function sort(data, cb) {
+      return data.slice(0).sort(cb);
     }
 
     // --------------------- Fetching ----------------------
@@ -155,7 +161,7 @@ define(function(require) {
 
     // --------------- Process client message ----------------
 
-    var handlerMethods = ['map', 'reduce', 'done'];
+    var handlerMethods = ['map', 'reduce', 'sort', 'done'];
     self.onmessage = function(e) {
       var method = e.data.method,
           data = e.data.data;

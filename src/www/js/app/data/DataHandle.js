@@ -16,6 +16,9 @@ define(function(require) {
     reduce: function(cb, initialValue) {
       return _addOperation.call(this, 'reduce', cb, initialValue);
     },
+    sort: function(cb) {
+      return _addOperation.call(this, 'sort', cb);
+    },
     done: function(cb) {
       _addHandler.call(this, cb);
       return _addOperation.call(this, 'done');
