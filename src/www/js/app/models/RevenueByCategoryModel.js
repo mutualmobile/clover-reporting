@@ -18,8 +18,6 @@ define(function(require) {
                 result[name] = (result[name] || 0) + revenueForLineItem(lineItem);
               });
             });
-          } else {
-            result['Unknown'] = data.total;
           }
           return result;
         })

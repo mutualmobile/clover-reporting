@@ -6,6 +6,8 @@ define(function(require) {
   var BaseDataModel = Model.extend(function BaseDataModel() {
     Model.apply(this, arguments);
 
+    this.set('data', []);
+
     // Add individual properties based on the dataStatus
     // property of the stateModel
     _setStatusProperties.call(this);
