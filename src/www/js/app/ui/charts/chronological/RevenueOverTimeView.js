@@ -8,8 +8,8 @@ define(function(require) {
       nv = require('nv'),
       moment = require('moment'),
       bucketData = require('app/misc/bucket_data'),
-      timeRangeModel = require('app/models/TimeRangeModel'),
-      $ = require('jquery');
+      timeRangeModel = require('app/models/global/TimeRangeModel'),
+      $ = require('$');
   require('app/ui/widgets/CustomLineChart');
   require('rdust!templates/revenue_over_time');
 

@@ -6,7 +6,7 @@ define(function(require) {
       ProductsView = require('app/ui/pages/ProductsView'),
       Model = require('lavaca/mvc/Model'),
       Promise = require('lavaca/util/Promise'),
-      timeRangeModel = require('app/models/TimeRangeModel'),
+      timeRangeModel = require('app/models/global/TimeRangeModel'),
       moment = require('moment');
 
   /**

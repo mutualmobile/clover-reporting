@@ -1,5 +1,5 @@
 define(function(require) {
-  var $ = require('jquery');
+  var $ = require('$');
 
   var _TOUCH_CLASS = 'touch',
       _TOUCH_DELAY = 0,

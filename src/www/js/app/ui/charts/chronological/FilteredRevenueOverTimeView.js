@@ -2,7 +2,7 @@ define(function(require) {
 
   var BaseChartView = require('app/ui/charts/BaseChartView'),
       RevenueOverTimeView = require('app/ui/charts/chronological/RevenueOverTimeView'),
-      timeRangeModel = require('app/models/TimeRangeModel'),
+      timeRangeModel = require('app/models/global/TimeRangeModel'),
       bucketData = require('app/misc/bucket_data'),
       d3 = require('d3'),
       nv = require('nv');

@@ -1,6 +1,6 @@
 define(function(require) {
   var dataHub = require('app/data/DataHub'),
-      stateModel = require('app/models/StateModel'),
+      stateModel = require('app/models/global/StateModel'),
       Model = require('lavaca/mvc/Model');
 
   var BaseDataModel = Model.extend(function BaseDataModel() {

@@ -5,7 +5,7 @@ define(function(require) {
       router = require('lavaca/mvc/Router'),
       PageMenuView = require('app/ui/navigation/PageMenuView'),
       ModeMenuView = require('app/ui/navigation/ModeMenuView'),
-      stateModel = require('app/models/StateModel');
+      stateModel = require('app/models/global/StateModel');
 
   require('rdust!templates/time_selector');
 

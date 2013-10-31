@@ -1,6 +1,6 @@
 define(function(require) {
   var Widget = require('lavaca/ui/Widget'),
-      $ = require('jquery'),
+      $ = require('$'),
       merge = require('mout/object/merge');
   require('jquery-spin');
 

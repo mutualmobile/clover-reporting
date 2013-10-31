@@ -1,7 +1,7 @@
 define(function(require) {
   var Application = require('lavaca/mvc/Application'),
       History = require('lavaca/net/History'),
-      $ = require('jquery');
+      $ = require('$');
 
   var CloverApplication = Application.extend(function CloverApplication() {
     Application.apply(this, arguments);

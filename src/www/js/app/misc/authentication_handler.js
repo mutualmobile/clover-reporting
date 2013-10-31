@@ -1,6 +1,6 @@
 define(function(require) {
   var localStore = require('app/cache/localStore'),
-      stateModel = require('app/models/StateModel');
+      stateModel = require('app/models/global/StateModel');
 
   var tokenMatch = location.href.match(/access_token=([^&]+)/),
       merchantIdMatch = location.href.match(/merchant_id=([^&+]+)/);

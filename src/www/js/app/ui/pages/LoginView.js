@@ -2,8 +2,8 @@ define(function(require) {
 
   var BaseView = require('app/ui/BaseView'),
       localStore = require('app/cache/localStore'),
-      stateModel = require('app/models/StateModel'),
-      $ = require('jquery'),
+      stateModel = require('app/models/global/StateModel'),
+      $ = require('$'),
       router = require('lavaca/mvc/Router');
   require('rdust!templates/login');
 

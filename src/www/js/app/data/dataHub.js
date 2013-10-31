@@ -1,11 +1,11 @@
 define(function(require) {
   var Disposable = require('lavaca/util/Disposable'),
       DataHandle = require('app/data/DataHandle'),
-      stateModel = require('app/models/StateModel'),
+      stateModel = require('app/models/global/StateModel'),
       Config = require('lavaca/util/Config'),
       StringUtils = require('lavaca/util/StringUtils'),
       localStore = require('app/cache/localStore'),
-      timeRangeModel = require('app/models/TimeRangeModel'),
+      timeRangeModel = require('app/models/global/TimeRangeModel'),
       encodeQueryString = require('mout/queryString/encode'),
       Worker = require('app/workers/Worker');
 

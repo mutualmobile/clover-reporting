@@ -1,7 +1,7 @@
 define(function(require) {
 
   var PopoverControlView = require('app/ui/navigation/PopoverControlView'),
-      timeRangeModel = require('app/models/TimeRangeModel'),
+      timeRangeModel = require('app/models/global/TimeRangeModel'),
       clone = require('mout/lang/clone'),
       $ = require('$');
   require('rdust!templates/mode_menu');

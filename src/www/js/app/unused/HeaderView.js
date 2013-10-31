@@ -2,8 +2,8 @@ define(function(require) {
 
   var BaseView = require('app/ui/BaseView'),
       TimeSelectorView = require('app/ui/navigation/TimeSelectorView'),
-      timeRangeModel = require('app/models/TimeRangeModel'),
-      stateModel = require('app/models/StateModel');
+      timeRangeModel = require('app/models/global/TimeRangeModel'),
+      stateModel = require('app/models/global/StateModel');
   require('rdust!templates/header');
 
   /**

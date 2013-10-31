@@ -4,7 +4,7 @@ define(function(require) {
       batchCalls = require('app/misc/batch_calls'),
       d3 = require('d3'),
       nv = require('nv'),
-      $ = require('jquery');
+      $ = require('$');
   require('app/ui/widgets/CustomPieChart');
   require('rdust!templates/base_pie');
 

@@ -1,8 +1,8 @@
 define(function(require) {
   var Collection = require('lavaca/mvc/Collection'),
-      timeRangeModel = require('app/models/TimeRangeModel'),
+      timeRangeModel = require('app/models/global/TimeRangeModel'),
       clone = require('mout/lang/clone'),
-      stateModel = require('app/models/StateModel'),
+      stateModel = require('app/models/global/StateModel'),
       remove = require('mout/array/remove');
 
   var BaseChartDataCollection = Collection.extend(function BaseChartDataCollection() {

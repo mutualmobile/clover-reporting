@@ -2,7 +2,7 @@ define(function(require) {
 
   var Controller = require('lavaca/mvc/Controller'),
       merge = require('mout/object/merge'),
-      stateModel = require('app/models/StateModel');
+      stateModel = require('app/models/global/StateModel');
 
   /**
    * Base controller

@@ -2,7 +2,7 @@ define(function(require) {
   var BaseController = require('app/net/BaseController'),
       Model = require('lavaca/mvc/Model'),
       localStore = require('app/cache/localStore'),
-      stateModel = require('app/models/StateModel'),
+      stateModel = require('app/models/global/StateModel'),
       LoginView = require('app/ui/pages/LoginView');
 
   /**
