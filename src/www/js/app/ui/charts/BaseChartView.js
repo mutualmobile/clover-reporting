@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var BaseView = require('app/ui/BaseView'),
+  var BaseDataView = require('app/ui/BaseDataView'),
       $ = require('$'),
       remove = require('mout/array/remove'),
       debounce = require('mout/function/debounce'),
@@ -12,10 +12,10 @@ define(function(require) {
   /**
    * Super class for all chart views
    * @class app.ui.charts.BaseChartView
-   * @extends app.ui.BaseView
+   * @extends app.ui.BaseDataView
    */
-  var BaseChartView = BaseView.extend(function BaseChartView() {
-    BaseView.apply(this, arguments);
+  var BaseChartView = BaseDataView.extend(function BaseChartView() {
+    BaseDataView.apply(this, arguments);
 
     this.chart = this.createChart();
     this.mapEvent({
@@ -23,18 +23,21 @@ define(function(require) {
         'change.loading': _onChangeLoading.bind(this)
       }
     });
-
     $(window).on('resize.baseChart'+this.id, debounce(function() {
       this.updateChart();
     }.bind(this), 50));
   }, {
+    autoRender: true,
     template: 'templates/revenue_by_customer',
     className: 'revenue_by_customer',
     createChart: function() {},
     updateChart: function() {},
     getData: function() {},
+    onChangeData: function() {
+      this.updateChart();
+    },
     onRenderSuccess: function() {
-      BaseView.prototype.onRenderSuccess.apply(this, arguments);
+      BaseDataView.prototype.onRenderSuccess.apply(this, arguments);
       nv.addGraph(function() {
         if (this.model) {
           this.updateChart();
@@ -45,7 +48,7 @@ define(function(require) {
     dispose: function() {
       $(window).off('resize.baseChart'+this.id);
       remove(nv.graphs, this.chart);
-      return BaseView.prototype.dispose.apply(this, arguments);
+      return BaseDataView.prototype.dispose.apply(this, arguments);
     }
   });
 

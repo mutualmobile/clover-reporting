@@ -14,9 +14,9 @@ define(function(require) {
 
     // Add a done handler to the DatHandle that will set
     // the returned data to the 'data' property
-    this._dataHandle = dataHub.createDataHandle().done(function(data) {
-      this.set('data', data);
-    }.bind(this));
+    this._dataHandle = dataHub.createDataHandle();
+    this.setDataOperations();
+    this._dataHandle.done(this.onDataChange.bind(this));
   }, {
     map: function() {
       this._dataHandle.map.apply(this._dataHandle, arguments);
@@ -26,10 +26,17 @@ define(function(require) {
       this._dataHandle.reduce.apply(this._dataHandle, arguments);
       return this;
     },
+    sort: function() {
+      this._dataHandle.sort.apply(this._dataHandle, arguments);
+    },
+    setDataOperations: function() {},
+    onDataChange: function(data) {
+      this.set('data', data);
+    },
     dispose: function() {
       this._dataHandle.dispose();
       stateModel.off(this._statusChangeHandler);
-      return Model.dispose.apply(this, arguments);
+      return Model.prototype.dispose.apply(this, arguments);
     }
   });
 

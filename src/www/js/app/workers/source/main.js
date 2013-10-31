@@ -67,7 +67,9 @@ define(function(require) {
         if (method === 'map') {
           result = map(result, handle.cb);
         } else if (method === 'reduce') {
-          result = reduce(result, handle.cb, handle.initialValue);
+          // JSON encode then decode the initialValue to "copy"
+          // it in case the reduce function modifies it
+          result = reduce(result, handle.cb, JSON.parse(JSON.stringify(handle.initialValue)));
         } else if (method === 'sort') {
           result = sort(result, handle.cb);
         }
@@ -109,7 +111,7 @@ define(function(require) {
             sendStatus('error');
           })
           .always(function() {
-            fetchTimer = setTimeout(fetch, 30000);
+            fetchTimer = setTimeout(fetch, 6000);
           });
       }
     }

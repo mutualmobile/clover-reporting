@@ -4,7 +4,8 @@ define(function(require) {
       batchCalls = require('app/misc/batch_calls'),
       d3 = require('d3'),
       nv = require('nv'),
-      $ = require('$');
+      $ = require('$'),
+      colors = require('app/misc/color_scheme');
   require('app/ui/widgets/CustomPieChart');
   require('rdust!templates/base_pie');
 
@@ -16,7 +17,6 @@ define(function(require) {
   var BasePieChartView = BaseChartView.extend(function BasePieChartView() {
     BaseChartView.apply(this, arguments);
 
-    var batchedChangeHandler = batchCalls(this.updateChart, this);
     this.mapEvent({
       '.popover': {
         'tap': _tapInPopover,
@@ -30,13 +30,6 @@ define(function(require) {
       },
       '.popover-see-more': {
         'tap': this.onTapSeeMore.bind(this)
-      },
-      model: {
-        'addItem': batchedChangeHandler,
-        'removeItem': batchedChangeHandler,
-        // 'change.startTime': batchedChangeHandler,
-        // 'change.endTime': batchedChangeHandler
-        'dataChange': batchedChangeHandler
       }
     });
 
@@ -45,12 +38,10 @@ define(function(require) {
     template: 'templates/base_pie',
     className: 'base_pie',
     updateChart: function() {
-      if (!this.model) { return; }
-
-      var data = this.getData(),
+      var data = this.model.get('pieData'),
           selected = d3.select(this.el[0]).select('svg');
 
-      if (!data) {
+      if (!data || data.length === 0) {
         selected.text(null);
         this.el.addClass('empty');
       } else {
@@ -58,44 +49,11 @@ define(function(require) {
       }
 
       selected
-          .datum(this.handleOther(data))
+          .datum(data)
         .transition().duration(500)
           .call(this.chart);
 
       this.updateLegend();
-    },
-    getData: function() {},
-    handleOther: function(data) {
-      var total = 0,
-          cutoff = 0.062,
-          newData = [],
-          other = {
-            label: 'Other',
-            value: 0
-          };
-
-      if (!data) { return data; }
-
-      // Calculate total
-      data.forEach(function(item) {
-        total += item.value;
-      });
-
-      // Determine the cutoff (data should already be in descending order)
-      for (var i = data.length - 1; i >= 0; i--) {
-        if ((data[i].value / total) < cutoff) {
-          other.value += data[i].value;
-        } else {
-          newData.unshift(data[i]);
-        }
-      }
-
-      // Add other to data if necessary
-      if (other.value) {
-        newData.push(other);
-      }
-
-      return newData;
     },
     createChart: function() {
       var chart = nv.models.pieChart()
@@ -110,7 +68,10 @@ define(function(require) {
               .spacing(0.07)
               .labelOffset(30)
               .tooltips(false)
-              .labelType('custom1');
+              .labelType('custom1')
+              .color(function(d, i) {
+                return colors[i % colors.length];
+              });
 
       return chart;
     },

@@ -2,7 +2,8 @@ define(function(require) {
   var Disposable = require('lavaca/util/Disposable'),
       FakeWorker = require('app/workers/FakeWorker'),
       main = require('app/workers/source/main'),
-      xhr = require('app/workers/source/xhr');
+      xhr = require('app/workers/source/xhr'),
+      revenueForLineItem = require('app/workers/source/revenueForLineItem');
 
   var _URL = window.URL ? window.URL : window.webkitURL,
       _hasFullSupport = false; //!!(window.Worker && _URL);
@@ -52,7 +53,7 @@ define(function(require) {
   }
 
   function _getWorkerSource() {
-    var imports = [xhr],
+    var imports = [xhr, revenueForLineItem],
         src = '';
     imports.forEach(function(anImport) {
       src += anImport + '\r\n';
