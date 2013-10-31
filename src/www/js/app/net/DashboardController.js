@@ -2,8 +2,8 @@ define(function(require) {
 
   var BaseController = require('app/net/BaseController'),
       DashboardView = require('app/ui/pages/DashboardView'),
-      EmployeesView = require('app/ui/pages/EmployeesView'),
-      ProductsView = require('app/ui/pages/ProductsView'),
+      // EmployeesView = require('app/ui/pages/EmployeesView'),
+      // ProductsView = require('app/ui/pages/ProductsView'),
       Model = require('lavaca/mvc/Model'),
       Promise = require('lavaca/util/Promise'),
       timeRangeModel = require('app/models/global/TimeRangeModel'),
