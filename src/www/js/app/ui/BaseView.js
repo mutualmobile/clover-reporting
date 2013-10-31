@@ -26,7 +26,7 @@ define(function(require) {
       }
     });
   }, {
-
+    autoRender: true,
     /**
      * The name of the template used by the view
      * @property {String} template

@@ -34,7 +34,6 @@ define(function(require) {
         'tap': _onTapTooltipButton.bind(this)
       }
     });
-    this.render();
   }, {
     template: 'templates/revenue_over_time',
     className: 'revenue_over_time',

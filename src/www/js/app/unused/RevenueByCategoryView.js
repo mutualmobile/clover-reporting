@@ -21,7 +21,6 @@ define(function(require) {
         model: revenueByItemCollection
       }
     });
-    this.render();
   }, {
     template: 'templates/revenue_by_category',
     className: 'base_pie revenue_by_category',

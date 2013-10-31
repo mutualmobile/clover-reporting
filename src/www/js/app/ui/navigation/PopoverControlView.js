@@ -20,7 +20,6 @@ define(function(require) {
         change: batchCalls(_updateMenu, this)
       }
     });
-    this.render();
   }, {
     open: function() {
       setTimeout(function() {

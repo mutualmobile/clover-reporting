@@ -21,7 +21,6 @@ define(function(require) {
         change: batchedRedraw
       }
     });
-    this.render();
   }, {
     template: 'templates/order_metrics',
     className: 'order_metrics'

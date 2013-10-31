@@ -10,7 +10,6 @@ define(function(require) {
    */
   var ProductCollectionView = BaseCollectionView.extend(function ProductCollectionView() {
     BaseCollectionView.apply(this, arguments);
-    this.render();
   },{
     TView: ProductDetailView
   });

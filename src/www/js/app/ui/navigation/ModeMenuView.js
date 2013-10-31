@@ -21,7 +21,6 @@ define(function(require) {
       }
     });
     this.model.timeRange = clone(timeRangeModel.toObject());
-    this.render();
   }, {
     template: 'templates/mode_menu',
     className: 'mode_menu'

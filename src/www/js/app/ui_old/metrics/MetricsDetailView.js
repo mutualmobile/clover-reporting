@@ -9,7 +9,6 @@ define(function(require) {
    */
   var MetricsDetailView = BaseView.extend(function MetricsDetailView() {
     BaseView.apply(this, arguments);
-    this.render();
   }, {
     template: 'templates/metrics_detail',
     className: 'metrics_detail'

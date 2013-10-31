@@ -27,7 +27,6 @@ define(function(require) {
       this.updateChart();
     }.bind(this), 50));
   }, {
-    autoRender: true,
     template: 'templates/revenue_by_customer',
     className: 'revenue_by_customer',
     createChart: function() {},

@@ -19,7 +19,6 @@ define(function(require) {
         tap: _onTapLink.bind(this)
       }
     });
-    this.render();
   }, {
     template: 'templates/page_menu',
     className: 'page_menu'

@@ -19,7 +19,6 @@ define(function(require) {
         TView: PieChartPopoverView
       }
     });
-    this.render();
   }, {
     template: 'templates/revenue_by_employee',
     className: 'base_pie revenue_by_employee',

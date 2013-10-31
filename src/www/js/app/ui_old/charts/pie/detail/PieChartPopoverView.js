@@ -21,7 +21,6 @@ define(function(require) {
         'change.loading': batchedChangeHandler
       }
     });
-    this.render();
   }, {
     template: 'templates/pie_popover',
     className: 'pie_popover',

@@ -44,7 +44,6 @@ define(function(require) {
         change: batchCalls(_onChange, this)
       }
     });
-    this.render();
   });
 
   // Event handlers

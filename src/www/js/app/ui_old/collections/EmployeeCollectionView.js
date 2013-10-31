@@ -10,7 +10,6 @@ define(function(require) {
    */
   var EmployeeCollectionView = BaseCollectionView.extend(function EmployeeCollectionView() {
     BaseCollectionView.apply(this, arguments);
-    this.render();
   },{
     TView: EmployeeDetailView
   });

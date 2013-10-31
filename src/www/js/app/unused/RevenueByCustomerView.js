@@ -24,7 +24,6 @@ define(function(require) {
         dataChange: batchedChangeHandler
       }
     });
-    this.render();
   }, {
     template: 'templates/revenue_by_customer',
     className: 'revenue_by_customer',

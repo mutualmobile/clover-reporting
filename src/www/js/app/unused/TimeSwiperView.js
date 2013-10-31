@@ -26,7 +26,6 @@ define(function(require) {
       .on('touchmove', _onDragMove.bind(this))
       .on('touchend', _onDragEnd.bind(this))
       .on('touchcancel', _onDragCancel.bind(this));
-    this.render();
   }, {
     template: 'templates/time_swiper',
     className: 'time_swiper',

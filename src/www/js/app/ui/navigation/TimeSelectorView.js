@@ -40,7 +40,6 @@ define(function(require) {
     this._hideHeaderChangeHandler = _onChangeHidden.bind(this);
     stateModel.on('change', 'hideHeader', this._hideHeaderChangeHandler);
     _onChangeHidden.call(this);
-    this.render();
   }, {
     template: 'templates/time_selector',
     className: 'time_selector',
@@ -69,12 +68,7 @@ define(function(require) {
   }
 
   function _onChangeHidden() {
-    var hide = stateModel.get('hideHeader');
-    if (hide) {
-      $(document.body).addClass('hide-header');
-    } else {
-      $(document.body).removeClass('hide-header');
-    }
+    $(document.body).toggleClass('hide-header', stateModel.get('hideHeader'));
   }
 
   return TimeSelectorView;
