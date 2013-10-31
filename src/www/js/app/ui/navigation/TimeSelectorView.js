@@ -14,7 +14,7 @@ define(function(require) {
    * @class app.ui.navigation.TimeSelectorView
    * @extends app.ui.BaseView
    */
-  var TimeSelectorView = BaseView.extend(function() {
+  var TimeSelectorView = BaseView.extend(function TimeSelectorView() {
     BaseView.apply(this, arguments);
     this.mapChildView({
       '#pagemenu': {
@@ -40,6 +40,7 @@ define(function(require) {
     this._hideHeaderChangeHandler = _onChangeHidden.bind(this);
     stateModel.on('change', 'hideHeader', this._hideHeaderChangeHandler);
     _onChangeHidden.call(this);
+    this.render();
   }, {
     template: 'templates/time_selector',
     className: 'time_selector',
