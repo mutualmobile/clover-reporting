@@ -52,7 +52,7 @@ define(function(require) {
           rangeData,
           maxHeight,
           data;
-      // Remove tooldtips
+      // Remove tooltips
       nv.tooltip.cleanup();
 
       if (!elWidth) { return; }
