@@ -20,7 +20,8 @@ define(function(require) {
           other = {
             label: 'Other',
             value: 0
-          };
+          },
+          i;
 
       if (!data) { return data; }
 
@@ -29,8 +30,9 @@ define(function(require) {
         total += item.value;
       });
 
-      // Determine the cutoff (data should already be in descending order)
-      for (var i = data.length - 1; i >= 0; i--) {
+      // Find which items fall below the cutoff
+      // and add them to 'Other'
+      for (i = data.length - 1; i >= 0; i--) {
         if ((data[i].value / total) < cutoff) {
           other.value += data[i].value;
         } else {
@@ -38,7 +40,7 @@ define(function(require) {
         }
       }
 
-      // Add other to data if necessary
+      // Add 'Other' category if necessary
       if (other.value) {
         newData.push(other);
       }
