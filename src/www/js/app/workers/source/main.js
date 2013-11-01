@@ -73,6 +73,8 @@ define(function(require) {
           result = reduce(result, handle.cb, JSON.parse(JSON.stringify(handle.initialValue)));
         } else if (method === 'sort') {
           result = sort(result, handle.cb);
+        } else if (method === 'process') {
+          result = process(result, handle.cb);
         }
       });
       sendDone(id, result);
@@ -90,6 +92,10 @@ define(function(require) {
 
     function sort(data, cb) {
       return data.slice(0).sort(cb);
+    }
+
+    function process(data, cb) {
+      return cb(data);
     }
 
     // --------------------- Fetching ----------------------
@@ -164,14 +170,14 @@ define(function(require) {
 
     // --------------- Process client message ----------------
 
-    var handlerMethods = ['map', 'reduce', 'sort', 'done'];
+    var handlerMethods = ['map', 'reduce', 'sort', 'process', 'done'];
     self.onmessage = function(e) {
       var method = e.data.method,
           data = e.data.data;
       if (method === 'setTimeRange') {
         setTimeRange(data.startTime, data.endTime);
       } else if (handlerMethods.indexOf(method) > -1) {
-        addHandler(data.id, method, data.fn, data.initialValue);
+        addHandler(data.id, method, data.fn, data.initialValue || null);
       } else if (method === 'reset') {
         reset();
       } else if (method === 'setURL') {

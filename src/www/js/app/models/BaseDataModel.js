@@ -16,31 +16,33 @@ define(function(require) {
 
     // Add a done handler to the DatHandle that will set
     // the returned data to the 'data' property
-    this._dataHandle = dataHub.createDataHandle();
-    this.setDataOperations();
-    this._dataHandle.done(this.onDataChange.bind(this));
+    this._dataHandles = [];
   }, {
-    map: function() {
-      this._dataHandle.map.apply(this._dataHandle, arguments);
-      return this;
-    },
-    reduce: function() {
-      this._dataHandle.reduce.apply(this._dataHandle, arguments);
-      return this;
-    },
-    sort: function() {
-      this._dataHandle.sort.apply(this._dataHandle, arguments);
-    },
-    setDataOperations: function() {},
     onDataChange: function(data) {
       this.set('data', data);
+    },
+    setPrimaryDataHandle: function(handle) {
+      handle.done(this.onDataChange.bind(this));
+    },
+    addDataOperation: function(callbacks, fireOnDataChange) {
+      callbacks = Array.isArray(callbacks) ? callbacks : [callbacks];
+      callbacks.forEach(function(cb) {
+        var handle = dataHub.createDataHandle();
+        cb.call(this, handle);
+        if (fireOnDataChange !== false) {
+          handle.done(this.onDataChange.bind(this));
+        }
+        this._dataHandles.push(handle);
+      }.bind(this));
     },
     dispose: function() {
       // In case this gets called twice, for example,
       // if the model is shared by multiple views that
       // are getting disposed at the same time
       if (!this._hasBeenDisposed) {
-        this._dataHandle.dispose();
+        this._dataHandles.forEach(function(handle) {
+          handle.dispose();
+        });
         stateModel.off(this._statusChangeHandler);
         this._hasBeenDisposed = true;
       }

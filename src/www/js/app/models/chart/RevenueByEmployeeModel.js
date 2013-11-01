@@ -4,20 +4,21 @@ define(function(require) {
   var RevenueByEmployeeModel = BasePieChartModel.extend(function RevenueByEmployeeModel() {
     BasePieChartModel.apply(this, arguments);
     this.set('popoverTitle', 'Top Employees');
-  }, {
-    setDataOperations: function() {
-      this
-        .map(function(order) {
-          var employeeName = order.employeeName,
-              result = {};
-          if (employeeName) {
-            result[employeeName] = order.total;
-          }
-          return result;
-        })
-        .applyStandardFormatting();
-    }
+    this.addDataOperation(_dataOperation);
   });
+
+  function _dataOperation(handle) {
+    handle
+      .map(function(order) {
+        var employeeName = order.employeeName,
+            result = {};
+        if (employeeName) {
+          result[employeeName] = order.total;
+        }
+        return result;
+      });
+    this.applyStandardFormatting(handle);
+  }
 
   return RevenueByEmployeeModel;
 });

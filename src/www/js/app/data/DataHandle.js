@@ -19,6 +19,9 @@ define(function(require) {
     sort: function(cb) {
       return _addOperation.call(this, 'sort', cb);
     },
+    process: function(cb) {
+      return _addOperation.call(this, 'process', cb);
+    },
     done: function(cb) {
       _addHandler.call(this, cb);
       return _addOperation.call(this, 'done');

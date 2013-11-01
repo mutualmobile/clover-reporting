@@ -5,25 +5,26 @@ define(function(require) {
   var RevenueByItemModel = BasePieChartModel.extend(function RevenueByItemModel() {
     BasePieChartModel.apply(this, arguments);
     this.set('popoverTitle', 'Top Items');
-  }, {
-    setDataOperations: function() {
-      this
-        .map(function(order) {
-          var lineItems = order.lineItems,
-              result = {};
-          if (lineItems && lineItems.length) {
-            lineItems.forEach(function(lineItem) {
-              var name = lineItem.name;
-              if (name) {
-                result[name] = (result[name] || 0) + revenueForLineItem(lineItem);
-              }
-            });
-          }
-          return result;
-        })
-        .applyStandardFormatting();
-    }
+    this.addDataOperation(_dataOperation);
   });
+
+  function _dataOperation(handle) {
+    handle
+      .map(function(order) {
+        var lineItems = order.lineItems,
+            result = {};
+        if (lineItems && lineItems.length) {
+          lineItems.forEach(function(lineItem) {
+            var name = lineItem.name;
+            if (name) {
+              result[name] = (result[name] || 0) + revenueForLineItem(lineItem);
+            }
+          });
+        }
+        return result;
+      });
+    this.applyStandardFormatting(handle);
+  }
 
   return RevenueByItemModel;
 });

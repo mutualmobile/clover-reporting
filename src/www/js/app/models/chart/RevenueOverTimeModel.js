@@ -3,17 +3,18 @@ define(function(require) {
 
   var RevenueOverTimeModel = BaseDataModel.extend(function RevenueOverTimeModel() {
     BaseDataModel.apply(this, arguments);
-  }, {
-    setDataOperations: function() {
-      this
-        .map(function(order) {
-          return {
-            total: order.total,
-            modified: order.modified
-          };
-        });
-    }
+    this.addDataOperation(_dataOperation);
   });
+
+  function _dataOperation(handle) {
+    handle
+      .map(function(order) {
+        return {
+          total: order.total,
+          modified: order.modified
+        };
+      });
+  }
 
   return RevenueOverTimeModel;
 });

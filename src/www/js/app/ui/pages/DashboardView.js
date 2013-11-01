@@ -2,7 +2,6 @@ define(function(require) {
 
   var BaseView = require('app/ui/BaseView'),
       Scrollable = require('lavaca/ui/Scrollable'),
-      // OrderMetricsView = require('app/ui/metrics/OrderMetricsView'),
       // recentOrdersCollection = require('app/models_old/RecentOrdersCollection'),
       // revenueByEmployeeCollection = require('app/models_old/RevenueByEmployeeCollection'),
       // revenueByCategoryCollection = require('app/models_old/RevenueByCategoryCollection'),
@@ -14,7 +13,9 @@ define(function(require) {
       RevenueByEmployeeView = require('app/ui/charts/pie/RevenueByEmployeeView'),
       RevenueByEmployeeModel = require('app/models/chart/RevenueByEmployeeModel'),
       RevenueOverTimeView = require('app/ui/charts/time/RevenueOverTimeView'),
-      RevenueOverTimeModel = require('app/models/chart/RevenueOverTimeModel');
+      RevenueOverTimeModel = require('app/models/chart/RevenueOverTimeModel'),
+      OrderMetricsView = require('app/ui/metrics/OrderMetricsView'),
+      OrderMetricsModel = require('app/models/metrics/OrderMetricsModel');
 
   require('rdust!templates/dashboard');
 
@@ -29,10 +30,10 @@ define(function(require) {
       'self': Scrollable
     });
     this.mapChildView({
-      // '.order-metrics': {
-      //   TView: OrderMetricsView,
-      //   model: recentOrdersCollection
-      // },
+      '.order-metrics': {
+        TView: OrderMetricsView,
+        model: new OrderMetricsModel()
+      },
       '.revenue-graph': {
         TView: RevenueOverTimeView,
         model: new RevenueOverTimeModel()

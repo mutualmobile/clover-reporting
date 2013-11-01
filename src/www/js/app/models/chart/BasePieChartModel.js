@@ -14,8 +14,8 @@ define(function(require) {
       BaseDataModel.prototype.onDataChange.call(this, data);
       this.set('pieData', this.handleOther(data));
     },
-    applyStandardFormatting: function() {
-      this
+    applyStandardFormatting: function(handle) {
+      handle
         .reduce(function(prev, current) {
           var counts = prev[0];
           for (var name in current) {

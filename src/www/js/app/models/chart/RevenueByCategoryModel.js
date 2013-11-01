@@ -4,26 +4,27 @@ define(function(require) {
 
   var RevenueByCategoryModel = BasePieChartModel.extend(function RevenueByCategoryModel() {
     BasePieChartModel.apply(this, arguments);
-  }, {
-    setDataOperations: function() {
-      this
-        .map(function(order) {
-          var lineItems = order.lineItems,
-              result = {};
-          if (lineItems && lineItems.length) {
-            lineItems.forEach(function(lineItem) {
-              var categories = (lineItem.item && lineItem.item.categories) || [];
-              categories.forEach(function(category) {
-                var name = category.name;
-                result[name] = (result[name] || 0) + revenueForLineItem(lineItem);
-              });
-            });
-          }
-          return result;
-        })
-        .applyStandardFormatting();
-    }
+    this.addDataOperation(_dataOperation);
   });
+
+  function _dataOperation(handle) {
+    handle
+      .map(function(order) {
+        var lineItems = order.lineItems,
+            result = {};
+        if (lineItems && lineItems.length) {
+          lineItems.forEach(function(lineItem) {
+            var categories = (lineItem.item && lineItem.item.categories) || [];
+            categories.forEach(function(category) {
+              var name = category.name;
+              result[name] = (result[name] || 0) + revenueForLineItem(lineItem);
+            });
+          });
+        }
+        return result;
+      });
+    this.applyStandardFormatting(handle);
+  }
 
   return RevenueByCategoryModel;
 });
