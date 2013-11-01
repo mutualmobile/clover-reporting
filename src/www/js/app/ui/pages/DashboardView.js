@@ -12,7 +12,9 @@ define(function(require) {
       RevenueByCategoryView = require('app/ui/charts/pie/RevenueByCategoryView'),
       RevenueByCategoryModel = require('app/models/chart/RevenueByCategoryModel'),
       RevenueByEmployeeView = require('app/ui/charts/pie/RevenueByEmployeeView'),
-      RevenueByEmployeeModel = require('app/models/chart/RevenueByEmployeeModel');
+      RevenueByEmployeeModel = require('app/models/chart/RevenueByEmployeeModel'),
+      RevenueOverTimeView = require('app/ui/charts/time/RevenueOverTimeView'),
+      RevenueOverTimeModel = require('app/models/chart/RevenueOverTimeModel');
 
   require('rdust!templates/dashboard');
 
@@ -31,10 +33,10 @@ define(function(require) {
       //   TView: OrderMetricsView,
       //   model: recentOrdersCollection
       // },
-      // '.revenue-graph': {
-      //   TView: RevenueOverTimeView,
-      //   model: recentOrdersCollection
-      // },
+      '.revenue-graph': {
+        TView: RevenueOverTimeView,
+        model: new RevenueOverTimeModel()
+      },
       '.revenue-by-category': {
         TView: RevenueByCategoryView,
         model: new RevenueByCategoryModel()

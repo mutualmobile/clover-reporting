@@ -1,15 +1,14 @@
 define(function() {
-  return function(collection, start, end, ticks, bucketAttr, sumAttr, filter) {
-    var buckets = [],
-        filteredItems,
-        getBucketVal,
-        getSumVal;
+  return function(data, start, end, ticks, bucketAttr, sumAttr, filter) {
+    var buckets = [];
 
-    if (!collection) {
+    if (!data) {
       return buckets;
     }
 
-    filteredItems = filter ? collection.filter(filter) : collection.models,
+    if (filter) {
+      data = data.filter(filter);
+    }
 
     ticks = [start].concat(ticks);
 
@@ -20,26 +19,12 @@ define(function() {
       ]);
     });
 
-    if (typeof bucketAttr === 'string') {
-      getBucketVal = function(model) {
-        return model.get(bucketAttr);
-      };
-    } else {
-      getBucketVal = bucketAttr;
-    }
-    if (typeof sumAttr === 'string') {
-      getSumVal = function(model) {
-        return model.get(sumAttr);
-      };
-    } else {
-      getSumVal = sumAttr;
-    }
-
-    filteredItems.forEach(function(model) {
+    data.forEach(function(item) {
       ticks.some(function(tick, i) {
-        var bucketVal = getBucketVal(model);
+        var bucketVal = item[bucketAttr];
         if (bucketVal > tick && bucketVal < (ticks[i+1] || end)) {
-          buckets[i][1] += getSumVal(model);
+          buckets[i][1] += item[sumAttr];
+          return true;
         }
       });
     });
