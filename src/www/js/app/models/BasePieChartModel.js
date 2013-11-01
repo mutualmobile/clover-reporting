@@ -6,12 +6,35 @@ define(function(require) {
     BaseDataModel.apply(this, arguments);
     this.apply({
       legend: _legend,
+      popoverData: _popoverData
     });
   }, {
     colors: colors,
     onDataChange: function(data) {
       BaseDataModel.prototype.onDataChange.call(this, data);
       this.set('pieData', this.handleOther(data));
+    },
+    applyStandardFormatting: function() {
+      this
+        .reduce(function(prev, current) {
+          var counts = prev[0];
+          for (var name in current) {
+            counts[name] = (counts[name] || 0) + current[name];
+          }
+          return prev;
+        }, [{}])
+        .reduce(function(prev, current) {
+          for (var name in current) {
+            prev.push({
+              label: name,
+              value: current[name]
+            });
+          }
+          return prev;
+        }, [])
+        .sort(function(a, b) {
+          return a.label.localeCompare(b.label);
+        });
     },
     handleOther: function(data) {
       var total = 0,
@@ -63,6 +86,32 @@ define(function(require) {
     });
 
     return legend;
+  }
+
+  function _popoverData() {
+    var popoverData = [],
+        data = this.get('data');
+
+    data.forEach(function(item) {
+      popoverData.push({
+        label: item.label,
+        value: item.value
+      });
+    });
+
+    // Sort and limit items
+    popoverData.sort(function(a, b) {
+      return b.value - a.value;
+    });
+    popoverData = popoverData.slice(0, colors.length);
+
+    // Add 'percentOfTop' and 'color' attributes
+    popoverData.forEach(function(item, index) {
+      item.color = colors[index];
+      item.percentOfTop = (item.value / popoverData[0].value) * 100;
+    });
+
+    return popoverData;
   }
 
   return BasePieChartModel;

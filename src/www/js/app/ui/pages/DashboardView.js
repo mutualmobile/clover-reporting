@@ -10,7 +10,9 @@ define(function(require) {
       // RevenueByEmployeeView = require('app/ui/charts/pie/RevenueByEmployeeView'),
       // RevenueOverTimeView = require('app/ui/charts/chronological/RevenueOverTimeView');
       RevenueByCategoryView = require('app/ui/charts/pie/RevenueByCategoryView'),
-      RevenueByCategoryModel = require('app/models/RevenueByCategoryModel');
+      RevenueByCategoryModel = require('app/models/RevenueByCategoryModel'),
+      RevenueByEmployeeView = require('app/ui/charts/pie/RevenueByEmployeeView'),
+      RevenueByEmployeeModel = require('app/models/RevenueByEmployeeModel');
 
   require('rdust!templates/dashboard');
 
@@ -36,26 +38,15 @@ define(function(require) {
       '.revenue-by-category': {
         TView: RevenueByCategoryView,
         model: new RevenueByCategoryModel()
+      },
+      '.revenue-by-employee': {
+        TView: RevenueByEmployeeView,
+        model: new RevenueByEmployeeModel()
       }
-      // '.revenue-by-employee': {
-      //   TView: RevenueByEmployeeView,
-      //   model: revenueByEmployeeCollection
-      // }
     });
   }, {
-    /**
-     * The name of the template used by the view
-     * @property {String} template
-     * @default 'example'
-     */
     template: 'templates/dashboard',
-    /**
-     * A class name added to the view container
-     * @property {String} className
-     * @default 'example'
-     */
     className: 'dashboard'
-
   });
 
   return DashboardView;

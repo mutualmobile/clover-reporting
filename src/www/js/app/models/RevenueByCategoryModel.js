@@ -7,8 +7,8 @@ define(function(require) {
   }, {
     setDataOperations: function() {
       this
-        .map(function(data) {
-          var lineItems = data.lineItems,
+        .map(function(order) {
+          var lineItems = order.lineItems,
               result = {};
           if (lineItems && lineItems.length) {
             lineItems.forEach(function(lineItem) {
@@ -21,25 +21,7 @@ define(function(require) {
           }
           return result;
         })
-        .reduce(function(prev, current) {
-          var counts = prev[0];
-          for (var name in current) {
-            counts[name] = (counts[name] || 0) + current[name];
-          }
-          return prev;
-        }, [{}])
-        .reduce(function(prev, current) {
-          for (var name in current) {
-            prev.push({
-              label: name,
-              value: current[name]
-            });
-          }
-          return prev;
-        }, [])
-        .sort(function(a, b) {
-          return a.label.localeCompare(b.label);
-        });
+        .applyStandardFormatting();
     }
   });
 

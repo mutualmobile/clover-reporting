@@ -1,14 +1,14 @@
-<h2>{popoverData.title}</h2>
-{?popoverData.items}
+<h2>{popoverTitle}</h2>
+{?popoverData}
   <ol>
-    {#popoverData.items}
+    {#popoverData}
       <li>
         <h3>{label}<span>{value|cashMoney|s}</span></h3>
         <div class="bar-wrapper">
           <div class="bar" style="width:{percentOfTop}%;background:{color};"></div>
         </div>
       </li>
-    {/popoverData.items}
+    {/popoverData}
   </ol>
   <div class="see-more-wrapper">
     <a href="#" class="popover-see-more">See More</a>
@@ -19,4 +19,4 @@
   {:else}
     <div class="empty">No Data</div>
   {/loading}
-{/popoverData.items}
+{/popoverData}

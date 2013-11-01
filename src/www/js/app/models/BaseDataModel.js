@@ -36,9 +36,15 @@ define(function(require) {
       this.set('data', data);
     },
     dispose: function() {
-      this._dataHandle.dispose();
-      stateModel.off(this._statusChangeHandler);
-      return Model.prototype.dispose.apply(this, arguments);
+      // In case this gets called twice, for example,
+      // if the model is shared by multiple views that
+      // are getting disposed at the same time
+      if (!this._hasBeenDisposed) {
+        this._dataHandle.dispose();
+        stateModel.off(this._statusChangeHandler);
+        this._hasBeenDisposed = true;
+      }
+      Model.prototype.dispose.apply(this, arguments);
     }
   });
 
