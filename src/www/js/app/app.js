@@ -20,7 +20,7 @@ define(function(require) {
     // Initialize the routes
     this.router.add({
       '/': [DashboardController, 'dashboard'],
-      // '/zoom': [DashboardController, 'zoom',  {bypassAuth: true}],
+      '/zoom': [DashboardController, 'zoom',  {bypassAuth: true}],
       // '/employees': [DashboardController, 'employees'],
       // '/products': [DashboardController, 'products'],
       '/login': [AuthenticationController, 'login', {bypassAuth: true}],

@@ -97,7 +97,7 @@ define(function(require) {
       var fullUrl;
       if (url) {
         cancel();
-        fullUrl = url + '&startTime=' + startTime + '&endTime=' + endTime;
+        fullUrl = url + '&start_time=' + startTime + '&end_time=' + endTime;
         lastFetch = xhr(fullUrl)
           .success(function(newData, newHash) {
             if (newData && newData.orders && newHash !== lastHash) {
