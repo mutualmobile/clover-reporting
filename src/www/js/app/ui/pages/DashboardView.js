@@ -10,9 +10,9 @@ define(function(require) {
       // RevenueByEmployeeView = require('app/ui/charts/pie/RevenueByEmployeeView'),
       // RevenueOverTimeView = require('app/ui/charts/chronological/RevenueOverTimeView');
       RevenueByCategoryView = require('app/ui/charts/pie/RevenueByCategoryView'),
-      RevenueByCategoryModel = require('app/models/RevenueByCategoryModel'),
+      RevenueByCategoryModel = require('app/models/chart/RevenueByCategoryModel'),
       RevenueByEmployeeView = require('app/ui/charts/pie/RevenueByEmployeeView'),
-      RevenueByEmployeeModel = require('app/models/RevenueByEmployeeModel');
+      RevenueByEmployeeModel = require('app/models/chart/RevenueByEmployeeModel');
 
   require('rdust!templates/dashboard');
 

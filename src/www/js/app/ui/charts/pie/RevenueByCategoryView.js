@@ -1,7 +1,7 @@
 define(function(require) {
   var BasePieChartView = require('app/ui/charts/pie/BasePieChartView'),
       PieChartPopoverView = require('app/ui/charts/pie/detail/PieChartPopoverView'),
-      RevenueByItemModel = require('app/models/RevenueByItemModel'),
+      RevenueByItemModel = require('app/models/chart/RevenueByItemModel'),
       router = require('lavaca/mvc/Router');
   require('rdust!templates/revenue_by_category');
 

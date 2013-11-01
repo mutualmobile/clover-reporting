@@ -1,10 +1,9 @@
 define(function(require) {
-  var BasePieChartModel = require('app/models/BasePieChartModel'),
+  var BasePieChartModel = require('app/models/chart/BasePieChartModel'),
       revenueForLineItem = require('app/workers/source/revenueForLineItem'); // Will be exposed globally in worker
 
-  var RevenueByItemModel = BasePieChartModel.extend(function RevenueByItemModel() {
+  var RevenueByCategoryModel = BasePieChartModel.extend(function RevenueByCategoryModel() {
     BasePieChartModel.apply(this, arguments);
-    this.set('popoverTitle', 'Top Items');
   }, {
     setDataOperations: function() {
       this
@@ -13,10 +12,11 @@ define(function(require) {
               result = {};
           if (lineItems && lineItems.length) {
             lineItems.forEach(function(lineItem) {
-              var name = lineItem.name;
-              if (name) {
+              var categories = (lineItem.item && lineItem.item.categories) || [];
+              categories.forEach(function(category) {
+                var name = category.name;
                 result[name] = (result[name] || 0) + revenueForLineItem(lineItem);
-              }
+              });
             });
           }
           return result;
@@ -25,5 +25,5 @@ define(function(require) {
     }
   });
 
-  return RevenueByItemModel;
+  return RevenueByCategoryModel;
 });
