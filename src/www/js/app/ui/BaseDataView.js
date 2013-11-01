@@ -21,9 +21,11 @@ define(function(require) {
       var model = this.model;
       stateModel.off('change', this._dataChangeHandler);
       BaseView.prototype.dispose.apply(this, arguments);
-       // BaseDataModels should be disposed to
-       // release their DataHandler
-      model.dispose();
+      if (model && model.dispose) {
+         // BaseDataModels should be disposed to
+         // release their DataHandler
+        model.dispose();
+      }
     }
   });
 
