@@ -1,14 +1,13 @@
 define(function(require) {
-  // When running in a real worker, this source
-  // will be injected into the worker source
+  // When running in a real worker, this source will
+  // be injected into the worker source (see Worker.js)
   // and expose the xhr function globally
   var xhr = require('app/workers/source/xhr');
 
   // When used in a FakeWorker, 'self' will be
   // passed in and will expose 'onmessage' and
   // 'postMessage' functions. In the context of
-  // a WebWorker, only the function body will
-  // be used and 'self' will refer to the built-in
+  // a WebWorker, 'self' will refer to the built-in
   // global object.
   return function(self) {
     var handles = {},
@@ -25,6 +24,8 @@ define(function(require) {
       if (start !== startTime || end !== endTime) {
         startTime = start;
         endTime = end;
+        data = [];
+        lastHash = null;
         sendStatus('loading');
         fetch();
       }

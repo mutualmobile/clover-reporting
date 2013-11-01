@@ -1,15 +1,12 @@
 define(function(require) {
 
   var BaseChartView = require('app/ui/charts/BaseChartView'),
-      batchCalls = require('app/misc/batch_calls'),
       Translation = require('lavaca/util/Translation'),
-      router = require('lavaca/mvc/Router'),
       d3 = require('d3'),
       nv = require('nv'),
       moment = require('moment'),
       bucketData = require('app/misc/bucket_data'),
-      timeRangeModel = require('app/models/global/TimeRangeModel'),
-      $ = require('$');
+      timeRangeModel = require('app/models/global/TimeRangeModel');
   require('app/ui/widgets/CustomLineChart');
   require('rdust!templates/revenue_over_time');
 
@@ -20,11 +17,6 @@ define(function(require) {
    */
   var RevenueOverTimeView = BaseChartView.extend(function() {
     BaseChartView.apply(this, arguments);
-    this.mapEvent({
-      '.nvtooltip': {
-        'tap': _onTapTooltipButton.bind(this)
-      }
-    });
   }, {
     template: 'templates/revenue_over_time',
     className: 'revenue_over_time',
@@ -67,15 +59,15 @@ define(function(require) {
 
       rangeData = timeRangeModel.getRangeData(minTicks, maxTicks);
 
-      this.key = rangeData.key;
+      // Used in the tooltip content function
+      this.rangeData = rangeData;
 
       this.chart.forceX([rangeData.start.valueOf(), rangeData.end.valueOf()]);
       this.chart.xAxis
         .axisLabel(Translation.get('chart_axis.' + rangeData.key) || 'Time')
         .tickValues(rangeData.ticks)
         .tickFormat(function(millis) {
-          var date = moment(millis);
-          return date.format(rangeData.format);
+          return moment(millis).format(rangeData.format);
         }.bind(this));
       this.chart.yAxis
         .tickFormat(d3.format('$,.2f'));
@@ -123,24 +115,21 @@ define(function(require) {
     createChart: function() {
       var chart = nv.models.customLineChart()
             .x(function(d) { return d[0]; })
-            .y(function(d) { return d[1] / 100; });
-      chart.tooltipContent(function(key, x, y, e, graph) {
-        var time = moment(e.point[0]),
-            content,
-            hideButton,
-            start,
-            end;
-        if (this.key === 'day') {
-          start = time.clone().startOf('day');
-          end = time.clone().endOf('day');
-        } else {
-          hideButton = true;
-        }
-        content = '<time>' + time.format('MMMM DD') + '</time>' +
-              '<div class="money">$' + parseFloat(y, 10).toFixed(2) + '</div><div class="triangle"></div>';
-        if (!hideButton) {
-          content += '<div class="button" data-start="'+ start +'" data-end="'+ end +'"></div>';
-        }
+            .y(function(d) { return d[1] / 100; }),
+          tooltipFormats = {
+            'day': 'MMM DD',
+            'hour': 'h:mm'
+          };
+      chart.tooltipContent(function(key, x, y, e) {
+        var start = moment(this.rangeData.ticks[e.pointIndex-1] || this.rangeData.start),
+            end =  moment((this.rangeData.ticks[e.pointIndex] || this.rangeData.end) - 1),
+            format = tooltipFormats[this.rangeData.key] || this.rangeData.format,
+            startString = start.format(format),
+            endString = end.format(format),
+            label = startString === endString ? startString : startString + ' - ' + endString,
+            content;
+        content = '<time>' + label + '</time>' +
+              '<div class="money">' + y + '</div><div class="triangle"></div>';
         return content;
       }.bind(this));
 
@@ -148,19 +137,6 @@ define(function(require) {
     }
 
   });
-
-  function _onTapTooltipButton(e) {
-    var el = $(e.currentTarget),
-        button = el.find('.button');
-    if (!button.length) {
-      return;
-    }
-    timeRangeModel.set('mode', 'day');
-    router.exec('/zoom', null, {
-      startTime: button.data('start'),
-      endTime: button.data('end')
-    });
-  }
 
   return RevenueOverTimeView;
 
