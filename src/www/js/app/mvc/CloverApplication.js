@@ -25,6 +25,7 @@ define(function(require) {
           } else if (rel === 'cancel') {
             this.viewManager.dismiss(e.currentTarget);
           } else if (url) {
+            url = url.replace(/^\/?#/, '');
             this.router.exec(url).error(this.onInvalidRoute);
           }
         }
