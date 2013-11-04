@@ -57,7 +57,10 @@ define(function(require) {
   function _revenuePerCustomer(handle) {
     handle
       .map(function(order) {
-        return [order.customer.id, order.total];
+        // If we don't have a customer id, assume they are a unique customer
+        // and can be represented by the order id which is a uuid
+        var customerId = (order.customer && order.customer.id) || order.id;
+        return [customerId, order.total];
       })
       .reduce(function(prev, current) {
         var customerId = current[0],
@@ -73,7 +76,7 @@ define(function(require) {
       })
       .process(function(obj) {
         if (obj.customers.length) {
-          obj.total / obj.customers.length;
+          return obj.total / obj.customers.length;
         }
         return 0;
       });
