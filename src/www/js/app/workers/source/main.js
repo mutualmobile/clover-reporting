@@ -40,7 +40,7 @@ define(function(require) {
       // the handlers immediately, in case there is already
       // data loaded
       if (method === 'done') {
-        processHandle(id, handles[id]);
+        processHandle(id);
       } else {
         handles[id].push({
           method: method,
@@ -104,7 +104,7 @@ define(function(require) {
       var fullUrl;
       if (url) {
         cancel();
-        fullUrl = url + '&start_time=' + startTime + '&end_time=' + endTime;
+        fullUrl = url + '&start_time=' + startTime + '&end_time=' + endTime + '&count=' + 99999;
         lastFetch = xhr(fullUrl)
           .success(function(newData, newHash) {
             if (newData && newData.orders && newHash !== lastHash) {

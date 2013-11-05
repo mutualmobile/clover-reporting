@@ -22,7 +22,7 @@ define(function(require) {
       '/': [DashboardController, 'dashboard'],
       '/zoom': [DashboardController, 'zoom',  {bypassAuth: true}],
       // '/employees': [DashboardController, 'employees'],
-      // '/products': [DashboardController, 'products'],
+      '/products': [DashboardController, 'products'],
       '/login': [AuthenticationController, 'login', {bypassAuth: true}],
       '/logout': [AuthenticationController, 'logout']
     });
