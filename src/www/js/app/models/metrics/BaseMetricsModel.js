@@ -1,5 +1,5 @@
 define(function(require) {
-  var BaseDataModel = require('app/models/BaseDataModel');
+  var BaseDataModel = require('app/models/data/BaseDataModel');
 
   var BaseMetricsModel = BaseDataModel.extend(function BaseMetricsModel() {
     BaseDataModel.apply(this, arguments);

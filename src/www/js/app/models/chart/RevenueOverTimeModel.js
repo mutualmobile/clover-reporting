@@ -1,5 +1,5 @@
 define(function(require) {
-  var BaseDataModel = require('app/models/BaseDataModel');
+  var BaseDataModel = require('app/models/data/BaseDataModel');
 
   var RevenueOverTimeModel = BaseDataModel.extend(function RevenueOverTimeModel() {
     BaseDataModel.apply(this, arguments);

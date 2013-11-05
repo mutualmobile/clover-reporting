@@ -1,5 +1,5 @@
 define(function(require) {
-  var BaseDataModel = require('app/models/BaseDataModel'),
+  var BaseDataModel = require('app/models/data/BaseDataModel'),
       colors = require('app/misc/color_scheme');
 
   var BasePieChartModel = BaseDataModel.extend(function BasePieChartModel() {
