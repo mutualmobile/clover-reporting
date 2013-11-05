@@ -6,7 +6,7 @@ define(function(require) {
   var BaseDataView = BaseView.extend(function BaseDataView() {
     BaseView.apply(this, arguments);
 
-    this._dataChangeHandler = batchCalls(this.onChangeData, this);
+    this._dataChangeHandler = batchCalls(this.onDataChange, this);
     this.mapEvent({
       model: {
         'change.data': this._dataChangeHandler
@@ -14,7 +14,7 @@ define(function(require) {
     });
     stateModel.on('change', 'dataStatus', this._dataChangeHandler);
   }, {
-    onChangeData: function() {
+    onDataChange: function() {
       // No-op. Override in subclasses
     },
     dispose: function() {

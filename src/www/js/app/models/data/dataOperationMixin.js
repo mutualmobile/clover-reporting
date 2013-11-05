@@ -14,9 +14,7 @@ define(function(require) {
         this._statusChangeHandler = _setStatusProperties.bind(this);
         stateModel.on('change', 'dataStatus', this._statusChangeHandler);
       },
-      onDataChange: function(data) {
-        this.set('data', data);
-      },
+      onDataChange: function(data) {},
       setPrimaryDataHandle: function(handle) {
         handle.done(this.onDataChange.bind(this));
       },

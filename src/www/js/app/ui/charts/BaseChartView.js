@@ -32,7 +32,7 @@ define(function(require) {
     createChart: function() {},
     updateChart: function() {},
     getData: function() {},
-    onChangeData: function() {
+    onDataChange: function() {
       this.updateChart();
     },
     onRenderSuccess: function() {

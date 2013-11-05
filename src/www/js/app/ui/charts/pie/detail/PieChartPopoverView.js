@@ -12,7 +12,7 @@ define(function(require) {
   }, {
     template: 'templates/pie_popover',
     className: 'pie_popover',
-    onChangeData: function() {
+    onDataChange: function() {
       this.redraw();
     },
     spinnerArgs: {

@@ -13,7 +13,7 @@ define(function(require) {
   }, {
     template: 'templates/order_metrics',
     className: 'order_metrics',
-    onChangeData: function() {
+    onDataChange: function() {
       this.redraw();
     }
   });
