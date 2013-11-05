@@ -1,6 +1,8 @@
 define(function(require) {
   var Collection = require('lavaca/mvc/Collection'),
       mixIn = require('mout/object/mixIn'),
+      clone = require('mout/lang/clone'),
+      remove = require('mout/array/remove'),
       dataOperationMixin = require('app/models/data/dataOperationMixin');
 
   var BaseDataCollection = Collection.extend(function BaseDataCollection() {
@@ -10,10 +12,57 @@ define(function(require) {
     onDataChange: function(data) {
       var prev = this.get('data');
       if (!arraysEqual(prev, data)) {
+        _applyData.call(this, data);
         this.set('data', data);
       }
     }
   }));
+
+  // Private instance methods
+
+  function _applyData(data) {
+    var models;
+      if (!data || !data.length || !data[0].id) {
+        this.clearModels();
+        this.add(data);
+      } else {
+        models = clone(this.models);
+
+        // Update existing items and
+        // add new items
+        data.forEach(function(item) {
+          var current;
+          if (item.id) {
+            current = this.first({id: item.id});
+            if (current) {
+              current.apply(item);
+              remove(models, current);
+            } else {
+              this.add(item);
+            }
+          }
+        }.bind(this));
+
+        // Remove old items
+        models.forEach(function(model) {
+          this.remove(model);
+        }.bind(this));
+
+        // Re-arrange
+        data.forEach(function(item, index) {
+          var match = this.first({id: item.id}),
+              currentIndex;
+          if (match) {
+            currentIndex = this.models.indexOf(match);
+            if (currentIndex !== index) {
+              this.moveTo(currentIndex, index);
+            }
+          }
+        }.bind(this));
+      }
+  }
+
+  // Utility functions
 
   function arraysEqual(a, b) {
     if (a === b) { return true; }
