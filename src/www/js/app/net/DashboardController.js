@@ -37,18 +37,6 @@ define(function(require) {
       return this
         .view(null, ProductsView, new Model())
         .then(this.updateState(history, 'Products', params.url));
-    },
-    zoom: function(params, history) {
-      if (params.startTime && params.endTime) {
-        timeRangeModel.suppressEvents = true;
-        timeRangeModel.apply({
-          startTime: moment(params.startTime),
-          endTime: moment(params.endTime)
-        });
-        timeRangeModel.suppressEvents = false;
-        timeRangeModel.trigger('rangeUpdate');
-      }
-      return new Promise().resolve();
     }
   });
 

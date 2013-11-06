@@ -16,7 +16,6 @@ define(function(require) {
     PopoverControlView.apply(this, arguments);
     this.mapEvent({
       li: {
-        touchstart: function(e) {e.stopPropagation();},
         tap: _onChangeRangeSelect.bind(this)
       }
     });

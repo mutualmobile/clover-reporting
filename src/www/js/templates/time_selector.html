@@ -7,12 +7,12 @@
     <span class="year">&rsquo;{@moment value="{startTime}" format="YY"/}</span>
   </time>
   {@ne value="{mode}" key="day"}
-  <span class="sep">&thinsp;&ndash;&thinsp;</span>
-  <time datetime="{endTime|timestamp}" class="end">
-    <span class="month">{@moment value="{endTime}" format="MMM"/}</span>
-    <span class="day">{@moment value="{endTime}" format="D"/}</span>
-    <span class="year">&lsquo;{@moment value="{endTime}" format="YY"/}</span>
-  </time>
+    <span class="sep">&thinsp;&ndash;&thinsp;</span>
+    <time datetime="{endTime|timestamp}" class="end">
+      <span class="month">{@moment value="{endTime}" format="MMM"/}</span>
+      <span class="day">{@moment value="{endTime}" format="D"/}</span>
+      <span class="year">&lsquo;{@moment value="{endTime}" format="YY"/}</span>
+    </time>
   {/ne}
   <div class="arrow forward"></div>
 </div>

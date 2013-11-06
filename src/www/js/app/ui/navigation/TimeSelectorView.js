@@ -2,7 +2,6 @@ define(function(require) {
 
   var BaseView = require('app/ui/BaseView'),
       $ = require('$'),
-      router = require('lavaca/mvc/Router'),
       PageMenuView = require('app/ui/navigation/PageMenuView'),
       ModeMenuView = require('app/ui/navigation/ModeMenuView'),
       stateModel = require('app/models/global/StateModel');
@@ -50,27 +49,38 @@ define(function(require) {
     }
   });
 
-  function _onChangeModel() {
-    this.redraw();
+  // Event handlers
+
+  function _onChangeModel(e) {
+    if (e.changeMode) {
+      this.redraw();
+    } else {
+      this.redraw('time');
+    }
   }
 
   function _onTapForward() {
-    var start = this.model.get('startTime'),
-        mode = this.model.get('mode'),
-        newStart = start.add(mode, 1);
-    router.exec('/zoom', null, {startTime: newStart.valueOf(), endTime: newStart.endOf(mode).valueOf()});
+    _advanceTimeRange.call(this, 'add');
   }
 
   function _onTapBack() {
-    var start = this.model.get('startTime'),
-        mode = this.model.get('mode'),
-        newStart = start.subtract(mode, 1);
-    router.exec('/zoom', null, {startTime: newStart.valueOf(), endTime: newStart.endOf(mode).valueOf()});
+    _advanceTimeRange.call(this, 'subtract');
   }
 
   function _onChangeHidden() {
     $(document.body).toggleClass('hide-header', stateModel.get('hideHeader'));
   }
+
+  // Private functions
+
+  function _advanceTimeRange(operation) {
+    var start = this.model.get('startTime').clone(),
+        mode = this.model.get('mode'),
+        newStart = start[operation](mode, 1),
+        newEnd = newStart.clone().endOf(mode);
+    this.model.setCustomTimeRange(newStart, newEnd);
+  }
+
 
   return TimeSelectorView;
 
