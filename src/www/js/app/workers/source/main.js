@@ -31,7 +31,7 @@ define(function(require) {
       }
     }
 
-    function addHandler(id, method, callback, initialValue) {
+    function addHandler(id, method, callback, args) {
       if (!handles[id]) {
         handles[id] = [];
       }
@@ -45,7 +45,7 @@ define(function(require) {
         handles[id].push({
           method: method,
           cb: funcFromSource(callback),
-          initialValue: initialValue
+          args: args
         });
       }
     }
@@ -70,9 +70,11 @@ define(function(require) {
         } else if (method === 'reduce') {
           // JSON encode then decode the initialValue to "copy"
           // it in case the reduce function modifies it
-          result = reduce(result, handle.cb, JSON.parse(JSON.stringify(handle.initialValue)));
+          result = reduce(result, handle.cb, JSON.parse(JSON.stringify(handle.args)));
         } else if (method === 'sort') {
           result = sort(result, handle.cb);
+        } else if (method === 'filter') {
+          result = filter(result, handle.cb, handle.args);
         } else if (method === 'process') {
           result = process(result, handle.cb);
         }
@@ -94,6 +96,17 @@ define(function(require) {
       return data.slice(0).sort(cb);
     }
 
+    function filter(data, cb, args) {
+      if (!args) {
+        return data.filter(cb);
+      } else {
+        args = Array.isArray(args) ? args : [args];
+        return data.filter(function(item) {
+          return cb.apply(this, [item].concat(args));
+        });
+      }
+    }
+
     function process(data, cb) {
       return cb(data);
     }
@@ -104,7 +117,7 @@ define(function(require) {
       var fullUrl;
       if (url) {
         cancel();
-        fullUrl = url + '&start_time=' + startTime + '&end_time=' + endTime + '&count=' + 99999;
+        fullUrl = url + '&start_time=' + startTime + '&end_time=' + endTime + '&count=' + 999999;
         lastFetch = xhr(fullUrl)
           .success(function(newData, newHash) {
             if (newData && newData.orders && newHash !== lastHash) {
@@ -177,7 +190,7 @@ define(function(require) {
       if (method === 'setTimeRange') {
         setTimeRange(data.startTime, data.endTime);
       } else if (handlerMethods.indexOf(method) > -1) {
-        addHandler(data.id, method, data.fn, data.initialValue || null);
+        addHandler(data.id, method, data.fn, data.args || null);
       } else if (method === 'reset') {
         reset();
       } else if (method === 'setURL') {

@@ -5,6 +5,7 @@ define(function(require) {
 
   var BaseDataModel = Model.extend(function BaseDataModel() {
     Model.apply(this, arguments);
+    this.set('data', []);
     this.setupDataHandling();
   }, mixIn(dataOperationMixin(Model), {
     onDataChange: function(data) {

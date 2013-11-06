@@ -19,6 +19,10 @@ define(function(require) {
     sort: function(cb) {
       return _addOperation.call(this, 'sort', cb);
     },
+    filter: function(cb /*, other params */) {
+      var additionalParams = Array.prototype.slice.call(arguments, 1);
+      return _addOperation.call(this, 'filter', cb, additionalParams);
+    },
     process: function(cb) {
       return _addOperation.call(this, 'process', cb);
     },
@@ -33,11 +37,11 @@ define(function(require) {
   });
 
   // Private functions
-  function _addOperation(type, fn, initialValue) {
+  function _addOperation(type, fn, args) {
     this._worker.send(type, {
       id: this._id,
       fn: fn,
-      initialValue: initialValue
+      args: args
     });
     return this; // chaining
   }

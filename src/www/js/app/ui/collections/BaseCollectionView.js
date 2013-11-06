@@ -93,6 +93,9 @@ define(function(require) {
           .eq(insertIndex-1)
           .after(view.el[0]);
       }
+      if (view.autoRender) {
+        view.render();
+      }
       return view;
     },
     /**
@@ -160,7 +163,7 @@ define(function(require) {
           modelIndex,
           temp;
       // Add new views
-      while(model = models[++i]) {
+      while ((model = models[++i])) {
         viewIndex = this.getViewIndexByModel(model);
         if (viewIndex === -1) {
           this.addItemView(model, i);
@@ -169,7 +172,7 @@ define(function(require) {
       // Remove Old Views
       var collectionViews = clone(this.collectionViews);
       i = collectionViews.length;
-      while(view = collectionViews[--i]) {
+      while ((view = collectionViews[--i])) {
         modelIndex = models.indexOf(view.model);
         if (modelIndex === -1) {
           this.removeItemView(i);
@@ -177,7 +180,7 @@ define(function(require) {
       }
       // Move any existing views
       i = -1;
-      while(model = models[++i]) {
+      while ((model = models[++i])) {
         oldIndex = this.getViewIndexByModel(model);
         if (oldIndex !== i) {
           this.swapViews(this.collectionViews[i], this.collectionViews[oldIndex]);
