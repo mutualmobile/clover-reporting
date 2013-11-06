@@ -40,7 +40,12 @@ define(function(require) {
   $.event.special.tap = {
     add: function(handle) {
       var $el = $(this),
-          delegate = handle.selector;
+          delegate = handle.selector,
+          data = handle.data;
+
+      if (data && data.showHighlight === false) {
+        return;
+      }
 
       $el
         .on('tapAddHighlight', delegate, function(e) {

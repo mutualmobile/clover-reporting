@@ -125,7 +125,7 @@ define(function(require) {
   }
 
   $(function() {
-    $('body').on('tap.pieChartPopover', function() {
+    $('body').on('tap.pieChartPopover', {showHighlight: false}, function() {
       $('.base_pie .popover').hide();
     });
   });
