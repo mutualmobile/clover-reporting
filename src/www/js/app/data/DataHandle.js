@@ -23,8 +23,9 @@ define(function(require) {
       var additionalParams = Array.prototype.slice.call(arguments, 1);
       return _addOperation.call(this, 'filter', cb, additionalParams);
     },
-    process: function(cb) {
-      return _addOperation.call(this, 'process', cb);
+    process: function(cb /*, other params */) {
+      var additionalParams = Array.prototype.slice.call(arguments, 1);
+      return _addOperation.call(this, 'process', cb, additionalParams);
     },
     done: function(cb) {
       _addHandler.call(this, cb);

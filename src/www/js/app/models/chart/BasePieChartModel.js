@@ -19,7 +19,9 @@ define(function(require) {
         .reduce(function(prev, current) {
           var counts = prev[0];
           for (var name in current) {
-            counts[name] = (counts[name] || 0) + current[name];
+            if (current[name] > 0) {
+              counts[name] = (counts[name] || 0) + current[name];
+            }
           }
           return prev;
         }, [{}])

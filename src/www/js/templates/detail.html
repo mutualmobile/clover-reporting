@@ -1,22 +1,6 @@
 <div class="detail-info">
   <div class="number"></div>
   <div class="overview main-tab" data-panel="overview">
-    <h1 class="name">
-      {?firstName}
-        {firstName}<span>{lastName}</span>
-      {:else}
-        {name}
-      {/firstName}
-    </h1>
-    <div class="numeric-stats">
-      <div class="numbers">
-        <span class="revenue">{total|cashMoney|s}</span>
-      </div>
-      <div class="line-graph">
-        <div class="pink-line" style="width:{relativePercent|percent}"></div>
-      </div>
-    </div>
-    <div class="arrow"></div>
   </div>
   <div class="bar-chart main-tab clearfix" data-panel="bar">
     <div class="inner"></div>

@@ -2,8 +2,7 @@ define(function(require) {
 
   var BaseView = require('app/ui/BaseView'),
       ProductCollectionView = require('app/ui/collections/ProductCollectionView'),
-      Collection = require('lavaca/mvc/Collection');
-      // productCollection = require('app/models_old/ProductCollection');
+      ProductsCollection = require('app/models/collection/ProductsCollection');
 
   require('rdust!templates/products');
 
@@ -17,8 +16,7 @@ define(function(require) {
     this.mapChildView({
       '.product-list': {
         TView: ProductCollectionView,
-        model: new Collection()
-        // model: productCollection
+        model: new ProductsCollection()
       }
     });
   }, {

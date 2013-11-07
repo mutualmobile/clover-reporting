@@ -76,7 +76,7 @@ define(function(require) {
         } else if (method === 'filter') {
           result = filter(result, handle.cb, handle.args);
         } else if (method === 'process') {
-          result = process(result, handle.cb);
+          result = process(result, handle.cb, handle.args);
         }
       });
       sendDone(id, result);
@@ -97,7 +97,7 @@ define(function(require) {
     }
 
     function filter(data, cb, args) {
-      if (!args) {
+      if (!args || args.length === 0) {
         return data.filter(cb);
       } else {
         args = Array.isArray(args) ? args : [args];
@@ -107,8 +107,13 @@ define(function(require) {
       }
     }
 
-    function process(data, cb) {
-      return cb(data);
+    function process(data, cb, args) {
+      if (!args || args.length === 0) {
+        return cb(data);
+      } else {
+        args = Array.isArray(args) ? args : [args];
+        return cb.apply(this, [data].concat(args));
+      }
     }
 
     // --------------------- Fetching ----------------------
@@ -183,7 +188,7 @@ define(function(require) {
 
     // --------------- Process client message ----------------
 
-    var handlerMethods = ['map', 'reduce', 'sort', 'process', 'done'];
+    var handlerMethods = ['map', 'reduce', 'sort', 'process', 'filter', 'done'];
     self.onmessage = function(e) {
       var method = e.data.method,
           data = e.data.data;
