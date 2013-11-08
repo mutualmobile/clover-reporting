@@ -1,6 +1,6 @@
 define(function(require) {
   var BaseView = require('app/ui/BaseView');
-  require('rdust!templates/metrics_detail');
+  require('rdust!templates/detail_metrics_panel');
 
   /**
    * Employee Detail View
@@ -10,8 +10,8 @@ define(function(require) {
   var MetricsDetailView = BaseView.extend(function MetricsDetailView() {
     BaseView.apply(this, arguments);
   }, {
-    template: 'templates/metrics_detail',
-    className: 'metrics_detail'
+    template: 'templates/detail_metrics_panel',
+    className: 'detail_metrics_panel'
   });
 
   return MetricsDetailView;

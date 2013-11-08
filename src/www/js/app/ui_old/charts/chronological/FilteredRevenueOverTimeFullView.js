@@ -76,7 +76,6 @@ define(function(require) {
       selected
           .datum(data)
           .call(this.chart);
-      
     },
     createChart: function() {
       var chart = nv.models.discreteBarChart()

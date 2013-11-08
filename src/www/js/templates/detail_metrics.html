@@ -2,15 +2,15 @@
   {?firstName}
     {firstName}<span>{lastName}</span>
   {:else}
-    {data.name}
+    {name}
   {/firstName}
 </h1>
 <div class="numeric-stats">
   <div class="numbers">
-    <span class="revenue">{data.total|cashMoney|s}</span>
+    <span class="revenue">{total|cashMoney|s}</span>
   </div>
   <div class="line-graph">
-    <div class="pink-line" style="width:{?data.percentOfMax}{data.percentOfMax|percent}{:else}0{/data.percentOfMax}"></div>
+    <div class="pink-line" style="width:{?percentOfMax}{percentOfMax|percent}{:else}0{/percentOfMax}"></div>
   </div>
 </div>
 <div class="arrow"></div>

@@ -18,16 +18,14 @@ define(function() {
 
     req.open('GET', url);
     req.onreadystatechange = function () {
-      var data;
       if (req.readyState === 4) {
          if (req.status >= 200 && req.status < 300 || req.status === 304) {
           success = true;
          } else {
           success = false;
         }
-        data = req.responseText ? req.responseText : 'null';
-        response = JSON.parse(data);
-        responseHash = hash(data);
+        response = req.responseText ? req.responseText : 'null';
+        responseHash = hash(response);
         processHandlers();
       }
     };

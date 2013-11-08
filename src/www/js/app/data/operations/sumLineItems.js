@@ -30,4 +30,5 @@ define(function(require) {
         return counts;
       }, {});
   };
+
 });

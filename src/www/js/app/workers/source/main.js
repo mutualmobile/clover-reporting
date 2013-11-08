@@ -11,7 +11,7 @@ define(function(require) {
   // global object.
   return function(self) {
     var handles = {},
-        data = [],
+        data = '[]',
         url, lastFetch, fetchTimer, startTime, endTime, lastHash;
 
     // --------- Direct calls from the main thread ---------
@@ -24,7 +24,7 @@ define(function(require) {
       if (start !== startTime || end !== endTime) {
         startTime = start;
         endTime = end;
-        data = [];
+        data = '[]';
         lastHash = null;
         sendStatus('loading');
         fetch();
@@ -61,8 +61,13 @@ define(function(require) {
 
     // Update a single DataHandle
     function processHandle(id) {
-      var result = data,
+      var result = JSON.parse(data),
           handleData = handles[id];
+      if (!result || !result.orders) {
+        result = [];
+      } else {
+        result = result.orders;
+      }
       handleData.forEach(function(handle) {
         var method = handle.method;
         if (method === 'map') {
@@ -125,8 +130,8 @@ define(function(require) {
         fullUrl = url + '&start_time=' + startTime + '&end_time=' + endTime + '&count=' + 999999;
         lastFetch = xhr(fullUrl)
           .success(function(newData, newHash) {
-            if (newData && newData.orders && newHash !== lastHash) {
-              data = newData.orders;
+            if (newData && newHash !== lastHash) {
+              data = newData;
               lastHash = newHash;
               update();
             }
@@ -151,7 +156,7 @@ define(function(require) {
     function reset() {
       cancel();
       lastHash = null;
-      data = [];
+      data = '[]';
       update();
     }
 

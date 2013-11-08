@@ -1,35 +1,21 @@
 define(function(require) {
   var BasePieChartModel = require('app/models/chart/BasePieChartModel'),
-      revenueForLineItem = require('app/workers/source/revenueForLineItem');
+      filterByItem = require('app/data/operations/filterByItem');
 
   var RevenueByEmployeeModel = BasePieChartModel.extend(function RevenueByEmployeeModel() {
     BasePieChartModel.apply(this, arguments);
-    this.set('popoverTitle', 'Top Employees');
+    this.apply({
+      popoverTitle: 'Top Employees',
+      pieDetailList: _pieDetailList
+    });
     this.addDataOperation(_dataOperation);
   });
 
+  // Private functions
+
   function _dataOperation(handle) {
     // Filter if necessary
-    var itemId = this.get('itemId');
-    if (itemId) {
-      handle.process(function(data, itemId) {
-        return data.map(function(order) {
-          var result = {
-            employeeName: order.employeeName,
-            total: 0
-          };
-          (order.lineItems || []).forEach(function(lineItem) {
-            var item = lineItem.item;
-            if (item && item.id === itemId) {
-              result.total += revenueForLineItem(lineItem);
-            }
-          });
-          return result;
-        });
-      }, itemId);
-    }
-
-    // Calcuate totals
+    filterByItem(handle, this.get('itemId'));
     handle
       .map(function(order) {
         var employeeName = order.employeeName,
@@ -40,6 +26,14 @@ define(function(require) {
         return result;
       });
     this.applyStandardFormatting(handle);
+  }
+
+  // Computed properties
+
+  function _pieDetailList() {
+    return this.get('data').slice(0).sort(function(a, b) {
+      return b.value - a.value;
+    });
   }
 
   return RevenueByEmployeeModel;

@@ -1,47 +1,7 @@
 define(function(require) {
-  var BaseMetricsModel = require('app/models/metrics/BaseMetricsModel'),
-      revenueForLineItem = require('app/workers/source/revenueForLineItem'),
-      sumLineItems = require('app/data/operations/sumLineItems');
+  var revenueForLineItem = require('app/workers/source/revenueForLineItem');
 
-  var ProductDetailMetricsModel = BaseMetricsModel.extend(function ProductDetailMetricsModel() {
-    BaseMetricsModel.apply(this, arguments);
-    // this.addMetric()
-    this.addDataOperation(_dataOperation);
-  });
-
-  function _dataOperation(handle) {
-    var id = this.get('id');
-    sumLineItems(handle)
-      .process(function(counts) {
-        var result = [],
-            max = 0,
-            total = 0;
-        for (var id in counts) {
-          result.push({
-            id: id,
-            name: counts[id].name,
-            total: counts[id].total
-          });
-          total += counts[id].total;
-          max = Math.max(max, counts[id].total);
-        }
-        result.forEach(function(item) {
-          item.percentOfTotal = item.total / total;
-          item.percentOfMax = item.total / max;
-        });
-        return result;
-      })
-      .filter(function(item, id) {
-        return item.id === id;
-      }, id)
-      .process(function(arr) {
-        return arr[0];
-      });
-  }
-
-  // Metrics
-  function _otherDataOperation(handle) {
-    var id = this.get('id');
+  return function(handle) {
     handle
       .map(function(order) {
         var result = {
@@ -53,7 +13,7 @@ define(function(require) {
               itemObj;
           if (item && item.id && item.name) {
             itemObj = result.items[item.id];
-            if (!result[item.id]) {
+            if (!itemObj) {
               itemObj = result.items[item.id] = {
                 name: item.name,
                 qty: 0,
@@ -90,12 +50,14 @@ define(function(require) {
         for (var id in current.items) {
           if (!result.items[id]) {
             result.items[id] = current.items[id];
+            result.items[id].orderCount = 1;
           } else {
             result.items[id].total += current.items[id].total;
             result.items[id].qty += current.items[id].qty;
+            result.items[id].orderCount += 1;
           }
           result.max = Math.max(result.max, result.items[id].total);
-          result.total += current.items[id].qty;
+          result.total += current.items[id].total;
         }
         return result;
       }, {
@@ -125,17 +87,26 @@ define(function(require) {
       // }
       .process(function(totals) {
         var items = [];
-        for (var id in totals.items) {
-          totals.items[id].id = id;
-          items.push(totals.items[id]);
+
+        // Calculate total time
+        if (totals.first < Number.MAX_VALUE && totals.last > Number.MIN_VALUE) {
+          totals.time = totals.last - totals.first;
+        } else {
+          totals.time = 0;
         }
-        items.sort(function(a, b) {
-          return b.total - a.total;
-        });
-        totals.items = items;
-        totals.time = totals.last - totals.first;
         delete totals.first;
         delete totals.last;
+
+        // Convert object with id keys into an array
+        for (var id in totals.items) {
+          totals.items[id].id = id;
+          totals.items[id].time = totals.time;
+          totals.items[id].percentOfMax = totals.items[id].total / totals.max;
+          totals.items[id].percentOfTotal = totals.items[id].total / totals.total;
+          items.push(totals.items[id]);
+        }
+
+        totals.items = items;
         return totals;
       });
       // {
@@ -157,7 +128,6 @@ define(function(require) {
       //     }
       //   ]
       // }
-  }
+  };
 
-  return ProductDetailMetricsModel;
 });
