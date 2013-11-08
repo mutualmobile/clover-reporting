@@ -19,7 +19,7 @@ define(function(require) {
     // Initialize the routes
     this.router.add({
       '/': [DashboardController, 'dashboard'],
-      // '/employees': [DashboardController, 'employees'],
+      '/employees': [DashboardController, 'employees'],
       '/products': [DashboardController, 'products'],
       '/login': [AuthenticationController, 'login', {bypassAuth: true}],
       '/logout': [AuthenticationController, 'logout']

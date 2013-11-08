@@ -2,7 +2,7 @@ define(function(require) {
 
   var BaseView = require('app/ui/BaseView'),
       EmployeeCollectionView = require('app/ui/collections/EmployeeCollectionView'),
-      employeeCollection = require('app/models_old/EmployeeCollection');
+      EmployeesCollection = require('app/models/collection/EmployeesCollection');
 
   require('rdust!templates/employees');
 
@@ -16,7 +16,7 @@ define(function(require) {
     this.mapChildView({
       '.employee-list': {
         TView: EmployeeCollectionView,
-        model: employeeCollection
+        model: new EmployeesCollection()
       }
     });
   }, {

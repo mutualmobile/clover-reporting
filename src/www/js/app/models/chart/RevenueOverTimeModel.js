@@ -11,7 +11,7 @@ define(function(require) {
   function _dataOperation(handle) {
     // Filter if necessary
     filterByItem(handle, this.get('itemId'));
-    filterByEmployee(handle, this.get('employeeId'));
+    filterByEmployee(handle, this.get('employeeName'));
 
     handle
       .map(function(order) {
