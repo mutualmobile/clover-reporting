@@ -1,7 +1,6 @@
 define(function(require) {
   var CollectionDetailView = require('app/ui/collections/detail/CollectionDetailView'),
       DetailMetricsView = require('app/ui/collections/detail/child/DetailMetricsView'),
-      ProductDetailMetricsModel = require('app/models/collection/overview/ProductDetailMetricsModel'),
       SmallRevenueByEmployeeView = require('app/ui/charts/pie/SmallRevenueByEmployeeView'),
       RevenueByEmployeeModel = require('app/models/chart/RevenueByEmployeeModel'),
       SmallRevenueOverTimeBarView = require('app/ui/charts/time/SmallRevenueOverTimeBarView'),
