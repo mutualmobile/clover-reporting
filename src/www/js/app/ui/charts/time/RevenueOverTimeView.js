@@ -35,7 +35,7 @@ define(function(require) {
           .attr('width', '110%');
         svg
           .insert('image')
-          .attr('xlink:href', '/assets/img/graphshadow_top.png')
+          .attr('xlink:href', 'assets/img/graphshadow_top.png')
           .attr('id', 'graph-bottom-shadow')
           .attr('x', '0')
           .attr('y', '192')
