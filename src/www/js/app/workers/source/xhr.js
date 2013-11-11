@@ -22,7 +22,7 @@ define(function() {
     req.open('GET', url);
     req.onreadystatechange = function () {
       if (req.readyState === 4) {
-         if (req.status >= 200 && req.status < 300 || req.status === 304) {
+        if (req.status >= 200 && req.status < 300 || req.status === 304) {
           success = true;
          } else {
           success = false;
