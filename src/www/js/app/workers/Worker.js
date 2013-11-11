@@ -6,7 +6,7 @@ define(function(require) {
       revenueForLineItem = require('app/workers/source/revenueForLineItem');
 
   var _URL = window.URL ? window.URL : window.webkitURL,
-      _hasFullSupport = false; //!!(window.Worker && _URL);
+      _hasFullSupport = !!(window.Worker && _URL);
 
   var Worker = Disposable.extend(function Worker() {
     Disposable.apply(this, arguments);
