@@ -1,11 +1,8 @@
-var api = require('./api');
-
 module.exports = function(grunt) {
   'use strict';
 
   /* server.js */
-  var express = require('express'),
-      util = require('util');
+  var express = require('express');
 
   var startServer = function(config) {
     config = config || {};
@@ -83,9 +80,6 @@ module.exports = function(grunt) {
     server.use(express.directory(base, {icons: true}));
     server.use(express.bodyParser());
     server.use(express.errorHandler({dumpExceptions: true, showStack: true}));
-
-    // Custom API
-    api.init(server);
 
     server.all(apiPrefix + '*', proxyRequest);
 
