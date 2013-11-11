@@ -407,17 +407,17 @@ module.exports = function( grunt ) {
     buildProject: {
       local: {
         options: {
-          tasks: ['less', 'amd-dist', 'uglify', 'preprocess']
+          tasks: ['less', 'amd-dist', 'preprocess']
         }
       },
       staging: {
         options: {
-          tasks: ['less', 'amd-dist', 'uglify', 'preprocess']
+          tasks: ['less', 'amd-dist', 'preprocess']
         }
       },
       production: {
         options: {
-          tasks: ['yuidoc', 'less', 'amd-dist', 'uglify', 'preprocess']
+          tasks: ['yuidoc', 'less', 'amd-dist', 'preprocess']
         }
       }
     },
