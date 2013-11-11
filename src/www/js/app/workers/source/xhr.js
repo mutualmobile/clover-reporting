@@ -1,5 +1,8 @@
 define(function() {
 
+  // Executes a GET request to the specified
+  // url and returns a promise. This function
+  // is exposed globally in the web worker context.
   return function xhr(url) {
     var req = new XMLHttpRequest(),
         success = null,

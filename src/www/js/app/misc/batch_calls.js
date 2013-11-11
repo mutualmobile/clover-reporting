@@ -1,6 +1,6 @@
 define(function() {
 
-  // Acts like debounce with a (nearly) zero
+  // Acts like debounce with a nearly zero
   // second delay, except that it will call
   // the `fn` parameter in the specified
   // context, and will cancel the debounced call
