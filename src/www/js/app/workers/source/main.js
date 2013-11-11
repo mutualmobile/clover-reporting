@@ -136,11 +136,10 @@ define(function(require) {
               update();
             }
             sendStatus('ready');
+            fetchTimer = setTimeout(fetch, 30000);
           })
           .error(function() {
             sendStatus('error');
-          })
-          .always(function() {
             fetchTimer = setTimeout(fetch, 6000);
           });
       }
