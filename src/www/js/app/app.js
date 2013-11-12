@@ -3,17 +3,14 @@ define(function(require) {
       AuthenticationController = require('app/net/AuthenticationController'),
       CloverApplication = require('app/mvc/CloverApplication'),
       Translation = require('lavaca/util/Translation'),
-      History = require('lavaca/net/History'),
       TimeSelectorView = require('app/ui/navigation/TimeSelectorView'),
       timeRangeModel = require('app/models/global/TimeRangeModel');
   require('lavaca/ui/DustTemplate');
+  require('app/misc/lavaca_overrides');
   require('app/misc/dust_extensions');
   require('app/misc/hammer_extensions');
   require('app/misc/authentication_handler');
   require('app/data/dataHub');
-
-  // Use hash-based history since there's no server-side component supporting the app's routes.
-  History.overrideStandardsMode();
 
   var app = new CloverApplication(function() {
     // Initialize the routes
