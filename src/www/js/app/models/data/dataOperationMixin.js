@@ -1,5 +1,5 @@
 define(function(require) {
-  var dataHub = require('app/data/DataHub'),
+  var dataHub = require('app/data/dataHub'),
       stateModel = require('app/models/global/StateModel');
 
   var dataOperationMixin = function(TSuper) {
