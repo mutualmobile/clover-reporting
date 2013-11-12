@@ -15,7 +15,7 @@
 .active-arrow() {
   bottom: 8px;
   border-top: 6px solid transparent;
-  border-bottom: 6px solid rgba(255,255,255,.1);
+  border-bottom: 6px solid #383c3e;
   &:before {
     border-top: 6px solid transparent;
     border-bottom: 6px solid #303334;
@@ -33,14 +33,17 @@
   h2.title, .legend, .see-more {
     display: none !important;
   }
+  .list {
+    padding-bottom: 10px;
+  }
   .list-header {
     margin: 0.8rem auto;
     max-width: 630px;
     & > div {
       text-align: center;
       margin-top: 30px;
-      font-family: helveticaUltraLight;
-      color: rgba(255,255,255,.4);
+      font-family: @ultralightFont;
+      color: #A2A2A2;
       text-transform: uppercase;
       letter-spacing: 1px;
       font-size: 12px;
@@ -98,7 +101,7 @@
           content: counter(details);
           counter-increment: details;
         }
-        font-family: helveticaUltraLight;
+        font-family: @ultralightFont;
         font-weight: normal;
         text-transform: uppercase;
         position:absolute;
@@ -146,7 +149,7 @@
           top: 24px;
           padding: 2px 20px;
           color:#fff;
-          font-family: helveticaBold;
+          font-family: @boldFont;
           font-weight: normal;
           text-transform: uppercase;
           font-size: 24px;
@@ -158,7 +161,7 @@
           max-width: 100%;
           right: 0;
           span{
-            font-family: helveticaUltraLight;
+            font-family: @ultralightFont;
             font-weight: normal;
           }
         }
@@ -172,7 +175,7 @@
             text-shadow:0px 1px 2px #212121;
             > span {
               font-size:1.2rem;
-              font-family: helveticaLight;
+              font-family: @lightFont;
               font-weight: normal;
               padding-left:1.2rem;
               padding-right:1.2rem;
@@ -259,6 +262,7 @@
         pointer-events: none;
       }
       .arrow {
+        display: none;
         position: absolute;
         width: 0;
         height: 0;
@@ -269,7 +273,7 @@
         border-left: 6px solid transparent;
         border-right: 6px solid transparent;
         border-bottom: 6px solid transparent;
-        border-top: 6px solid rgba(255,255,255,.1);
+        border-top: 6px solid #383c3e;
         z-index: 1;
         &:before {
           content: '';
@@ -388,16 +392,16 @@
           #graph-background {
             fill: #576166;
             stroke: #2d3133;
-            -webkit-svg-shadow: 0 1px 0 rgba(255, 255, 255, .075);
+            //-webkit-svg-shadow: 0 1px 0 #383c3e;
           }
           .discreteBar {
-            stroke: rgba(0,0,0,.2);
+            stroke: #394145;
             stroke-width: 1;
             fill-opacity: 1;
           }
           .nv-x {
             text {
-              fill: rgba(255,255,255,.5);
+              fill: #a0a4a6;
               font-size: 9px;
               text-transform: uppercase;
             }
@@ -410,13 +414,13 @@
           }
           .nv-y {
             text {
-              fill: rgba(255,255,255,.5);
+              fill: #a0a4a6;
               font-size: 10px;
               font-weight: bold;
             }
             line, path {
               stroke: #2d3133;
-              -webkit-svg-shadow: 0 1px 0 rgba(255, 255, 255, .075);
+              //-webkit-svg-shadow: 0 1px 0 #4d555a;
             }
             path {
               stroke: transparent;
