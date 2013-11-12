@@ -22,24 +22,8 @@ define(function(require) {
           }
         }
       }
-    },
-    bindLinkHandler: function() {
-      var $body = $(document.body),
-          type = 'click';
-      if ($body.hammer) {
-        $body = $body.hammer();
-        type = 'tap';
-        $body.on('click', 'a', _stopEvent);
-      }
-      $body
-        .on(type, 'a[href], [data-href]', this.onTapLink.bind(this));
     }
   });
-
-  function _stopEvent(e) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
 
   function _isExternal(url) {
     var match = url.match(/^([^:\/?#]+:)?(?:\/\/([^\/?#]*))?([^?#]+)?(\?[^#]*)?(#.*)?/);
