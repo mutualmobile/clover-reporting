@@ -329,7 +329,8 @@ module.exports = function( grunt ) {
     'amd-dist': {
       all: {
         options: {
-          standalone: true
+          standalone: true,
+          exports: 'clover'
         },
         files: [
           {

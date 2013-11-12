@@ -48,6 +48,7 @@ define(function(require) {
         'expand': 'line_items,items'
       };
       url = StringUtils.format(baseURL, merchantId, 'orders' + encodeQueryString(params));
+      this._hasSetUrl = url; // TODO remove this
       this._worker.send('setURL', url);
     }
   }
