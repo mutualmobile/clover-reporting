@@ -1,5 +1,11 @@
 define(function(require) {
   var BaseView = require('app/ui/BaseView'),
+      DetailMetricsView = require('app/ui/collections/detail/child/DetailMetricsView'),
+      SmallPieChartView = require('app/ui/charts/pie/SmallPieChartView'),
+      SmallRevenueOverTimeBarView = require('app/ui/charts/time/SmallRevenueOverTimeBarView'),
+      RevenueOverTimeBarView = require('app/ui/charts/time/RevenueOverTimeBarView'),
+      DetailMetricsPanelView = require('app/ui/collections/detail/child/DetailMetricsPanelView'),
+      DetailCategoriesPanelView = require('app/ui/collections/detail/child/DetailCategoriesPanelView'),
       $ = require('$');
   require('rdust!templates/detail');
 
@@ -18,6 +24,32 @@ define(function(require) {
   }, {
     template: 'templates/detail',
     className: 'detail',
+    mapDetailViews: function(overTimeModel, categorizedModel) {
+      this.mapChildView({
+        '.overview': {
+          TView: DetailMetricsView
+        },
+        '.revenue-by-category': {
+          TView: SmallPieChartView,
+          model: categorizedModel
+        },
+        '.bar-chart .inner': {
+          TView: SmallRevenueOverTimeBarView,
+          model: overTimeModel
+        },
+        '.bar-chart-full': {
+          TView: RevenueOverTimeBarView,
+          model: overTimeModel
+        },
+        '.metrics': {
+          TView: DetailMetricsPanelView
+        },
+        '.pie-chart-full': {
+          TView: DetailCategoriesPanelView,
+          model: categorizedModel
+        }
+      });
+    },
     redraw: function() {
       var activePanel = this.el.find('[data-panel].active').attr('data-panel');
       return BaseView.prototype.redraw.apply(this, arguments).then(function() {

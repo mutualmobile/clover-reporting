@@ -3,7 +3,7 @@ define(function(require) {
 
   var _HOUR = 1000 * 60 * 60;
 
-  var ProductMetricsModel = Model.extend(function ProductMetricsModel() {
+  var DetailMetricsModel = Model.extend(function DetailMetricsModel() {
     Model.apply(this, arguments);
     this.apply({
       avgPerOrder: _avgPerOrder,
@@ -39,5 +39,5 @@ define(function(require) {
   }
 
 
-  return ProductMetricsModel;
+  return DetailMetricsModel;
 });

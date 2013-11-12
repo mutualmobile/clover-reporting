@@ -1,27 +1,12 @@
 define(function (require) {
-  var BaseDataCollection = require('app/models/data/BaseDataCollection'),
-      ProductMetricsModel = require('app/models/collection/ProductMetricsModel'),
+  var DetailCollection = require('app/models/collection/DetailCollection'),
       sumByItem = require('app/data/operations/sumByItem');
 
-  var ProductsCollection = BaseDataCollection.extend(function ProductsCollection() {
-    BaseDataCollection.apply(this, arguments);
-    this.addDataOperation(_dataOperation);
+  var ProductsCollection = DetailCollection.extend(function ProductsCollection() {
+    DetailCollection.apply(this, arguments);
   }, {
-    TModel: ProductMetricsModel,
-    onDataChange: function(data) {
-      BaseDataCollection.prototype.onDataChange.call(this, data.items);
-    }
+    sumOperation: sumByItem
   });
-
-  function _dataOperation(handle) {
-    sumByItem(handle);
-    handle.process(function(data) {
-      data.items.sort(function(a, b) {
-        return b.total - a.total;
-      });
-      return data;
-    });
-  }
 
   return ProductsCollection;
 });

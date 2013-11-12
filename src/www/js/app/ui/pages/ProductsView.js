@@ -4,7 +4,7 @@ define(function(require) {
       ProductCollectionView = require('app/ui/collections/ProductCollectionView'),
       ProductsCollection = require('app/models/collection/ProductsCollection');
 
-  require('rdust!templates/products');
+  require('rdust!templates/detail_list');
 
   /**
    * Product View
@@ -14,13 +14,13 @@ define(function(require) {
   var ProductsView = BaseView.extend(function ProductsView() {
     BaseView.apply(this, arguments);
     this.mapChildView({
-      '.product-list': {
+      '.list': {
         TView: ProductCollectionView,
         model: new ProductsCollection()
       }
     });
   }, {
-    template: 'templates/products',
+    template: 'templates/detail_list',
     className: 'details'
   });
 

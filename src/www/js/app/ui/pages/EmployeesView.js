@@ -4,7 +4,7 @@ define(function(require) {
       EmployeeCollectionView = require('app/ui/collections/EmployeeCollectionView'),
       EmployeesCollection = require('app/models/collection/EmployeesCollection');
 
-  require('rdust!templates/employees');
+  require('rdust!templates/detail_list');
 
   /**
    * Employee View
@@ -14,13 +14,13 @@ define(function(require) {
   var EmployeesView = BaseView.extend(function EmployeesView() {
     BaseView.apply(this, arguments);
     this.mapChildView({
-      '.employee-list': {
+      '.list': {
         TView: EmployeeCollectionView,
         model: new EmployeesCollection()
       }
     });
   }, {
-    template: 'templates/employees',
+    template: 'templates/detail_list',
     className: 'details'
   });
 
