@@ -37,9 +37,13 @@ define(function(require) {
   }
 
   function _createRealWorker() {
-    var blob = new Blob([_getWorkerSource()]),
-        blobURL = _URL.createObjectURL(blob);
-    return new window.Worker(blobURL);
+    var blob = _makeBlob(_getWorkerSource(), 'text/javascript'),
+        blobURL;
+    if (blob) {
+      blobURL = _URL.createObjectURL(blob);
+      return new window.Worker(blobURL);
+    }
+    return _createFakeWorker();
   }
 
   function _createFakeWorker() {
@@ -60,6 +64,26 @@ define(function(require) {
     });
     src += _extractFunctionBody(main);
     return src;
+  }
+
+  function _makeBlob(data, datatype) {
+    var out;
+    try {
+      out = new Blob([data], {type: datatype});
+    } catch (e) {
+      var BlobBuilder = window.BlobBuilder ||
+                        window.WebKitBlobBuilder ||
+                        window.MozBlobBuilder ||
+                        window.MSBlobBuilder;
+      if (e.name === 'TypeError' && BlobBuilder) {
+        var bb = new BlobBuilder();
+        bb.append(data);
+        out = bb.getBlob(datatype);
+      } else if (e.name === 'InvalidStateError') {
+        out = new Blob([data], {type: datatype});
+      }
+    }
+    return out;
   }
 
   function _serialize(data) {
