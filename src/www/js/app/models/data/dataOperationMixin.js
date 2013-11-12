@@ -28,21 +28,6 @@ define(function(require) {
           this._dataHandles.push(handle);
         }.bind(this));
       },
-      addFilteredDataOperation: function(callbacks, fireOnDataChange) {
-        var id = this.get('id');
-        if (id) {
-          callbacks = Array.isArray(callbacks) ? callbacks : [callbacks];
-          callbacks = callbacks.map(function(origCallback) {
-            return function(handle) {
-              handle.filter(function(item, id) {
-                return item.id === id;
-              }, id);
-              origCallback.apply(this, arguments);
-            };
-          });
-        }
-        return this.addDataOperation(callbacks, fireOnDataChange);
-      },
       dispose: function() {
         // In case this gets called twice, for example,
         // if the model is shared by multiple views that
