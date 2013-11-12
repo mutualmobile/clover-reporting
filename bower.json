@@ -9,7 +9,7 @@
     "tests"
   ],
   "dependencies": {
-    "lavaca": "https://github.com/mutualmobile/lavaca.git#a08c2da7cc909a12855f9c0185fb70bcabbc3f6c",
+    "lavaca": "2.3.2",
     "momentjs": "2.3.1",
     "spinjs": "1.3.2",
     "nvd3": "https://github.com/novus/nvd3.git#13d5dec998e554389a0b214afd3891ca831b06f3"
