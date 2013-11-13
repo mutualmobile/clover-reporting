@@ -74,7 +74,7 @@ nv.models.pie = function() {
       var arc = d3.svg.arc()
                   .outerRadius(arcRadius);
 
-      if (startAngle) arc.startAngle(startAngle)
+      if (startAngle) arc.startAngle(startAngle);
       if (endAngle) arc.endAngle(endAngle);
       if (donut) arc.innerRadius(arcRadius * donutRatio);
 
@@ -292,10 +292,11 @@ nv.models.pie = function() {
           var midAngle;
           a.endAngle = isNaN(a.endAngle) ? 0 : a.endAngle;
           a.startAngle = isNaN(a.startAngle) ? 0 : a.startAngle;
-          if (spacing) {
+          if (spacing && !a.adjusted) {
             midAngle = ((a.endAngle - a.startAngle) / 2) + a.startAngle;
             a.endAngle = Math.max(a.endAngle - (spacing / 2), midAngle + 0.03);
             a.startAngle = Math.min(a.startAngle + (spacing / 2), midAngle - 0.03);
+            a.adjusted = true;
           }
           if (!donut) a.innerRadius = 0;
           var i = d3.interpolate(this._current, a);
