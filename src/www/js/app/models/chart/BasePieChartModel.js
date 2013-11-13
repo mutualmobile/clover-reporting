@@ -26,9 +26,11 @@ define(function(require) {
           return prev;
         }, [{}])
         .reduce(function(prev, current) {
+          var label;
           for (var name in current) {
+            label = name.length > 15 ? name.substring(0, 12) + '...' : name;
             prev.push({
-              label: name,
+              label: label,
               value: current[name]
             });
           }
