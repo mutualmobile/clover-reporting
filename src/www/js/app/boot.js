@@ -39,6 +39,9 @@ require.config({
     nv: {
       deps: ['d3'],
       exports: 'nv'
+    },
+    'jquery-spin': {
+      deps: ['$']
     }
   }
 });

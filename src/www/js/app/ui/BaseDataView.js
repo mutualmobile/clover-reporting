@@ -12,7 +12,6 @@ define(function(require) {
         'change.data': this._dataChangeHandler
       }
     });
-    stateModel.on('change', 'dataStatus', this._dataChangeHandler);
   }, {
     onDataChange: function() {
       // No-op. Override in subclasses

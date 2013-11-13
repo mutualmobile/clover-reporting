@@ -3,8 +3,6 @@ define(function(require) {
   var Detection = require('lavaca/env/Detection'),
       View = require('lavaca/mvc/View'),
       Promise = require('lavaca/util/Promise'),
-      Spinner = require('app/ui/widgets/Spinner'),
-      viewManager = require('lavaca/mvc/ViewManager'),
       History = require('lavaca/net/History');
   require('lavaca/fx/Animation'); //jquery plugins
 
@@ -18,13 +16,6 @@ define(function(require) {
    */
   var BaseView = View.extend(function() {
     View.apply(this, arguments);
-    this.mapEvent('.cancel', 'tap', this.onTapCancel);
-    // this.mapWidget({
-    //   '.loading-spinner': {
-    //     TWidget: Spinner,
-    //     args: this.spinnerArgs
-    //   }
-    // });
   }, {
     autoRender: true,
     /**
@@ -44,16 +35,6 @@ define(function(require) {
       'out': '',
       'inReverse': '',
       'outReverse': ''
-    },
-    /**
-     * Handler for when a cancel control is tapped
-     * @method onTapCancel
-     *
-     * @param {Event} e  The tap event.
-     */
-    onTapCancel: function(e) {
-      e.preventDefault();
-      viewManager.dismiss(e.currentTarget);
     },
     /**
      * Executes when the user navigates to this view. This implementation

@@ -200,7 +200,7 @@ define(function(require) {
       if (method === 'setTimeRange') {
         setTimeRange(data.startTime, data.endTime);
       } else if (handlerMethods.indexOf(method) > -1) {
-        addHandler(data.id, method, data.fn, data.args || null);
+        addHandler(data.id, method, data.fn, data.args);
       } else if (method === 'reset') {
         reset();
       } else if (method === 'setURL') {

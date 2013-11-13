@@ -20,7 +20,7 @@ define(function(require) {
       })
       .reduce(function(prev, current) {
         return prev + current;
-      });
+      }, 0);
   }
 
   function _totalOrders(handle) {
@@ -126,7 +126,7 @@ define(function(require) {
         if (obj.last - obj.first > 0) {
           return (obj.total / ((obj.last - obj.first) / hour)).toFixed(2);
         }
-        return 0;
+        return -1;
       });
   }
 

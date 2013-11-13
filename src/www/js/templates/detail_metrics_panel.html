@@ -1,52 +1,44 @@
 <div class="wrapper clearfix">
-  {^loading}
-    {^error}
-      <div class="info-container border-highlight-grey">
-        <div class="label">
-          <div>Total</div>
-          <div>Sales</div>
-        </div>
-        <div class="total-revenue value">{total|cashMoney|s}</div>
-      </div>
-      <div class="info-container border-highlight-grey">
-        <div class="label">
-          <div>Items</div>
-          <div>Sold</div>
-        </div>
-        <div class="value">{qty}</div>
-      </div>
-      <div class="info-container border-highlight-grey">
-        <div class="label">
-          <div>Overall Sales</div>
-          <div>Percentage</div>
-        </div>
-        <div class="value">{percentOfTotal|percent}</div>
-      </div>
-      <div class="info-container border-highlight-grey">
-        <div class="label">
-          <div>Items per</div>
-          <div>Order</div>
-        </div>
-        <div class="value">{avgPerOrder}</div>
-      </div>
-      <div class="info-container border-highlight-grey">
-        <div class="label">
-          <div>Sales per</div>
-          <div>Hour</div>
-        </div>
-        <div class="value">{@gt key="{salesPerHour}" value="-1"}{salesPerHour|cashMoney|s}{:else}N/A{/gt}</div>
-      </div>
-      <div class="info-container border-highlight-grey">
-        <div class="label">
-          <div>Items per</div>
-          <div>Hour</div>
-        </div>
-        <div class="value">{@gt key="{qtyPerHour}" value="-1"}{qtyPerHour}{:else}N/A{/gt}</div>
-      </div>
-    {:else}
-      <p>Error loading data</p>
-    {/error}
-  {:else}
-    <div class="loading-spinner center"></div>
-  {/loading}
+  <div class="info-container border-highlight-grey">
+    <div class="label">
+      <div>Total</div>
+      <div>Sales</div>
+    </div>
+    <div class="total-revenue value">{total|cashMoney|s}</div>
+  </div>
+  <div class="info-container border-highlight-grey">
+    <div class="label">
+      <div>Items</div>
+      <div>Sold</div>
+    </div>
+    <div class="value">{qty}</div>
+  </div>
+  <div class="info-container border-highlight-grey">
+    <div class="label">
+      <div>Overall Sales</div>
+      <div>Percentage</div>
+    </div>
+    <div class="value">{percentOfTotal|percent}</div>
+  </div>
+  <div class="info-container border-highlight-grey">
+    <div class="label">
+      <div>Items per</div>
+      <div>Order</div>
+    </div>
+    <div class="value">{avgPerOrder}</div>
+  </div>
+  <div class="info-container border-highlight-grey">
+    <div class="label">
+      <div>Sales per</div>
+      <div>Hour</div>
+    </div>
+    <div class="value">{@gt key="{salesPerHour}" value="-1"}{salesPerHour|cashMoney|s}{:else}N/A{/gt}</div>
+  </div>
+  <div class="info-container border-highlight-grey">
+    <div class="label">
+      <div>Items per</div>
+      <div>Hour</div>
+    </div>
+    <div class="value">{@gt key="{qtyPerHour}" value="-1"}{qtyPerHour}{:else}N/A{/gt}</div>
+  </div>
 </div>

@@ -18,11 +18,6 @@ define(function(require) {
     BaseDataView.apply(this, arguments);
 
     this.chart = this.createChart();
-    this.mapEvent({
-      model: {
-        'change.loading': _onChangeLoading.bind(this)
-      }
-    });
     $(window).on('resize.baseChart'+this.id, debounce(function() {
       this.updateChart();
     }.bind(this), 50));
@@ -50,20 +45,6 @@ define(function(require) {
       return BaseDataView.prototype.dispose.apply(this, arguments);
     }
   });
-
-  function _onChangeLoading(e) {
-    var loading = e.value,
-        spinners,
-        nestedSpinners;
-    if (!loading) {
-      this.el.find('.loading').each(function() {
-        d3.select(this).classed('loading', false);
-      });
-      spinners = this.el.find('.loading-spinner');
-      nestedSpinners = this.el.find('[data-view-id] .loading-spinner');
-      spinners.not(nestedSpinners).remove();
-    }
-  }
 
   return BaseChartView;
 

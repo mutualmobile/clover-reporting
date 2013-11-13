@@ -1,17 +1,10 @@
 define(function(require) {
-  var dataHub = require('app/data/dataHub'),
-      stateModel = require('app/models/global/StateModel');
+  var dataHub = require('app/data/dataHub');
 
   var dataOperationMixin = function(TSuper) {
     return {
       setupDataHandling: function() {
         this._dataHandles = [];
-
-        // Add individual properties based on the dataStatus
-        // property of the stateModel
-        _setStatusProperties.call(this);
-        this._statusChangeHandler = _setStatusProperties.bind(this);
-        stateModel.on('change', 'dataStatus', this._statusChangeHandler);
       },
       onDataChange: function(data) {},
       setPrimaryDataHandle: function(handle) {
@@ -36,21 +29,12 @@ define(function(require) {
           this._dataHandles.forEach(function(handle) {
             handle.dispose();
           });
-          stateModel.off(this._statusChangeHandler);
           this._hasBeenDisposed = true;
         }
         TSuper.prototype.dispose.apply(this, arguments);
       }
     };
   };
-
-  // Private functions
-  function _setStatusProperties() {
-    var dataStatus = stateModel.get('dataStatus');
-    this.set('ready', dataStatus === 'ready');
-    this.set('error', dataStatus === 'error');
-    this.set('loading', dataStatus === 'loading');
-  }
 
   return dataOperationMixin;
 });

@@ -4,7 +4,8 @@ define(function(require) {
       CloverApplication = require('app/mvc/CloverApplication'),
       Translation = require('lavaca/util/Translation'),
       TimeSelectorView = require('app/ui/navigation/TimeSelectorView'),
-      timeRangeModel = require('app/models/global/TimeRangeModel');
+      timeRangeModel = require('app/models/global/TimeRangeModel'),
+      LoadingSpinner = require('app/ui/widgets/LoadingSpinner');
   require('lavaca/ui/DustTemplate');
   require('app/misc/lavaca_overrides');
   require('app/misc/dust_extensions');
@@ -24,6 +25,9 @@ define(function(require) {
 
     // Initialize translations
     Translation.init('en_US');
+
+    // Initialize loading spinner
+    LoadingSpinner.init();
 
     this.timeSelector = new TimeSelectorView('#time-selector', timeRangeModel);
   });
