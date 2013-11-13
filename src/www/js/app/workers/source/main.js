@@ -18,6 +18,7 @@ define(function(require) {
 
     function setURL(newURL) {
       url = newURL;
+      fetch();
     }
 
     function setTimeRange(start, end) {
@@ -172,7 +173,7 @@ define(function(require) {
     function sendStatus(status) {
       self.postMessage({
         type: 'status',
-        status: 'status'
+        status: status
       });
     }
 

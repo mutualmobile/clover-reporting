@@ -6,6 +6,7 @@ define(function() {
   return function xhr(url) {
     var req = new XMLHttpRequest(),
         success = null,
+        aborted = false,
         successHandlers = [],
         errorHandlers = [],
         response,
@@ -21,10 +22,10 @@ define(function() {
 
     req.open('GET', url);
     req.onreadystatechange = function () {
-      if (req.readyState === 4) {
+      if (req.readyState === 4 && !aborted) {
         if (req.status >= 200 && req.status < 300 || req.status === 304) {
           success = true;
-         } else {
+        } else {
           success = false;
         }
         response = req.responseText ? req.responseText : 'null';
@@ -66,6 +67,7 @@ define(function() {
         return this;
       },
       abort: function() {
+        aborted = true;
         req.abort(0);
       }
     };

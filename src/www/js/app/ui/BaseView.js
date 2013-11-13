@@ -19,12 +19,12 @@ define(function(require) {
   var BaseView = View.extend(function() {
     View.apply(this, arguments);
     this.mapEvent('.cancel', 'tap', this.onTapCancel);
-    this.mapWidget({
-      '.loading-spinner': {
-        TWidget: Spinner,
-        args: this.spinnerArgs
-      }
-    });
+    // this.mapWidget({
+    //   '.loading-spinner': {
+    //     TWidget: Spinner,
+    //     args: this.spinnerArgs
+    //   }
+    // });
   }, {
     autoRender: true,
     /**
