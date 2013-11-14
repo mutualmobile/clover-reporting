@@ -128,8 +128,9 @@ define(function(require) {
             endString = end.format(format),
             label = startString === endString ? startString : startString + ' - ' + endString,
             content;
-        content = '<time>' + label + '</time>' +
-              '<div class="money">' + y + '</div><div class="triangle"></div>';
+        content = '<div class="triangle"></div>' +
+              '<time>' + label + '</time>' +
+              '<div class="money">' + y + '</div>';
         return content;
       }.bind(this));
 

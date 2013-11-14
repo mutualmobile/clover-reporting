@@ -62,20 +62,17 @@
       background-color: rgba(255,255,255,1);
       font-size: 13px;
       padding: 10px;
-     
       pointer-events: auto;
-    
       color: #000000;
-
       .triangle {
         @dropDownArrowWidth: 10px;
         position: absolute;
         top: 100%;
-        margin-top: -12px;
-        margin-left: -15px;
+        margin-top: -3px;
+        margin-left: -@dropDownArrowWidth;
         left: 50%;
-        width: 30px;
-        height: 30px;
+        width: @dropDownArrowWidth * 2;
+        height: @dropDownArrowWidth;
         &:before {
           content: '';
           display: block;
@@ -96,7 +93,7 @@
         }
       }
     }
-     
+
     .nvtooltip .money {
       margin: 0;
       padding: 0;
@@ -106,7 +103,7 @@
       font-weight: bold;
       padding: 0 10px;
     }
-     
+
     .nvtooltip time {
       margin: 0;
       padding: 0;

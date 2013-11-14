@@ -12,6 +12,7 @@ define(function(require) {
   require('app/misc/hammer_extensions');
   require('app/misc/authentication_handler');
   require('app/data/dataHub');
+  require('app/customization/nv_tooltip_triangle_positioning');
 
   var app = new CloverApplication(function() {
     // Initialize the routes
