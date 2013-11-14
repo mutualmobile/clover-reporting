@@ -1,6 +1,7 @@
 define(function(require) {
-  var d3 = require('d3');
-  var nv = require('nv');
+  var d3 = require('d3'),
+      nv = require('nv'),
+      clone = require('mout/lang/clone');
 
 nv.models.pie = function() {
 
@@ -147,6 +148,30 @@ nv.models.pie = function() {
             .attr('d', arc)
             .attrTween('d', arcTween);
 
+
+        function isMajority(d) {
+          return d.endAngle - d.startAngle > 5.65; // ~90%
+        }
+
+        function getLabelCentroid(arc, d) {
+          if (isMajority(d)) {
+            var specialArc = d3.svg.arc();
+            specialArc.outerRadius(arc.outerRadius());
+            specialArc.innerRadius(arc.innerRadius());
+            specialArc.startAngle(2.36);
+            specialArc.endAngle(Math.PI * 2);
+            return specialArc.centroid(d);
+          }
+          return arc.centroid(d);
+        }
+
+        function isRightSide(d) {
+          if (isMajority(d)) {
+            return false;
+          }
+          return (d.startAngle + d.endAngle) / 2 < Math.PI;
+        }
+
         if (showLabels) {
           // This does the normal label
           var labelsArc = d3.svg.arc().innerRadius(0);
@@ -165,7 +190,7 @@ nv.models.pie = function() {
                     d.outerRadius = arcRadius + 10; // Set Outer Coordinate
                     d.innerRadius = arcRadius + 15; // Set Inner Coordinate
                     var rotateAngle = (d.startAngle + d.endAngle) / 2 * (180 / Math.PI);
-                    if ((d.startAngle+d.endAngle)/2 < Math.PI) {
+                    if (isRightSide(d)) {
                       rotateAngle -= 90;
                     } else {
                       rotateAngle += 90;
@@ -174,8 +199,8 @@ nv.models.pie = function() {
                   } else {
                     d.outerRadius = arcRadius + labelOffset; // Set Outer Coordinate
                     d.innerRadius = arcRadius + labelOffset + 5; // Set Inner Coordinate
-                    var translate = labelsArc.centroid(d);
-                    if ((d.startAngle+d.endAngle)/2 < Math.PI) {
+                    var translate = getLabelCentroid(labelsArc, d);
+                    if (isRightSide(d)) {
                       translate[0] += labelOverhang;
                     } else {
                       translate[0] -= labelOverhang;
@@ -200,7 +225,7 @@ nv.models.pie = function() {
                 d.outerRadius = arcRadius + 10; // Set Outer Coordinate
                 d.innerRadius = arcRadius + 15; // Set Inner Coordinate
                 var rotateAngle = (d.startAngle + d.endAngle) / 2 * (180 / Math.PI);
-                if ((d.startAngle+d.endAngle)/2 < Math.PI) {
+                if (isRightSide(d)) {
                   rotateAngle -= 90;
                 } else {
                   rotateAngle += 90;
@@ -209,8 +234,8 @@ nv.models.pie = function() {
               } else {
                 d.outerRadius = arcRadius + labelOffset; // Set Outer Coordinate
                 d.innerRadius = arcRadius + labelOffset + 5; // Set Inner Coordinate
-                var translate = labelsArc.centroid(d);
-                if ((d.startAngle+d.endAngle)/2 < Math.PI) {
+                var translate = getLabelCentroid(labelsArc, d);
+                if (isRightSide(d)) {
                  translate[0] += labelOverhang;
                 } else {
                  translate[0] -= labelOverhang;
@@ -221,11 +246,11 @@ nv.models.pie = function() {
 
           slices.each(function(d, i) {
             var slice = d3.select(this),
-                isRightSide = (d.startAngle + d.endAngle) / 2 < Math.PI;
+                isRight = isRightSide(d);
 
             slice
               .select(".nv-label text")
-                .style('text-anchor', isRightSide ? 'start' : 'end') //center the text on it's origin or begin/end if orthogonal aligned
+                .style('text-anchor', isRight ? 'start' : 'end') //center the text on it's origin or begin/end if orthogonal aligned
                 .text(function(d, i) {
                   var percent = (d.endAngle - d.startAngle) / (2 * Math.PI);
                   var labelTypes = {
@@ -241,26 +266,26 @@ nv.models.pie = function() {
             function getPathData(d) {
               var textBox = slice.select('text').node().getBBox(),
                   y = textBox.y + textBox.height + 5,
-                  labelCentroid = labelsArc.centroid(d),
-                  arcCentroid = arc.centroid(d),
+                  labelCentroid = getLabelCentroid(labelsArc, d),
+                  arcCentroid = getLabelCentroid(arc, d),
                   centerPoint,
-                  pathData = [];
+                  pathData = [{x: 0, y:0}];
               if (textBox.width && textBox.height) {
                 pathData = [
                   {
-                    x: textBox.x - (isRightSide ? labelOverhang : 0),
+                    x: textBox.x - (isRight ? labelOverhang : 0),
                     y: y
                   },
                   {
-                    x: textBox.x + textBox.width + (isRightSide ? 0 : labelOverhang),
+                    x: textBox.x + textBox.width + (isRight ? 0 : labelOverhang),
                     y: y
                   }
                 ];
                 centerPoint = {
-                  x: arcCentroid[0]-labelCentroid[0] + (isRightSide ? -labelOverhang : labelOverhang),
+                  x: arcCentroid[0]-labelCentroid[0] + (isRight ? -labelOverhang : labelOverhang),
                   y: arcCentroid[1]-labelCentroid[1]
                 };
-                if (isRightSide) {
+                if (isRight) {
                   centerPoint.x -= (centerPoint.x - pathData[0].x) * 0.2;
                   centerPoint.y -= (centerPoint.y - pathData[0].y) * 0.2;
                   pathData.unshift(centerPoint);
