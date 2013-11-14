@@ -19,7 +19,7 @@ define(function(require) {
       '/': [DashboardController, 'dashboard'],
       '/employees': [DashboardController, 'employees'],
       '/products': [DashboardController, 'products'],
-      '/login': [AuthenticationController, 'login', {bypassAuth: true}],
+      '/login': [AuthenticationController, 'login', {bypassAuth: true, hideLoading: true}],
       '/logout': [AuthenticationController, 'logout']
     });
 

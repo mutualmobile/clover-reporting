@@ -2,6 +2,7 @@ define(function(require) {
 
   var Controller = require('lavaca/mvc/Controller'),
       merge = require('mout/object/merge'),
+      $ = require('$'),
       stateModel = require('app/models/global/StateModel');
 
   /**
@@ -16,6 +17,7 @@ define(function(require) {
       if (!_isAuthorized() && !params.bypassAuth) {
         return this.redirect('/login');
       }
+      $(document.body).toggleClass('hide-spinner', !!params.hideLoading);
       return Controller.prototype.exec.apply(this, arguments);
     },
     updateState: function(historyState, title, url, stateProps){
