@@ -1,5 +1,14 @@
 # [Mutual Mobile Reporting App](http://mutualmobile.github.io/clover-reporting)
 
+Providing real time performance information about your business, the Mutual Mobile Reporting App gives you the metrics to manage your business from anywhere using your phone, tablet or computer.
+
+- Understand where your daily sales are hour by hour, throughout the week, or over the course of a month
+
+- Review key sales metrics
+
+- Drill into detail about how individual products are performing
+
+- Use the employee leader board to have some friendly competition
 
 
 ## Application Overview
