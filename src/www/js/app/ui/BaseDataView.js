@@ -1,7 +1,6 @@
 define(function(require) {
   var BaseView = require('app/ui/BaseView'),
-      batchCalls = require('app/misc/batch_calls'),
-      stateModel = require('app/models/global/StateModel');
+      batchCalls = require('app/misc/batch_calls');
 
   var BaseDataView = BaseView.extend(function BaseDataView() {
     BaseView.apply(this, arguments);
@@ -18,7 +17,6 @@ define(function(require) {
     },
     dispose: function() {
       var model = this.model;
-      stateModel.off('change', this._dataChangeHandler);
       BaseView.prototype.dispose.apply(this, arguments);
       if (model && model.dispose) {
          // BaseDataModels should be disposed to
