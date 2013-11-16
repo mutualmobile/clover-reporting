@@ -4,7 +4,6 @@ define(function(require) {
       $ = require('$'),
       remove = require('mout/array/remove'),
       debounce = require('mout/function/debounce'),
-      d3 = require('d3'),
       nv = require('nv');
 
   require('rdust!templates/revenue_by_customer');
@@ -26,7 +25,6 @@ define(function(require) {
     className: 'revenue_by_customer',
     createChart: function() {},
     updateChart: function() {},
-    getData: function() {},
     onDataChange: function() {
       this.updateChart();
     },
