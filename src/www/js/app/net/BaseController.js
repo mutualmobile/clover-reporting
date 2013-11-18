@@ -3,6 +3,7 @@ define(function(require) {
   var Controller = require('lavaca/mvc/Controller'),
       merge = require('mout/object/merge'),
       $ = require('$'),
+      tracker = require('app/analytics/tracker'),
       stateModel = require('app/models/global/StateModel');
 
   /**
@@ -25,6 +26,8 @@ define(function(require) {
       this.history(historyState, title, url)();
 
       stateModel.set('hideHeader', !!(stateProps && stateProps.hideHeader));
+
+      tracker.trackPageView(url, title);
 
       stateProps = merge(stateProps || {}, defaultStateProps);
       stateModel.apply(stateProps, true);

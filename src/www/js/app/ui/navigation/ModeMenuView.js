@@ -3,6 +3,7 @@ define(function(require) {
   var PopoverControlView = require('app/ui/navigation/PopoverControlView'),
       timeRangeModel = require('app/models/global/TimeRangeModel'),
       clone = require('mout/lang/clone'),
+      tracker = require('app/analytics/tracker'),
       $ = require('$');
   require('rdust!templates/mode_menu');
 
@@ -26,8 +27,10 @@ define(function(require) {
   });
 
   function _onChangeRangeSelect(e) {
+    var newMode = $(e.currentTarget).attr('data-value');
+    tracker.trackEvent('TODO', 'TODO');
     e.stopPropagation();
-    timeRangeModel.set('mode', $(e.currentTarget).data('value'));
+    timeRangeModel.set('mode', newMode);
   }
 
   return ModeMenuView;
