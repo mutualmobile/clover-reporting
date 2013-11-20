@@ -18,7 +18,7 @@ define(function(require) {
    * @class app.ui.pages.DashboardView
    * @extends app.ui.BaseView
    */
-  var DashboardView = BaseView.extend(function() {
+  var DashboardView = BaseView.extend(function DashboardView() {
     BaseView.apply(this, arguments);
     this.mapWidget({
       'self': Scrollable
@@ -43,7 +43,8 @@ define(function(require) {
     });
   }, {
     template: 'templates/dashboard',
-    className: 'dashboard'
+    className: 'dashboard',
+    trackerLabel: 'Dashboard'
   });
 
   return DashboardView;

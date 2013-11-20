@@ -14,9 +14,9 @@ define(function(require) {
   }, {
     template: 'templates/revenue_by_employee',
     className: 'base_pie revenue_by_employee',
-    onTapSeeMore: function(e) {
-      e.stopPropagation();
-      e.preventDefault();
+    trackerLabel: 'TopEmployees',
+    onTapSeeMore: function() {
+      BasePieChartView.prototype.onTapSeeMore.apply(this, arguments);
       router.exec('/employees');
     }
   });

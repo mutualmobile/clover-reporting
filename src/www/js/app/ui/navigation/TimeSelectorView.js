@@ -4,7 +4,8 @@ define(function(require) {
       $ = require('$'),
       PageMenuView = require('app/ui/navigation/PageMenuView'),
       ModeMenuView = require('app/ui/navigation/ModeMenuView'),
-      stateModel = require('app/models/global/StateModel');
+      stateModel = require('app/models/global/StateModel'),
+      tracker = require('app/analytics/tracker');
 
   require('rdust!templates/time_selector');
 
@@ -77,8 +78,10 @@ define(function(require) {
     var start = this.model.get('startTime').clone(),
         mode = this.model.get('mode'),
         newStart = start[operation](mode, 1),
-        newEnd = newStart.clone().endOf(mode);
+        newEnd = newStart.clone().endOf(mode),
+        currentViewLabel = tracker.getCurrentPageLabel();
     this.model.setCustomTimeRange(newStart, newEnd);
+    tracker.trackEvent(currentViewLabel + '_DateChange', 'DateChange');
   }
 
 

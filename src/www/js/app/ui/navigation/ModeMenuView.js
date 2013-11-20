@@ -27,10 +27,11 @@ define(function(require) {
   });
 
   function _onChangeRangeSelect(e) {
-    var newMode = $(e.currentTarget).attr('data-value');
-    tracker.trackEvent('TODO', 'TODO');
+    var newMode = $(e.currentTarget).attr('data-value'),
+        currentViewLabel = tracker.getCurrentPageLabel();
     e.stopPropagation();
     timeRangeModel.set('mode', newMode);
+    tracker.trackEvent(currentViewLabel + '_DateFilter', 'ChangeDateFilter', newMode);
   }
 
   return ModeMenuView;

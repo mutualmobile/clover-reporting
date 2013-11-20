@@ -6,7 +6,8 @@ define(function(require) {
       RevenueOverTimeBarView = require('app/ui/charts/time/RevenueOverTimeBarView'),
       DetailMetricsPanelView = require('app/ui/collections/detail/child/DetailMetricsPanelView'),
       DetailCategoriesPanelView = require('app/ui/collections/detail/child/DetailCategoriesPanelView'),
-      $ = require('$');
+      $ = require('$'),
+      tracker = require('app/analytics/tracker');
   require('rdust!templates/detail');
 
   /**
@@ -63,6 +64,7 @@ define(function(require) {
         panel = tab.data('panel'),
         shouldClose = tab.hasClass('active'),
         isMainTab = tab.hasClass('main-tab'),
+        currentViewLabel = tracker.getCurrentPageLabel(),
         tabViews;
 
     $('[data-active-panel]')
@@ -98,6 +100,11 @@ define(function(require) {
           });
         }
       });
+      tracker.trackEvent(currentViewLabel + '_Data',
+                         'DataDrillDown',
+                         tab.attr('data-tracker-label'),
+                         tab.parents('.detail').index() + 1 // rank
+                         );
     }
   }
 

@@ -21,7 +21,8 @@ define(function(require) {
     });
   }, {
     template: 'templates/detail_list',
-    className: 'details'
+    className: 'details',
+    trackerLabel: 'Product'
   });
 
   return ProductsView;

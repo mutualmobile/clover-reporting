@@ -29,6 +29,7 @@ nv.models.customLineChart = function() {
         return '<h3>' + key + '</h3>' +
                '<p>' +  y + ' at ' + x + '</p>'
       }
+    , tooltipShowEventHandler = function() {}
     , x
     , y
     , state = {}
@@ -76,6 +77,7 @@ nv.models.customLineChart = function() {
     if (previousTooltipContent !== content) {
       nv.tooltip.show([left, top], content, null, null, offsetElement);
       previousTooltipContent = content;
+      tooltipShowEventHandler();
     } else if (tooltips) {
       nv.tooltip.cleanup();
       previousTooltipContent = null;
@@ -415,6 +417,12 @@ nv.models.customLineChart = function() {
     if (!arguments.length) return tooltip;
     tooltip = _;
     return chart;
+  };
+
+  chart.tooltipShowEventHandler = function(_) {
+    if (!arguments.length) return tooltipShowEventHandler;
+    tooltipShowEventHandler = _;
+    return tooltipShowEventHandler;
   };
 
   chart.state = function(_) {

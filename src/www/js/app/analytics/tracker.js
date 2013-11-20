@@ -1,6 +1,7 @@
 define(function(require) {
 
-  var Config = require('lavaca/util/Config');
+  var Config = require('lavaca/util/Config'),
+      viewManager = require('lavaca/mvc/ViewManager');
 
   // ----------- Google Analytics snippet ---------
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -9,8 +10,10 @@ define(function(require) {
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   // --------- End Google Analytics snippet -------
 
-  var ga = window.ga;
-  ga('create', Config.get('analytics_ua') || '', 'auto');
+  var props = location.port === 8080 ? 'auto' : {
+    'cookieDomain': 'none'
+  };
+  window.ga('create', Config.get('analytics_ua') || '', props);
 
   var tracker = {
     trackPageView: function(url, title, cb) {
@@ -40,6 +43,12 @@ define(function(require) {
         cb = arguments[arguments.length - 1];
       }
       _send(obj, cb);
+    },
+    setUserDimension: function(dimension, value) {
+      window.ga('set', dimension, value);
+    },
+    getCurrentPageLabel: function() {
+      return viewManager.layers[0].trackerLabel;
     }
   };
 
@@ -49,7 +58,7 @@ define(function(require) {
     if (cb) {
       obj.hitCallback = cb;
     }
-    ga('send', obj);
+    window.ga('send', obj);
   }
 
 

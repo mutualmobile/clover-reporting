@@ -16,9 +16,9 @@ define(function(require) {
   }, {
     template: 'templates/revenue_by_category',
     className: 'base_pie revenue_by_category',
-    onTapSeeMore: function(e) {
-      e.stopPropagation();
-      e.preventDefault();
+    trackerLabel: 'TopItems',
+    onTapSeeMore: function() {
+      BasePieChartView.prototype.onTapSeeMore.apply(this, arguments);
       router.exec('/products');
     }
   });

@@ -5,7 +5,8 @@ define(function(require) {
       d3 = require('d3'),
       nv = require('nv'),
       $ = require('$'),
-      colors = require('app/misc/color_scheme');
+      colors = require('app/misc/color_scheme'),
+      tracker = require('app/analytics/tracker');
   require('app/ui/widgets/CustomPieChart');
   require('rdust!templates/base_pie');
 
@@ -78,6 +79,7 @@ define(function(require) {
     onTapSeeMore: function(e) {
       e.stopPropagation();
       e.preventDefault();
+      tracker.trackEvent('Dashboard_TopCharts', 'ClickThrough', this.trackerLabel);
     }
   });
 
@@ -85,13 +87,13 @@ define(function(require) {
       _inCircle = false;
   function _tapInCircle(e) {
     $('.base_pie .popover').hide();
-    this.el.find('.popover').show();
+    _showPopover.call(this);
     e.stopPropagation();
   }
 
   function _enterCircle() {
     _inCircle = true;
-    this.el.find('.popover').show();
+    _showPopover.call(this);
   }
 
   function _exitCircle() {
@@ -110,6 +112,11 @@ define(function(require) {
 
   function _tapInPopover(e) {
     e.stopPropagation();
+  }
+
+  function _showPopover() {
+    this.el.find('.popover').show();
+    tracker.trackEvent('Dashboard_TopCharts', 'DataDrillDown', this.trackerLabel);
   }
 
   function _hidePopover() {

@@ -6,7 +6,8 @@ define(function(require) {
       nv = require('nv'),
       moment = require('moment'),
       bucketData = require('app/misc/bucket_data'),
-      timeRangeModel = require('app/models/global/TimeRangeModel');
+      timeRangeModel = require('app/models/global/TimeRangeModel'),
+      tracker = require('app/analytics/tracker');
   require('app/ui/widgets/CustomLineChart');
   require('rdust!templates/revenue_over_time');
 
@@ -120,24 +121,29 @@ define(function(require) {
             'day': 'MMM DD',
             'hour': 'h:mm'
           };
-      chart.tooltipContent(function(key, x, y, e) {
-        var start = moment(this.rangeData.ticks[e.pointIndex-1] || this.rangeData.start),
-            end =  moment((this.rangeData.ticks[e.pointIndex] || this.rangeData.end) - 1),
-            format = tooltipFormats[this.rangeData.key] || this.rangeData.format,
-            startString = start.format(format),
-            endString = end.format(format),
-            label = startString === endString ? startString : startString + ' - ' + endString,
-            content;
-        content = '<div class="triangle"></div>' +
-              '<time>' + label + '</time>' +
-              '<div class="money">' + y + '</div>';
-        return content;
-      }.bind(this));
+      chart
+        .tooltipContent(function(key, x, y, e) {
+          var start = moment(this.rangeData.ticks[e.pointIndex-1] || this.rangeData.start),
+              end =  moment((this.rangeData.ticks[e.pointIndex] || this.rangeData.end) - 1),
+              format = tooltipFormats[this.rangeData.key] || this.rangeData.format,
+              startString = start.format(format),
+              endString = end.format(format),
+              label = startString === endString ? startString : startString + ' - ' + endString,
+              content;
+          content = '<div class="triangle"></div>' +
+                '<time>' + label + '</time>' +
+                '<div class="money">' + y + '</div>';
+          return content;
+        }.bind(this))
+        .tooltipShowEventHandler(_onShowTooltip.bind(this));
 
       return chart;
     }
-
   });
+
+  function _onShowTooltip() {
+    tracker.trackEvent('Dashboard_DateData', 'DataDrillDown', timeRangeModel.get('mode'));
+  }
 
   return RevenueOverTimeView;
 
