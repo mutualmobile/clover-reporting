@@ -4,7 +4,9 @@ define(function(require) {
       Scrollable = require('lavaca/ui/Scrollable'),
       RevenueByCategoryView = require('app/ui/charts/pie/RevenueByCategoryView'),
       RevenueByCategoryModel = require('app/models/chart/RevenueByCategoryModel'),
+      RevenueByDiningTypeModel = require('app/models/chart/RevenueByDiningTypeModel'),
       RevenueByEmployeeView = require('app/ui/charts/pie/RevenueByEmployeeView'),
+      RevenueByDiningTypeView = require('app/ui/charts/pie/RevenueByDiningTypeView'),
       RevenueByEmployeeModel = require('app/models/chart/RevenueByEmployeeModel'),
       RevenueOverTimeView = require('app/ui/charts/time/RevenueOverTimeView'),
       RevenueOverTimeModel = require('app/models/chart/RevenueOverTimeModel'),
@@ -40,6 +42,11 @@ define(function(require) {
         TView: RevenueByEmployeeView,
         model: new RevenueByEmployeeModel()
       }
+      //To Be Added
+      // '.revenue-by-dining-type': {
+      //   TView: RevenueByDiningTypeView,
+      //   model: new RevenueByDiningTypeModel()
+      // }
     });
   }, {
     template: 'templates/dashboard',

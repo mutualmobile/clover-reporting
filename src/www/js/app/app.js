@@ -21,7 +21,10 @@ define(function(require) {
       '/employees': [DashboardController, 'employees'],
       '/products': [DashboardController, 'products'],
       '/login': [AuthenticationController, 'login', {bypassAuth: true, hideLoading: true}],
-      '/logout': [AuthenticationController, 'logout']
+      '/logout': [AuthenticationController, 'logout'],
+      '/end-user-agreement': [AuthenticationController, 'agreement', {bypassAuth: true, hideLoading: true}],
+      '/support': [AuthenticationController, 'support', {bypassAuth: true, hideLoading: true}],
+      '/privacy-policy': [AuthenticationController, 'privacy', {bypassAuth: true, hideLoading: true}]
     });
 
     // Initialize translations
