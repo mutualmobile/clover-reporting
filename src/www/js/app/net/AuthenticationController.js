@@ -72,7 +72,7 @@ define(function(require) {
           //navigationCommunication.init().loggedIn(true);
         }
         localStore.set('accessToken', data.access_token);
-        localStore.set('merchantId', 'RZC2F4FMKFJ12');
+        localStore.set('merchantId', 'current');
         stateModel.set('loggedIn', true);
 
         localStorage.setItem('token', data.access_token);

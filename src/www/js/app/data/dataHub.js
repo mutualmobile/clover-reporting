@@ -41,7 +41,7 @@ define(function(require) {
         params,
         url;
     if (stateModel.get('loggedIn')) {
-      merchantId = localStore.get('merchantId');
+      merchantId = 'current';
       accessToken = localStore.get('accessToken');
       params = {
         'access_token': accessToken,
