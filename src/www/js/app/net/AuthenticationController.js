@@ -6,7 +6,13 @@ define(function(require) {
       AgreementView = require('app/ui/pages/AgreementView'),
       SupportView = require('app/ui/pages/SupportView'),
       PrivacyView = require('app/ui/pages/PrivacyView'),
-      LoginView = require('app/ui/pages/LoginView');
+      LoginView = require('app/ui/pages/LoginView'),
+      Connectivity = require('lavaca/net/Connectivity'),
+      Device = require('lavaca/env/Device'),
+      Promise = require('lavaca/util/Promise'),
+      Config = require('lavaca/util/Config');
+
+      var _isCordova = Device.isCordova();
 
   /**
    * Authentication controller
@@ -41,6 +47,42 @@ define(function(require) {
       return this
         .view(null, SupportView, new Model())
         .then(this.updateState(history, 'Support', params.url, {hideHeader: true}));
+    },
+    getToken: function(params) {
+      var email = params.email,
+          password = params.password,
+          endpoint = 'oauth/token',
+          tokenURL = Config.get('auth_url') + endpoint,
+          proxyTokenURL = Config.get('auth_proxy_url') + endpoint,
+          promise = new Promise();
+      
+      Connectivity.ajax({
+        url: _isCordova ? tokenURL : proxyTokenURL,
+        dataType: 'json',
+        type: 'POST',
+        data: JSON.stringify({
+          clientId: Config.get('app_id'),
+          email: email,
+          password: password
+        }),
+        contentType: 'application/json'
+      })
+      .success(function(data) {
+        if (_isCordova) {
+          //navigationCommunication.init().loggedIn(true);
+        }
+        localStore.set('accessToken', data.access_token);
+        localStore.set('merchantId', 'RZC2F4FMKFJ12');
+        stateModel.set('loggedIn', true);
+
+        localStorage.setItem('token', data.access_token);
+        promise.when(this.redirect('/'));
+      }.bind(this))
+      .error(function() {
+        alert('Error authenticating. Please try again.');
+        promise.reject();
+      });
+      return promise;
     }
   });
 

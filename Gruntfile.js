@@ -20,16 +20,15 @@ module.exports = function( grunt ) {
         android: '<%= paths.tmp.root %>/android'
       },
       cordovaInit: {
-        root: 'init',
-        www: '<%= paths.cordovaInit.root %>/src/www',
-        cordovaConfig: '<%= paths.src.www %>/config.xml',
-        cordovaConfigDest: '<%= paths.cordovaInit.www %>/config.xml'
+        root: 'cordova',
+        www: '<%= paths.cordovaInit.root %>/www'
       },
       build: {
         root: 'build',
         www: '<%= paths.build.root %>/www',
-        ios: '<%= paths.build.root %>/platforms/ios',
-        android: '<%= paths.build.root %>/platforms/android'
+        ios: '<%= paths.cordovaInit.root %>/platforms/ios',
+        android: '<%= paths.cordovaInit.root %>/platforms/android',
+        androidLocalProperties: '<%= paths.build.android %>local.properties'
       },
       asset: {
         ios: '<%= paths.build.ios %>/www',
@@ -55,6 +54,7 @@ module.exports = function( grunt ) {
           'configs/**/*',
           'assets/**/*',
           'messages/**/*',
+          '<%= paths.out.js %>/app/initial/**/*',
           'config.xml'
         ]
       }
@@ -64,9 +64,10 @@ module.exports = function( grunt ) {
 
     clean: {
       tmp: ['<%= paths.tmp.root %>'],
+      iosGitIgnore: ['cordova/platforms/ios/.gitignore'],
       build: ['<%= paths.build.root %>'],
       'package': ['<%= paths.package.root %>'],
-      cordova: ['<%= paths.src.www %>'],
+      cordova: ['<%= paths.cordovaInit.www %>'],
       init: ['<%= paths.cordovaInit.root %>']
     },
 
@@ -198,14 +199,26 @@ module.exports = function( grunt ) {
         options: {
           port: 8080,
           vhost: 'localhost',
-          base: 'src/www'
+          base: 'src/www',
+          apiPrefix: '/api',
+          apiBaseUrl: 'api.clover.com',
+          authApiPrefix: '/authApi',
+          authApiBaseUrl: 'www.clover.com',
+          proxyPort: '443',// change to 443 for https
+          proxyProtocol: 'https'//change to https if ssl is required
         }
       },
       prod: {
         options: {
           port: 8080,
           vhost: 'localhost',
-          base: 'build/www'
+          base: 'build/www',
+          apiPrefix: '/api',
+          apiBaseUrl: 'api.clover.com',
+          authApiPrefix: '/authApi',
+          authApiBaseUrl: 'www.clover.com',
+          proxyPort: '443',// change to 443 for https
+          proxyProtocol: 'https'//change to https if ssl is required
         }
       },
       doc: {
@@ -217,7 +230,15 @@ module.exports = function( grunt ) {
       }
     },
 
-    copy: {
+     copy: {
+      cordovaConfig: {
+        files: [
+          {
+            src: '<%= paths.cordovaInit.root %>/www/config.xml',
+            dest: '<%= paths.src.www %>/config.xml'
+          }
+        ]
+      },
       tmp: {
         files: [
           {
@@ -234,54 +255,6 @@ module.exports = function( grunt ) {
           }
         ]
       },
-      cordovaInit: {
-        files: [
-          {
-            expand: true,
-            cwd: '<%= paths.src.root %>',
-            src: '**/*',
-            dest: '<%= paths.cordovaInit.root %>/src'
-          }
-        ]
-      },
-      configLavaca: {
-        files: [
-          {
-            expand: true,
-            cwd: '<%= paths.cordovaInit.root %>/src/www',
-            src: '**/*',
-            dest: '<%= paths.src.root %>/www'
-          }
-        ]
-      },
-      cordova: {
-        files: [
-          {
-            expand: true,
-            cwd: '<%= paths.tmp.root %>',
-            src: ['.cordova/**'],
-            dest: '<%= paths.build.root %>/'
-          },
-          {
-            expand: true,
-            cwd: '<%= paths.tmp.root %>',
-            src: ['merges/**'],
-            dest: '<%= paths.build.root %>/'
-          },
-          {
-            expand: true,
-            cwd: '<%= paths.tmp.root %>',
-            src: ['platforms/**'],
-            dest: '<%= paths.build.root %>/'
-          },
-          {
-            expand: true,
-            cwd: '<%= paths.tmp.root %>',
-            src: ['plugins/**'],
-            dest: '<%= paths.build.root %>/'
-          }
-        ]
-      },
       www: {
         files: [
           {
@@ -289,6 +262,16 @@ module.exports = function( grunt ) {
             cwd: '<%= paths.tmp.www %>/',
             src: '<%= paths.copy.www %>',
             dest: '<%= paths.build.www %>/'
+          }
+        ]
+      },
+      cordova: {
+        files: [
+          {
+            expand: true,
+            cwd: '<%= paths.tmp.www %>/',
+            src: '<%= paths.copy.www %>',
+            dest: '<%= paths.cordovaInit.www %>/'
           }
         ]
       }
@@ -440,6 +423,15 @@ module.exports = function( grunt ) {
       }
     },
 
+    shell: {
+      mkCordovaDir: {
+        command: 'mkdir <%= paths.cordovaInit.cordovaRoot %>',
+        options: {
+          stdout: true
+        }
+      }
+    },
+
     chmod: {
       build: {
         options: {
@@ -468,6 +460,7 @@ module.exports = function( grunt ) {
   grunt.loadTasks('tasks/buildProject');
   grunt.loadTasks('tasks/initCordova');
   grunt.loadTasks('tasks/initPlatforms');
+  grunt.loadNpmTasks('grunt-shell');
   grunt.loadTasks('tasks/configLavaca');
   grunt.loadTasks('tasks/cordovaBuild');
   grunt.loadTasks('tasks/cordovaInit');

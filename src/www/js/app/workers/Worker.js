@@ -32,6 +32,7 @@ define(function(require) {
     if (_hasFullSupport) {
       return _createRealWorker();
     } else {
+      _getWorkerSource();
       return _createFakeWorker();
     }
   }

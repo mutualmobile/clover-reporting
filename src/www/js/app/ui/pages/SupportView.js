@@ -2,6 +2,8 @@ define(function(require) {
 
   var BaseView = require('app/ui/BaseView');
   require('rdust!templates/support');
+  require('rdust!templates/nonAuthHeader');
+  require('rdust!templates/nonAuthFooter');
 
   /**
    * Agreement View

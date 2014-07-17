@@ -30,6 +30,7 @@
     "grunt-contrib-yuidoc": "0.4.0",
     "grunt-contrib-watch": "0.4.4",
     "dustjs-linkedin": "1.2.5",
+    "grunt-shell": "0.3.x",
     "dustjs-helpers": "1.1.1",
     "grunt-chmod": "1.0.x",
     "grunt-concurrent": "0.x"

@@ -2,7 +2,8 @@ module.exports = function(grunt) {
   'use strict';
 
   /* server.js */
-  var express = require('express');
+  var express = require('express'),
+      util = require('util');
 
   var startServer = function(config) {
     config = config || {};
@@ -13,36 +14,40 @@ module.exports = function(grunt) {
         base = config.base,
         port = config.port,
         host = config.host,
+        authHost = config.authHost,
         apiPrefix = config.apiPrefix || '/api',
-        basicAuth = config.basicAuth,
-        additionalParams = config.additionalParams || {};
+        authApiPrefix = config.authApiPrefix,
+        basicAuth = config.basicAuth;
 
     function proxyRequest(request, response) {
       var postData = request.body;
       var options = {
-        host: host,
         port: config.proxyPort,
         method: request.method,
-        path: request.originalUrl.replace(new RegExp(apiPrefix), ''),
-        headers: {}
+        headers: {
+          'content-type': request.headers['content-type'],
+          'content-length': request.headers['content-length'] || '0'
+        }
       };
       var jsonData;
-      options.headers.host = host;
+      if (request.originalUrl.indexOf(authApiPrefix) > -1) {
+        options.host = authHost;
+        options.path = request.originalUrl.replace(new RegExp(authApiPrefix), '');
+      } else if (request.originalUrl.indexOf(apiPrefix) > -1) {
+        options.host = host;
+        options.path = request.originalUrl.replace(new RegExp(apiPrefix), '');
+      }
+      options.headers.host = options.host;
       if (basicAuth) {
         options.headers.Authorization = "Basic " + new Buffer(basicAuth.username + ":" + basicAuth.password).toString("base64");
       }
       if ('POST' === request.method && typeof postData === 'object') {
         postData = JSON.stringify(postData);
       }
-      for (var param in additionalParams) {
-        options.path += options.path.indexOf('?') > -1 ? '&' : '?';
-        if (additionalParams.hasOwnProperty(param)) {
-          options.path += encodeURIComponent(param) + '=' + encodeURIComponent(additionalParams[param]);
-        }
-      }
+      console.log(options);
       var req = requester.request(options, function(res) {
         var output = '';
-        // console.log(options.method + ' @ ' + options.host + options.path + ' Code: '+ res.statusCode);
+        console.log(options.method + ' @ ' + options.host + options.path + ' Code: '+ res.statusCode);
         res.setEncoding('utf8');
         res.on('data', function (chunk) {
           output += chunk;
@@ -50,6 +55,7 @@ module.exports = function(grunt) {
         res.on('end', function() {
           response
             .status(res.statusCode);
+          console.log(output);
           try {
             jsonData = JSON.parse(output);
           } catch(e) {
@@ -74,18 +80,17 @@ module.exports = function(grunt) {
       req.end();
     }
 
-    //server.use(express.basicAuth('test', 'test'));
-
     server.use(express['static'](base, {maxAge: hourMs}));
     server.use(express.directory(base, {icons: true}));
     server.use(express.bodyParser());
     server.use(express.errorHandler({dumpExceptions: true, showStack: true}));
 
     server.all(apiPrefix + '*', proxyRequest);
+    server.all(authApiPrefix + '*', proxyRequest);
 
-    // server.get('/*', function(req, res) {
-    //   res.redirect(util.format('/#%s#', req.originalUrl));
-    // });
+    server.get('/*', function(req, res) {
+      res.redirect(util.format('/#%s#', req.originalUrl));
+    });
 
     if (vhost) {
       server.use(express.vhost(vhost, server));
@@ -97,18 +102,18 @@ module.exports = function(grunt) {
 
 
   grunt.registerMultiTask('server', 'Runs a static web and proxy server', function() {
-    var options = this.options({
-    });
+    var options = this.options({});
     var server = startServer({
-        host: options.apiBaseUrl, // override this with your third party API host, such as 'search.twitter.com'.
+        host: options.apiBaseUrl,
+        authHost: options.authApiBaseUrl,
         hourMs: 0*60*60,
         vhost: options.vhost,
         base: options.base,
         port: options.port,
         apiPrefix: options.apiPrefix,
+        authApiPrefix: options.authApiPrefix,
         proxyPort: options.proxyPort || '80',
-        proxyProtocol: options.proxyProtocol || 'http',
-        additionalParams: options.additionalParams || {}
+        proxyProtocol: options.proxyProtocol || 'http'
     }),
     args = this.args,
     done = args[args.length-1] === 'watch' ? function() {} : this.async();

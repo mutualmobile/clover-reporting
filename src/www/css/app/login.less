@@ -86,10 +86,10 @@
         width: 481px;
         margin: 0 auto;
         display: block;
+        height: 359px;
       }
       .video {
         overflow: hidden;
-         // padding-top: 65px;
       }
       @media (max-width: 1200px) {
         height: 540px;
@@ -97,9 +97,6 @@
         video, .video {
           width: 429px;
           height: 322px;
-        }
-        .video {
-          // padding-top: 30px;
         }
       }
       @media (max-width: 800px) {
@@ -110,9 +107,6 @@
           width: 384px;
           height: 288px;
         } 
-        .video {
-           // padding-top: 25px;
-        }
       }
       @media (max-width: 730px) {
         height: 400px;
@@ -122,9 +116,6 @@
           width: 320px;
           height: 242px;
         } 
-        .video {
-          // padding-top: 21px;
-        }
       }
       @media (max-width: 640px) {
         height: 320px;
@@ -133,9 +124,6 @@
           width: 259px;
           height: 195px;
         } 
-        .video  {
-          // padding-top: 17px;
-        }
       }
       @media (max-width: 480px) {
         height: 250px;
@@ -145,9 +133,6 @@
           width: 200px;
           height: 178px;
         } 
-        .video {
-           // padding-top: 12px;
-        }
       }
       @media (max-width: 380px) {
         height: 200px;
@@ -156,8 +141,6 @@
         video, .video {
           width: 160px;
           height: 123px;
-        }
-        .video {
         }
       }
     }
@@ -183,52 +166,73 @@
         width: 240px;
       }
     }
-    .sign-in h3 {
-      text-align: center;
-      font-size: 16px;
-      font-weight: 300;
 
-    }
-     .sign-in h3 b{
-      font-weight: 500;
-    }
-    .sign-in h3 a{
-      color: #d3dadd;
-    }
-    .sign-in button {
-      text-transform: uppercase;
-      width: 145px;
-      height:50px;
-      color: black;
-      border: none;
-      border-radius: 3px;
-      margin: 32px auto 0;
-      display: block;
-      font-size: 16px;
-      background: url(../../assets/img/cta@2x.png);
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-    .sign-in button a {
-      color: #000;
-    }
-    .sign-in button {
-      text-transform: uppercase;
-      font-size: 14px;
+    .sign-in {
+      display: inline-block;
+      text-align: center;
       h3 {
-        font-weight: bold;
-        text-align: left;
-        float: left;
-        padding: 4px 22px;
-        span {
-          &:nth-child(1) {
-            padding-left: 8px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 300;
+        b {
+          font-weight: 500;
+        }
+        a {
+          color: #d3dadd;
+        }
+      }
+      .login-wrapper {
+        margin: 0 auto;
+        display: inline-block;
+        text-align: center;
+        form {
+          margin-top: 30px;
+          input {
+            background: #fff;
+            width: 200px;
+            border-radius: 3px;
+            height: 35px;
+            margin: 9px 0 0 0;
+            padding: 3px 5px;
+            border: 1px solid #333;
+            -webkit-appearance: none;
             display: block;
           }
-          &:nth-child(2) {
-            font-size: 10px;
-            display: block;
-            font-weight: 500;
+        }
+      }
+      button {
+        text-transform: uppercase;
+        font-size: 14px;
+        text-transform: uppercase;
+        width: 200px;
+        height:50px;
+        color: black;
+        border: none;
+        border-radius: 3px;
+        margin: 12px auto 0;
+        display: block;
+        font-size: 16px;
+        background: url(../../assets/img/cta@2x.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+        a {
+          color: #000;
+        }
+        h3 {
+          font-weight: bold;
+          text-align: left;
+          float: left;
+          padding: 4px 22px;
+          span {
+            &:nth-child(1) {
+              padding-left: 8px;
+              display: block;
+            }
+            &:nth-child(2) {
+              font-size: 10px;
+              display: block;
+              font-weight: 500;
+            }
           }
         }
       }
@@ -343,4 +347,21 @@
       }
     }
   } 
+}
+
+
+.mobile {
+  .view.login {
+    video {
+      display: none !important;
+    }
+    .poster-image {
+      background: url(../../assets/img/poster.png);
+      background-size: contain;
+      display: block;
+      height: 100%;
+      width: 100%;
+      background-repeat: no-repeat; 
+    }
+  }
 }
