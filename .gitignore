@@ -17,6 +17,7 @@
 /src/www/css/app/app.min.css
 /node_modules
 /docs
+/cordova
 /doc
 /pkg
 /tmp

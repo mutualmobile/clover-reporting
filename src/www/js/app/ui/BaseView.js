@@ -3,6 +3,12 @@ define(function(require) {
   var Detection = require('lavaca/env/Detection'),
       View = require('lavaca/mvc/View'),
       Promise = require('lavaca/util/Promise'),
+      localStore = require('app/cache/localStore'),
+      Promise = require('lavaca/util/Promise'),
+      stateModel = require('app/models/global/StateModel'),
+      Device = require('lavaca/env/Device'),
+      router = require('lavaca/mvc/Router'),
+      Config = require('lavaca/util/Config'),
       History = require('lavaca/net/History');
   require('lavaca/fx/Animation'); //jquery plugins
 
@@ -16,6 +22,11 @@ define(function(require) {
    */
   var BaseView = View.extend(function() {
     View.apply(this, arguments);
+    this.mapEvent({
+      '.authButton': {
+        'tap': this.authButton.bind(this)
+      }
+    });
   }, {
     autoRender: true,
     /**
@@ -46,6 +57,10 @@ define(function(require) {
      * @param {Array} exitingViews  The views that are exiting as this one enters
      * @return {Lavaca.util.Promise} A promise
      */
+    authButton:function(e) {
+      e.preventDefault();
+      router.exec('/getToken');
+    },
     enter: function(container, exitingViews) {
       return View.prototype.enter.apply(this, arguments)
         .then(function() {

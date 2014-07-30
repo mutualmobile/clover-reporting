@@ -353,6 +353,7 @@
       border-bottom-left-radius: 0.4rem;
       border-bottom-right-radius: 0.4rem;
       .detail-panel {
+        display: none;
         border-top: 1px solid #51595e;
         .transition(opacity 300ms);
         z-index: -1;
@@ -364,6 +365,9 @@
         height: 100%;
         & > * {
           .transform(translateZ(0));
+        }
+        &.active {
+          display: block;
         }
       }
       .detail-panel[data-panel="overview"] {

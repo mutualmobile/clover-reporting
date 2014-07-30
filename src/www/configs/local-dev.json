@@ -1,7 +1,11 @@
 {
-  "api_url": "https://apidev1.dev.clover.com/v2/merchant/{0}/{1}",
-  "auth_url": "https://dev1.dev.clover.com/{0}",
-  "mock_url": "/assets/mock/{0}.json",
-  "app_id": "MGXX3K46PVRSA",
+  "api_url": "https://api.clover.com/v2/merchant/{0}/{1}", 
+  "auth_url": "https://www.clover.com/",
+  "proxy_url": "/api/v2/merchant/current/{0}",
+  "login_url": "https://www.clover.com/oauth/authorize",
+  "auth_proxy_url": "/authApi/",
+  "client_id": "H3XNANEEP9ATC",
+  "redirect_domain": "http://localhost:8080",
+  "app_id": "H3XNANEEP9ATC",
   "analytics_ua": "UA-45833312-1"
 }

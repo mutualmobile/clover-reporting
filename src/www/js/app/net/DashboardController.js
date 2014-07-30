@@ -21,6 +21,7 @@ define(function(require) {
      * @return {Lavaca.util.Promise}  A promise
      */
     dashboard: function(params, history) {
+      console.log('hit')
       return this
         .view(null, DashboardView, new Model())
         .then(this.updateState(history, 'Dashboard', params.url));
