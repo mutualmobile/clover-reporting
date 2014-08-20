@@ -28,7 +28,7 @@ define(function(require) {
 
       if (!this.model) {return;}
 
-      bucketedValues = bucketData(this.model.get('data'), rangeData.start, rangeData.end, rangeData.ticks, 'modified', 'total', filter),
+      bucketedValues = bucketData(this.model.get('data'), rangeData.start, rangeData.end, rangeData.ticks, 'timestamp', 'total', filter),
       bucketedValues.forEach(function(bucketedVal) {
         values.push({
           label: bucketedVal[0], // Will be hidden, must be unique

@@ -10,6 +10,7 @@ define(function() {
         successHandlers = [],
         errorHandlers = [],
         response,
+        getNonDeletedOrders,
         responseHash;
 
     function processHandlers() {
@@ -34,6 +35,7 @@ define(function() {
       }
     };
     req.send();
+
 
     function hash(s) {
       return s.split('').reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);

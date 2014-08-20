@@ -17,7 +17,7 @@ define(function(require) {
       .map(function(order) {
         return {
           total: order.total,
-          modified: order.modified
+          modified: order.timestamp
         };
       });
   }

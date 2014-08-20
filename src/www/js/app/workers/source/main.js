@@ -19,6 +19,7 @@ define(function(require) {
     function setURL(newURL) {
       url = newURL;
       fetch();
+
     }
 
     function setTimeRange(start, end) {
@@ -69,6 +70,7 @@ define(function(require) {
       } else {
         result = result.orders;
       }
+
       handleData.forEach(function(handle) {
         var method = handle.method;
         if (method === 'map') {
@@ -131,6 +133,7 @@ define(function(require) {
         fullUrl = url + '&start_time=' + startTime + '&end_time=' + endTime + '&count=' + 999999;
         lastFetch = xhr(fullUrl)
           .success(function(newData, newHash) {
+            newData = filterDeletedOrders(newData);
             if (newData && newHash !== lastHash) {
               data = newData;
               lastHash = newHash;
@@ -144,6 +147,18 @@ define(function(require) {
             fetchTimer = setTimeout(fetch, 6000);
           });
       }
+    }
+
+    function filterDeletedOrders(response) {
+      var parseResponse = JSON.parse(response);
+      var arrayWithOnlyNonDeletedOrders = {"orders": []};
+      for (var i = 0; i < parseResponse.orders.length; i++) {
+        if (parseResponse.orders[i].isDeleted == false && parseResponse.orders[i].paymentState == "PAID") {
+          arrayWithOnlyNonDeletedOrders.orders.push(parseResponse.orders[i]);
+        };
+      };
+      debugger;
+      return JSON.stringify(arrayWithOnlyNonDeletedOrders);
     }
 
     function cancel() {
