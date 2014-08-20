@@ -16,6 +16,7 @@
 
 /src/www/css/app/app.min.css
 /node_modules
+/cordova
 /docs
 /cordova
 /doc
