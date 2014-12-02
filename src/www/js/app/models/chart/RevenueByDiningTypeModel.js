@@ -18,7 +18,6 @@ define(function(require) {
     filterByDiningType(handle, this.get('itemId'));
     handle
       .map(function(order) {
-        console.log(order.orderType)
         var orderType = order.orderType,
             result = {};
         if (orderType) {

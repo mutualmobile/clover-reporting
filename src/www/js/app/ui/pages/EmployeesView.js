@@ -4,7 +4,7 @@ define(function(require) {
       EmployeeCollectionView = require('app/ui/collections/EmployeeCollectionView'),
       EmployeesCollection = require('app/models/collection/EmployeesCollection');
 
-  require('rdust!templates/detail_list');
+  require('rdust!templates/employees_detail_list');
 
   /**
    * Employee View
@@ -20,7 +20,7 @@ define(function(require) {
       }
     });
   }, {
-    template: 'templates/detail_list',
+    template: 'templates/employees_detail_list',
     className: 'details',
     trackerLabel: 'Employee'
   });

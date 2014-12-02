@@ -5,7 +5,6 @@ define(function(require) {
   var BasePieChartModel = BaseDataModel.extend(function BasePieChartModel() {
     BaseDataModel.apply(this, arguments);
     this.apply({
-      legend: _legend,
       popoverData: _popoverData
     });
   }, {
@@ -75,22 +74,6 @@ define(function(require) {
       return newData;
     }
   });
-
-  // Computed properties
-  function _legend() {
-    var legend = [],
-        data = this.get('pieData') || [],
-        colors = this.colors;
-
-    data.forEach(function(item, index) {
-      legend.push({
-        color: colors[index % colors.length],
-        name: item.label
-      });
-    });
-
-    return legend;
-  }
 
   function _popoverData() {
     var popoverData = [],

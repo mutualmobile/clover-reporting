@@ -2,16 +2,12 @@
 <div class="date-range {@eq value="{mode}" key="day"}start-only{/eq}">
   <div class="arrow back"></div>
   <time datetime="{startTime|timestamp}" class="start">
-    <span class="month">{@moment value="{startTime}" format="MMM"/}</span>
-    <span class="day">{@moment value="{startTime}" format="D"/}</span>
-    <span class="year">&rsquo;{@moment value="{startTime}" format="YY"/}</span>
+    {@moment value="{startTime}" format="MMM"/} {@moment value="{startTime}" format="D"/}, {@moment value="{startTime}" format="YYYY"/}
   </time>
   {@ne value="{mode}" key="day"}
-    <span class="sep">&thinsp;&ndash;&thinsp;</span>
+    <span class="sep"> &nbsp;&nbsp;&ndash;&nbsp;&nbsp;</span>
     <time datetime="{endTime|timestamp}" class="end">
-      <span class="month">{@moment value="{endTime}" format="MMM"/}</span>
-      <span class="day">{@moment value="{endTime}" format="D"/}</span>
-      <span class="year">&lsquo;{@moment value="{endTime}" format="YY"/}</span>
+      {@moment value="{endTime}" format="MMM"/} {@moment value="{endTime}" format="D"/}, {@moment value="{endTime}" format="YYYY"/}
     </time>
   {/ne}
   <div class="arrow forward"></div>

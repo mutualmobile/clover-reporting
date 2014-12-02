@@ -19,7 +19,7 @@ define(function(require) {
     this.router.add({
       '/': [DashboardController, 'dashboard'],
       '/employees': [DashboardController, 'employees'],
-      '/products': [DashboardController, 'products'],
+      '/items': [DashboardController, 'items'],
       '/login': [AuthenticationController, 'login', {bypassAuth: true, hideLoading: true}],
       '/logout': [AuthenticationController, 'logout'],
       '/end-user-agreement': [AuthenticationController, 'agreement', {bypassAuth: true, hideLoading: true}],

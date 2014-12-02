@@ -4,7 +4,7 @@ define(function(require) {
       ProductCollectionView = require('app/ui/collections/ProductCollectionView'),
       ProductsCollection = require('app/models/collection/ProductsCollection');
 
-  require('rdust!templates/detail_list');
+  require('rdust!templates/products_detail_list');
 
   /**
    * Product View
@@ -20,9 +20,9 @@ define(function(require) {
       }
     });
   }, {
-    template: 'templates/detail_list',
+    template: 'templates/products_detail_list',
     className: 'details',
-    trackerLabel: 'Product'
+    trackerLabel: 'Item'
   });
 
   return ProductsView;

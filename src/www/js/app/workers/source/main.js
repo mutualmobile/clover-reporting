@@ -157,7 +157,6 @@ define(function(require) {
           arrayWithOnlyNonDeletedOrders.orders.push(parseResponse.orders[i]);
         };
       };
-      debugger;
       return JSON.stringify(arrayWithOnlyNonDeletedOrders);
     }
 

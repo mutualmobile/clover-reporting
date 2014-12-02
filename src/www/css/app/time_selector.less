@@ -21,8 +21,9 @@
     text-align: center;
     time {
       display: block;
+      font-family: @boldFont;
       &:first-of-type {
-        margin-top: 15px;
+        margin-top: 14px;
         margin-bottom: 2px;
       }
     }
@@ -36,11 +37,8 @@
       line-height: 62px;
       vertical-align: top;
     }
-    .day {
-      font-family: @boldFont;
-    }
     .arrow {
-      width: 62px;
+      width: 50px;
       height: 62px;
       cursor: pointer;
       position: absolute;
@@ -90,7 +88,7 @@
     }
     @media (min-width: 767px) {
       width: 50%;
-      font-family: @ultralightFont;
+      font-family: @boldFont;
       position: relative;
       left: auto;
       right: auto;
@@ -117,7 +115,6 @@
         display: inline-block;
       }
       time {
-        font-size: 27px;
         height: 62px;
         line-height: 62px;
         display: inline-block;
@@ -130,6 +127,21 @@
         time {
           margin-top: 0;
         }
+      }
+    }
+    @media (min-width: 961px) {
+      time {
+        font-size: 26px;
+      }
+    }
+    @media (max-width: 960px) {
+      time {
+        font-size: 21px;
+      }
+    }
+    @media (max-width: 767px) {
+      time {
+        font-size: 16px;
       }
     }
   }

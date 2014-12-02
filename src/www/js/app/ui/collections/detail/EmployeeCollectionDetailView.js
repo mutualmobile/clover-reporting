@@ -1,6 +1,6 @@
 define(function(require) {
   var CollectionDetailView = require('app/ui/collections/detail/CollectionDetailView'),
-      RevenueByCategoryModel = require('app/models/chart/RevenueByCategoryModel'),
+      RevenueByItemModel = require('app/models/chart/RevenueByItemModel'),
       RevenueOverTimeModel = require('app/models/chart/RevenueOverTimeModel');
 
   /**
@@ -13,8 +13,8 @@ define(function(require) {
 
     var name = this.model.get('name'), // employeeId not provided, for now
         revenueOverTimeModel = new RevenueOverTimeModel({employeeName: name}),
-        revenueByCategoryModel = new RevenueByCategoryModel({employeeName: name});
-    this.mapDetailViews(revenueOverTimeModel, revenueByCategoryModel);
+        revenueByItemModel = new RevenueByItemModel({employeeName: name});
+    this.mapDetailViews(revenueOverTimeModel, revenueByItemModel);
   });
 
   return EmployeeCollectionDetailView;

@@ -59,7 +59,6 @@ define(function() {
       // }
       .process(function(totals) {
         var items = [];
-
         // Calculate total time
         if (totals.first < Number.MAX_VALUE && totals.last > Number.MIN_VALUE) {
           totals.time = totals.last - totals.first;
@@ -77,7 +76,6 @@ define(function() {
           totals.items[id].percentOfTotal = totals.items[id].total / totals.total;
           items.push(totals.items[id]);
         }
-
         totals.items = items;
         return totals;
       });

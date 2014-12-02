@@ -10,7 +10,6 @@ define(function(require) {
    */
   var ProductCollectionDetailView = CollectionDetailView.extend(function ProductCollectionDetailView() {
     CollectionDetailView.apply(this, arguments);
-
     var id = this.model.get('id'),
         revenueOverTimeModel = new RevenueOverTimeModel({itemId: id}),
         revenueByEmployeeModel = new RevenueByEmployeeModel({itemId: id});

@@ -30,10 +30,10 @@ define(function(require) {
         .view(null, EmployeesView, new Model())
         .then(this.updateState(history, 'Employees', params.url));
     },
-    products: function(params, history) {
+    items: function(params, history) {
       return this
         .view(null, ProductsView, new Model())
-        .then(this.updateState(history, 'Products', params.url));
+        .then(this.updateState(history, 'Items', params.url));
     }
   });
 

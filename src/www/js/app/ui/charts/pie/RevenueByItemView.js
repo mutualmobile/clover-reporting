@@ -1,16 +1,16 @@
 define(function(require) {
   var BasePieChartView = require('app/ui/charts/pie/BasePieChartView'),
       PieChartPopoverView = require('app/ui/charts/pie/detail/PieChartPopoverView'),
-      RevenueByCategoryModel = require('app/models/chart/RevenueByItemModel'),
+      RevenueByItemModel = require('app/models/chart/RevenueByItemModel'),
       router = require('lavaca/mvc/Router');
   require('rdust!templates/revenue_by_category');
 
-  var RevenueByCategoryView = BasePieChartView.extend(function RevenueByCategoryView() {
+  var RevenueByItemView = BasePieChartView.extend(function RevenueByItemView() {
     BasePieChartView.apply(this, arguments);
     this.mapChildView({
       '.popover': {
         TView: PieChartPopoverView,
-        model: new RevenueByCategoryModel()
+        model: new RevenueByItemModel()
       }
     });
   }, {
@@ -23,5 +23,5 @@ define(function(require) {
     }
   });
 
-  return RevenueByCategoryView;
+  return RevenueByItemView;
 });

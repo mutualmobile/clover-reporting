@@ -21,8 +21,14 @@ define(function(require) {
                 total: 0
               };
             }
+
             itemObj.total += revenueForLineItem(lineItem);
-            itemObj.qty += lineItem.qty;
+
+            if (item.priceType === "PER_UNIT") {
+              itemObj.qty += 1;
+            } else {
+              itemObj.qty += lineItem.qty;
+            }
           }
         });
         return result;

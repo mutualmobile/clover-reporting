@@ -89,8 +89,6 @@ define(function(require) {
         return order.timestamp;
       })
       .reduce(function(prev, current) {
-        console.log('prev' + prev.first)
-        console.log('current' + current)
         prev.first = Math.min(current, prev.first);
         prev.last = Math.max(current, prev.last);
         prev.orderCount++;
@@ -103,11 +101,6 @@ define(function(require) {
       .process(function(obj) {
         var hour = 1000 * 60 * 60;
         if (obj.last - obj.first > 0) {
-          console.log(obj.orderCount);
-          console.log(obj.first)
-          console.log(obj.last)
-          console.log((obj.last - obj.first))
-          console.log((obj.orderCount / ((obj.last - obj.first) / hour)))
           return (obj.orderCount / ((obj.last - obj.first) / hour)).toFixed(2);
         }
         return -1;

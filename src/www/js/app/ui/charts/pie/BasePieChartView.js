@@ -33,8 +33,6 @@ define(function(require) {
         'tap': this.onTapSeeMore.bind(this)
       }
     });
-
-    this.updateLegend = batchCalls(_redrawLegend, this);
   }, {
     template: 'templates/base_pie',
     className: 'base_pie',
@@ -54,7 +52,6 @@ define(function(require) {
         .transition().duration(500)
           .call(this.chart);
 
-      this.updateLegend();
     },
     createChart: function() {
       var chart = nv.models.pieChart()
@@ -66,8 +63,8 @@ define(function(require) {
               .donut(true)
               .donutRatio(1)
               .donutLabelsOutside(true)
-              .spacing(0.07)
-              .labelOffset(30)
+              .spacing(0.05)
+              .labelOffset(40)
               .tooltips(false)
               .labelType('custom1')
               .color(function(d, i) {
@@ -125,10 +122,6 @@ define(function(require) {
         this.el.find('.popover').hide();
       }
     }.bind(this), 0);
-  }
-
-  function _redrawLegend() {
-    this.redraw('.legend');
   }
 
   $(function() {

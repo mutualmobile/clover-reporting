@@ -26,11 +26,11 @@ define(function(require) {
   dust.filters.cashMoney = function(value) {
     // value is in cents
     if (value > 99999) {
-      return '<span class="dollar light">$</span>' + _addCommas(value / 100000, value > 9999999 ? 1 : 2) + '<span class="light">K</span>';
+      return '<span class="dollar">$</span>' + _addCommas(value / 100000, value > 9999999 ? 1 : 2) + '<span class="">K</span>';
     } else {
       value = _addCommas(value / 100, 2);
       value = (''+value).split('.');
-      return '<span class="dollar light">$</span>' + value[0] + '<span class="light">.' + value[1] + '</span>';
+      return '<span class="dollar ">$</span>' + value[0] + '<span class="">.' + value[1] + '</span>';
     }
   };
   dust.filters.dateTime = function(value) {

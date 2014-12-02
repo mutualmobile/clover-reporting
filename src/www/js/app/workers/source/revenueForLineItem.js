@@ -2,13 +2,25 @@ define(function() {
   // Returns the total for a lineItem. This function
   // is exposed globally in the web worker context.
   return function revenueForLineItem(lineItem) {
-    var revenue = (lineItem.price * lineItem.qty) + lineItem.discountAmount;
+    if (lineItem.item) {
+      if (lineItem.item.priceType === "PER_UNIT") {
+        var quantity = lineItem.qty / 1000;
+      } else {
+        var quantity = lineItem.qty;
+      }
+    } else {
+      var quantity = lineItem.qty;
+    }
+
+    var revenue = ((lineItem.price) * quantity) + lineItem.discountAmount;
+
     if (lineItem.taxable) {
-      revenue += Math.round((lineItem.price * lineItem.qty) * (lineItem.taxRate / 10000000));
+      revenue += (revenue * (lineItem.taxRates[0].rate / 10000000));
     }
     if (lineItem.refunded) {
       revenue = 0;
     }
+
     return revenue;
   };
 });

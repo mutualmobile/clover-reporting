@@ -22,7 +22,7 @@ nv.models.pie = function() {
     , pieLabelsOutside = true
     , donutLabelsOutside = false
     , labelType = "key"
-    , labelThreshold = .02 //if slice percentage is under this, don't show label
+    , labelThreshold = 0.02 //if slice percentage is under this, don't show label
     , donut = false
     , labelSunbeamLayout = false
     , startAngle = false
@@ -512,10 +512,10 @@ nv.models.pieChart = function() {
     , legend = nv.models.legend()
     ;
 
-  var margin = {top: 30, right: 20, bottom: 20, left: 20}
+  var margin = {top: 25, right: 20, bottom: 20, left: 20}
     , width = null
     , height = null
-    , showLegend = true
+    , showLegend = false
     , color = nv.utils.defaultColor()
     , tooltips = true
     , tooltip = function(key, y, e, graph) {

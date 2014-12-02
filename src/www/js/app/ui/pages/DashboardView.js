@@ -2,8 +2,8 @@ define(function(require) {
 
   var BaseView = require('app/ui/BaseView'),
       Scrollable = require('lavaca/ui/Scrollable'),
-      RevenueByCategoryView = require('app/ui/charts/pie/RevenueByCategoryView'),
-      RevenueByCategoryModel = require('app/models/chart/RevenueByCategoryModel'),
+      RevenueByItemView = require('app/ui/charts/pie/RevenueByItemView'),
+      RevenueByItemModel = require('app/models/chart/RevenueByItemModel'),
       RevenueByDiningTypeModel = require('app/models/chart/RevenueByDiningTypeModel'),
       RevenueByEmployeeView = require('app/ui/charts/pie/RevenueByEmployeeView'),
       RevenueByDiningTypeView = require('app/ui/charts/pie/RevenueByDiningTypeView'),
@@ -34,9 +34,9 @@ define(function(require) {
         TView: RevenueOverTimeView,
         model: new RevenueOverTimeModel()
       },
-      '.revenue-by-category': {
-        TView: RevenueByCategoryView,
-        model: new RevenueByCategoryModel()
+      '.revenue-by-item': {
+        TView: RevenueByItemView,
+        model: new RevenueByItemModel()
       },
       '.revenue-by-employee': {
         TView: RevenueByEmployeeView,

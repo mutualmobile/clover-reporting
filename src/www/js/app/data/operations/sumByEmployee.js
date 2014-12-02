@@ -14,7 +14,17 @@ define(function(require) {
               qty: 0
             };
         (order.lineItems || []).forEach(function(lineItem) {
-          item.qty += lineItem.qty || 0;
+          if (lineItem.item) {
+            if (lineItem.item.priceType === "PER_UNIT") {
+              var quantity = 1;
+            } else {
+              var quantity = lineItem.qty;
+            }
+          } else {
+            var quantity = lineItem.qty;
+          }
+
+          item.qty += quantity || 0;
         });
         result.items[order.employeeName] = item;  // employeeId not provided, for now
         return result;
