@@ -42,7 +42,7 @@ module.exports = function(grunt) {
     }
 
 
-    tasks.push('clean:tmp');
+//    tasks.push('clean:tmp');
     grunt.verbose.writeln('Options:', options);
     grunt.verbose.writeln('Tasks:', tasks);
     grunt.task.run(tasks);
