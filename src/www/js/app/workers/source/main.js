@@ -12,7 +12,7 @@ define(function(require) {
   return function(self) {
     var handles = {},
         data = '[]',
-        url, lastFetch, fetchTimer, startTime, endTime, lastHash;
+        url, lastFetch, fetchTimer, startTime, endTime, lastHash, delayFetchTimer;
 
     // --------- Direct calls from the main thread ---------
 
@@ -131,21 +131,24 @@ define(function(require) {
       if (url) {
         cancel();
         fullUrl = url + '&start_time=' + startTime + '&end_time=' + endTime + '&count=' + 999999;
-        lastFetch = xhr(fullUrl)
-          .success(function(newData, newHash) {
-            newData = filterDeletedOrders(newData);
-            if (newData && newHash !== lastHash) {
-              data = newData;
-              lastHash = newHash;
-              update();
-            }
-            sendStatus('ready');
-            fetchTimer = setTimeout(fetch, 30000);
-          })
-          .error(function() {
-            sendStatus('error');
-            fetchTimer = setTimeout(fetch, 6000);
-          });
+        clearTimeout(delayFetchTimer);
+        delayFetchTimer = setTimeout(function() {
+          lastFetch = xhr(fullUrl)
+              .success(function(newData, newHash) {
+                newData = filterDeletedOrders(newData);
+                if (newData && newHash !== lastHash) {
+                  data = newData;
+                  lastHash = newHash;
+                  update();
+                }
+                sendStatus('ready');
+                fetchTimer = setTimeout(fetch, 60000);
+              })
+              .error(function() {
+                sendStatus('error');
+                fetchTimer = setTimeout(fetch, 6000);
+              });
+        }, 500);
       }
     }
 
