@@ -1,19 +1,19 @@
-# [Mutual Mobile Reporting App](http://mutualmobile.github.io/clover-reporting)
+# [Dashboard App](http://mutualmobile.github.io/clover-reporting)
 
-Providing real time performance information about your business, the Mutual Mobile Reporting App gives you the metrics to manage your business from anywhere using your phone, tablet or computer.
+Providing real time performance information about your business, the Dashboard App for Clover POS gives you the metrics to manage your business from anywhere using your phone, tablet or computer.
 
-- Understand where your daily sales are hour by hour, throughout the week, or over the course of a month
+- Understand where your daily sales are hour by hour, throughout the week, or over the course of a month.
 
-- Review key sales metrics
+- Review key sales metrics.
 
-- Drill into detail about how individual products are performing
+- Drill into detail about how individual products are performing.
 
-- Use the employee leader board to have some friendly competition
+- Use the employee leader board to have some friendly competition.
 
 
 ## Application Overview
 
-The Mutual Mobile Reporting App is a responsive web app built using [Lavaca](http://getlavaca.com/#/#@0). For graphs and charts, it uses [nvd3](http://nvd3.org/). To facilitate development and manage third-party client-side dependencies, it leverages [Grunt](http://gruntjs.com/) and [Bower](https://github.com/bower/bower).
+The Dashboard App is a responsive web app built using [Lavaca](http://getlavaca.com/#/#@0). For graphs and charts, it uses [nvd3](http://nvd3.org/). To facilitate development and manage third-party client-side dependencies, it leverages [Grunt](http://gruntjs.com/) and [Bower](https://github.com/bower/bower).
 
 ### Clover API Integration
 
@@ -47,7 +47,7 @@ Views which rely on data from the Clover API (and thus rely on a model which ext
 
 __Handling charts/graphs__
 
-Views that use nvd3 to show a chart extend from `BaseChartView` (also a descendent of `BaseDataView`). `BaseChartView` exposes and calls certain methods which subclasses can override to create and update their charts as appropriate.
+Views that use nvd3 to show a chart extend from `BaseChartView` (also a descendant of `BaseDataView`). `BaseChartView` exposes and calls certain methods which subclasses can override to create and update their charts as appropriate.
 
  - `createChart`- Called once when the view is created and should return an nvd3 chart object, which will be assigned to the `chart` property on the view
  - `updateChart`- Called whenever the data changes, or on window resize. Should apply the necessary data and any relevant style changes to the view's chart (accessed via `this.chart`).
@@ -63,7 +63,7 @@ The Employees and Products pages display a ranked list of objects and share much
 
 1. __Install NodeJS & NPM__
 
-    Installation instructions are available  from [nodejs.org](http://nodejs.org/).
+    Installation instructions are available from [nodejs.org](http://nodejs.org/).
 
 1. __Install grunt-cli and Bower globally__
 
@@ -92,20 +92,21 @@ Your application should now be running on `localhost:8080`.
 
 ### Packaging for deployment
 
-To package your app for deployment to a server, you can use the `build:[environment]` grunt command. This task will:
+To package your app for deployment to a server, you can use the `build:[environment]` grunt command on the `master` branch. This task will:
 
-  - Compile and concatenate `less` files
-  - Runs the require.js optimizer and outputs a single javascript file
-  - Processes the `index.html` file to make sure all css/javascript/config file references are updated
+  - Compile and concatenate `less` files,
+  - Run the require.js optimizer and outputs a single javascript file, and
+  - Process the `index.html` file to make sure all `css/javascript/config` file references are updated.
 
 
 For example, to build the app using the "production.json" config file, run:
 
     $ grunt build:production
 
+After building, switch to the `gh-pages` branch, and copy `/build/www/js/app.min.js` to `/js/app.min.js` (overwrite). Changes pushed to the `gh-pages` branch are deployed to production.
 
 ### Generating Documentation
 
-To generates JavaScript documentation using [yuidoc](https://github.com/gruntjs/grunt-contrib-yuidoc), use the `yuidoc` grunt command. The resulting documentation is outputed to the `doc` folder.
+To generate JavaScript documentation using [yuidoc](https://github.com/gruntjs/grunt-contrib-yuidoc), use the `yuidoc` grunt command. The resulting documentation is output to the `doc` folder.
 
     $ grunt yuidoc
