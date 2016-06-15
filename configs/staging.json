@@ -1,0 +1,7 @@
+{
+  "api_url": "https://apidev1.dev.clover.com/v2/merchant/{0}/{1}",
+  "auth_url": "https://dev1.dev.clover.com/{0}",
+  "mock_url": "/assets/mock/{0}.json",
+  "app_id": "TW9F2WP9880CA",
+  "analytics_ua": "UA-45833312-1"
+}

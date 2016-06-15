@@ -1,0 +1,16 @@
+<h1 class="name">
+  {?firstName}
+    {firstName}<span>{lastName}</span>
+  {:else}
+    {name}
+  {/firstName}
+</h1>
+<div class="numeric-stats">
+  <div class="numbers">
+    <span class="revenue">{total|cashMoney|s}</span>
+  </div>
+  <div class="line-graph">
+    <div class="pink-line" style="width:{?percentOfMax}{percentOfMax|percent}{:else}0{/percentOfMax}"></div>
+  </div>
+</div>
+<div class="arrow"></div>

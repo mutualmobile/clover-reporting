@@ -1,0 +1,57 @@
+{
+  "name": "lavaca",
+  "description": "A curated collection of tools built for mobile.",
+  "version": "2.3.2",
+  "homepage": "https://github.com/mutualmobile/lavaca",
+  "author": {
+    "name": "mutualmobile",
+    "email": "george.henderson@mutualmobile.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mutualmobile/lavaca.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mutualmobile/lavaca/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/mutualmobile/lavaca/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "lavaca",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "dependencies": {
+    "requirejs ": "2.1.8"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-amd-dist": "0.4.x",
+    "grunt-amd-check": "0.5.x",
+    "grunt-amd-test": "0.4.x",
+    "grunt-contrib-jasmine": "git://github.com/zship/grunt-contrib-jasmine.git",
+    "grunt-contrib-yuidoc": "0.4.0",
+    "grunt-open": "~0.2.1",
+    "fs-extra": "~0.6.3"
+  },
+  "keywords": [
+    "lavaca",
+    "javascript",
+    "lavaca-core",
+    "mobile",
+    "web",
+    "framework",
+    "touch",
+    "responsive",
+    "utils",
+    "build",
+    "mvc",
+    "localStorage",
+    "events",
+    "animation"
+  ]
+}

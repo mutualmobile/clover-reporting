@@ -1,0 +1,95 @@
+@dropDownArrowWidth: 7px;
+#time-range-select {
+  display: block;
+  width: 64px;
+  float: right;
+  height: 64px;
+  position: relative;
+  .border-highlight-dark;
+  text-align: center;
+  cursor: pointer;
+  &.touch:after {
+    content: '';
+    margin-right: -17px; 
+    margin-top: -21px; 
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 99px;
+    height: 99px;
+    background: url(../../assets/img/touch_glow@2x.png) center center no-repeat;
+    background-size: 99px 99px;
+    z-index: 1;
+  }
+  .label {
+    display: inline-block;
+    position: relative;
+    line-height:64px;
+    font-family:@boldFont;
+    font-weight: normal;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing:1px;
+    color:#fff;
+    .long-label {
+      display: none;
+    }
+    .popover {
+      top: 83%;
+      right: 50%;
+      margin-bottom: 23px;
+      margin-right: -18px;
+      width: 196px;
+      &:after {
+        border-left: 7px solid rgba(0, 0, 0, 0);
+        border-right: 7px solid rgba(0, 0, 0, 0);
+        border-top: 7px solid rgba(0, 0, 0, 0);
+        border-bottom: 7px solid #C6D5DE;
+        right: 18px;
+        top: -14px;
+        margin-right: -7px;
+      }
+      &.active {
+        display: block;
+      }
+    }
+  }
+  @media (min-width: 767px) {
+    width: 25%;
+    text-align: center;
+    padding-left: 0;
+    &.touch {
+       background: rgba(255,255,255,.1);
+    }
+    &.touch:after {
+      background: none;
+    }
+    .label {
+      .long-label {
+        display: inline-block;
+      }
+      .short-label {
+        display: none;
+      }
+      .popover {
+        top: 77%;
+        margin-right: -35px;
+        right: 0;
+      }
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 0;
+        height: 0;
+        top: 50%;
+        right: -24px;
+        margin-top: -3px;
+        margin-left: -@dropDownArrowWidth;
+        border-left: @dropDownArrowWidth solid transparent;
+        border-right: @dropDownArrowWidth solid transparent;
+        border-top: @dropDownArrowWidth solid #fff;
+      }
+    }
+  }
+}

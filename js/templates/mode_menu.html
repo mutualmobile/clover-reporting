@@ -1,0 +1,19 @@
+<div class="label">
+  <span class="long-label">{timeRange.mode}</span>
+  <span class="short-label">
+    {#timeRange}
+      {#modes}
+        {@eq key="{key}" value="{mode}"}{shortLabel}{/eq}
+      {/modes}
+    {/timeRange}
+  </span>
+  <div class="popover select">
+    <ul>
+      {#timeRange}
+        {#modes}
+          <li data-value="{key}" {@eq key="{key}" value="{mode}"}class="active"{/eq}>{label}</li>
+        {/modes}
+      {/timeRange}
+    </ul>
+  </div>
+</div>

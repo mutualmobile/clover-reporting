@@ -1,0 +1,77 @@
+#pagemenu {
+  display: block;
+  width: 64px;
+  float: left;
+  height: 64px;
+  line-height:64px;
+  font-family:@boldFont;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing:1px;
+  text-align: center;
+  color:#fff;
+  position: relative;
+  cursor: pointer;
+  &.touch:after {
+    content: '';
+    position: absolute;
+    margin-left: -17px;
+    margin-top: -21px;
+    left: 0;
+    top: 0;
+    width: 99px;
+    height: 99px;
+    background: url(../../assets/img/touch_glow@2x.png) center center no-repeat;
+    background-size: 99px 99px;
+    z-index: 1;
+  }
+  .border-highlight-dark;
+  .menu{
+    display: inline-block;
+    position: relative;
+    font-family: @lightFont, Helvetica, Arial, sans-serif;
+    font-size: 28px;
+    line-height: 64px;
+    .popover {
+      top: 53px;
+      left: 0;
+      margin-bottom: 23px;
+      margin-left: -10px;
+      width: 196px;
+      display: none;
+      &:after {
+        border-left: 7px solid rgba(0, 0, 0, 0);
+        border-right: 7px solid rgba(0, 0, 0, 0);
+        border-top: 7px solid rgba(0, 0, 0, 0);
+        border-bottom: 7px solid #C6D5DE;
+        left: 18px;
+        top: -14px;
+        margin-left: -7px;
+      }
+      &.active {
+        display: block;
+      }
+    }
+  }
+  .selected-page {
+    display: none;
+  }
+  @media (min-width: 767px) {
+    width: 25%;
+    &.touch {
+       background: rgba(255,255,255,.1);
+    }
+    &.touch:after {
+      background: none;
+    }
+    .menu {
+      margin-right: 2rem;
+    }
+    .selected-page {
+      display: inline-block;
+      line-height: 64px;
+      vertical-align: top;
+    }
+  }
+}

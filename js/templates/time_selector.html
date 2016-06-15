@@ -1,0 +1,16 @@
+<div id="pagemenu"></div>
+<div class="date-range {@eq value="{mode}" key="day"}start-only{/eq}">
+  <div class="arrow back"></div>
+  <time datetime="{startTime|timestamp}" class="start">
+    {@moment value="{startTime}" format="MMM"/} {@moment value="{startTime}" format="D"/}, {@moment value="{startTime}" format="YYYY"/}
+  </time>
+  {@ne value="{mode}" key="day"}
+    <span class="sep"> &nbsp;&nbsp;&ndash;&nbsp;&nbsp;</span>
+    <time datetime="{endTime|timestamp}" class="end">
+      {@moment value="{endTime}" format="MMM"/} {@moment value="{endTime}" format="D"/}, {@moment value="{endTime}" format="YYYY"/}
+    </time>
+  {/ne}
+  <div class="arrow forward"></div>
+</div>
+
+<div id="time-range-select"></div>

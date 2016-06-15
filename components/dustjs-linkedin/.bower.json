@@ -1,0 +1,14 @@
+{
+  "name": "dustjs-linkedin",
+  "homepage": "https://github.com/georgehenderson/dustjs",
+  "version": "2.0.4",
+  "_release": "2.0.4",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.0.4",
+    "commit": "07fec85e661ac38c2b73f7538d177f0ca45ef179"
+  },
+  "_source": "https://github.com/georgehenderson/dustjs.git",
+  "_target": "2.0.4",
+  "_originalSource": "https://github.com/georgehenderson/dustjs.git"
+}

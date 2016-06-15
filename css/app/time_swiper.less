@@ -1,0 +1,22 @@
+#time-swiper {
+  .clock {
+    position: absolute;
+    top: 50%;
+    @dropDownArrowWidth: 10px;
+    .transition(all 300ms);
+    &.left {
+      left: 15px;
+      border-left: @dropDownArrowWidth solid transparent;
+      border-right: @dropDownArrowWidth solid #FFF;
+      border-top: @dropDownArrowWidth solid transparent;
+      border-bottom: @dropDownArrowWidth solid transparent;
+    }
+    &.right {
+      right: 15px;
+      border-left: @dropDownArrowWidth solid #FFF;
+      border-right: @dropDownArrowWidth solid transparent;
+      border-top: @dropDownArrowWidth solid transparent;
+      border-bottom: @dropDownArrowWidth solid transparent;
+    }
+  }
+}

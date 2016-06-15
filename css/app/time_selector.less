@@ -1,0 +1,148 @@
+@dropDownArrowWidth: 6px;
+.time_selector {
+  display: block;
+  height: 64px;
+  position: relative;
+  z-index: 2;
+  background-color: rgb(35, 39, 41);
+  .date-range {
+    position: absolute;
+    left: 64px;
+    right: 64px;
+    top: 0;
+    color: #FFFFFF;
+    display: block;
+    height: 64px;
+    line-height: 64px;
+    .border-highlight-dark;
+    font-family: @lightFont;
+    text-transform: uppercase;
+    font-size: 16px;
+    text-align: center;
+    time {
+      display: block;
+      font-family: @boldFont;
+      &:first-of-type {
+        margin-top: 14px;
+        margin-bottom: 2px;
+      }
+    }
+    &.start-only {
+      time {
+        margin-top: 24px;
+      }
+    }
+    .sep {
+      display: none;
+      line-height: 62px;
+      vertical-align: top;
+    }
+    .arrow {
+      width: 50px;
+      height: 62px;
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      &.touch:after {
+        content: '';
+        position: absolute;
+        margin-left: -17px;
+        margin-top: -21px;
+        left: 0;
+        top: 0;
+        width: 99px;
+        height: 99px;
+        background: url(../../assets/img/touch_glow@2x.png) center center no-repeat;
+        background-size: 99px 99px;
+        z-index: 1;
+      }
+      &.forward {
+        right: 0;
+      }
+      &.back {
+        left: 0;
+      }
+      &:before {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        width: 0;
+        height: 0;
+        top: 50%;
+        left: 50%;
+        margin-top: -(@dropDownArrowWidth);
+        margin-left: -@dropDownArrowWidth;
+      }
+      &.forward:before {
+        border-left: @dropDownArrowWidth solid #FFF;
+        border-right: @dropDownArrowWidth solid transparent;
+        border-top: @dropDownArrowWidth solid transparent;
+        border-bottom: @dropDownArrowWidth solid transparent;
+      }
+      &.back:before {
+        border-left: @dropDownArrowWidth solid transparent;
+        border-right: @dropDownArrowWidth solid #FFF;
+        border-top: @dropDownArrowWidth solid transparent;
+        border-bottom: @dropDownArrowWidth solid transparent;
+      }
+    }
+    @media (min-width: 767px) {
+      width: 50%;
+      font-family: @boldFont;
+      position: relative;
+      left: auto;
+      right: auto;
+      top: auto;
+      float: left;
+      .arrow {
+        display: inline-block;
+        position: relative;
+        top: auto;
+        &.touch:after {
+          background: none;
+        }
+        &.touch {
+           background: rgba(255,255,255,.1);
+        }
+        &.forward {
+          right: auto;
+        }
+        &.back {
+          left: auto;
+        }
+      }
+      .sep {
+        display: inline-block;
+      }
+      time {
+        height: 62px;
+        line-height: 62px;
+        display: inline-block;
+        vertical-align: top;
+        &:first-of-type {
+          margin: 0;
+        }
+      }
+      &.start-only {
+        time {
+          margin-top: 0;
+        }
+      }
+    }
+    @media (min-width: 961px) {
+      time {
+        font-size: 26px;
+      }
+    }
+    @media (max-width: 960px) {
+      time {
+        font-size: 21px;
+      }
+    }
+    @media (max-width: 767px) {
+      time {
+        font-size: 16px;
+      }
+    }
+  }
+}

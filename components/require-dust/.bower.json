@@ -1,0 +1,19 @@
+{
+  "name": "require-dust",
+  "description": "RequireJs port for dust.js, for loading AMD modules. Includes RequireJS optimizer",
+  "main": "require-dust.js",
+  "engines": {
+    "node": "~0.6"
+  },
+  "dependencies": {},
+  "homepage": "https://github.com/georgehenderson/require-dust",
+  "_release": "e63aacb83b",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "e63aacb83b51d77f1d7b057e7522a83876671583"
+  },
+  "_source": "https://github.com/georgehenderson/require-dust.git",
+  "_target": "master",
+  "_originalSource": "https://github.com/georgehenderson/require-dust.git"
+}
