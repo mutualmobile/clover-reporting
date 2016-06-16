@@ -1,4 +1,4 @@
-define(function(require) {
+define(function (require) {
   // When running in a real worker, this source will
   // be injected into the worker source (see Worker.js)
   // and expose the xhr function globally
@@ -9,10 +9,15 @@ define(function(require) {
   // 'postMessage' functions. In the context of
   // a WebWorker, 'self' will refer to the built-in
   // global object.
-  return function(self) {
+  return function (self) {
+
     var handles = {},
-        data = '[]',
-        url, lastFetch, fetchTimer, startTime, endTime, lastHash, delayFetchTimer;
+      data = '[]',
+      orders = [],
+      offset = 0,
+      maxOrdersPreRequest = 1000,
+      refreshTimeout,
+      url, lastFetch, fetchTimer, startTime, endTime, lastHash, delayFetchTimer;
 
     // --------- Direct calls from the main thread ---------
 
@@ -29,6 +34,7 @@ define(function(require) {
         data = '[]';
         lastHash = null;
         sendStatus('loading');
+        offset = 0;
         fetch();
       }
     }
@@ -64,14 +70,14 @@ define(function(require) {
     // Update a single DataHandle
     function processHandle(id) {
       var result = JSON.parse(data),
-          handleData = handles[id];
+        handleData = handles[id];
       if (!result || !result.orders) {
         result = [];
       } else {
         result = result.orders;
       }
 
-      handleData.forEach(function(handle) {
+      handleData.forEach(function (handle) {
         var method = handle.method;
         if (method === 'map') {
           result = map(result, handle.cb);
@@ -109,7 +115,7 @@ define(function(require) {
         return data.filter(cb);
       } else {
         args = Array.isArray(args) ? args : [args];
-        return data.filter(function(item) {
+        return data.filter(function (item) {
           return cb.apply(this, [item].concat(args));
         });
       }
@@ -127,40 +133,87 @@ define(function(require) {
     // --------------------- Fetching ----------------------
 
     function fetch() {
-      var fullUrl;
-      if (url) {
-        cancel();
-        fullUrl = url + '&start_time=' + startTime + '&end_time=' + endTime + '&count=' + 999999;
-        clearTimeout(delayFetchTimer);
-        delayFetchTimer = setTimeout(function() {
+      if (!url) return;
+      cancel();
+      clearTimeout(delayFetchTimer);
+      delayFetchTimer = setTimeout(function () {
+        (function fetchPart() {
+          var fullUrl = url +
+            '&start_time=' + startTime +
+            '&end_time=' + endTime +
+            '&count=' + maxOrdersPreRequest +
+            '&offset=' + offset;
+
+          sendStatus('loading');
           lastFetch = xhr(fullUrl)
-              .success(function(newData, newHash) {
-                newData = filterDeletedOrders(newData);
-                if (newData && newHash !== lastHash) {
-                  data = newData;
-                  lastHash = newHash;
-                  update();
-                }
-                sendStatus('ready');
-                fetchTimer = setTimeout(fetch, 60000);
-              })
-              .error(function() {
-                sendStatus('error');
-                fetchTimer = setTimeout(fetch, 6000);
-              });
-        }, 500);
-      }
+            .success(function (response) {
+              var parsedResponse = JSON.parse(response);
+              var numReturned = parsedResponse.orders.length;
+
+              offset += numReturned;
+              sendStatus('ready');
+
+              if (numReturned != 0) {
+                parsedResponse.orders.map(function (order) {
+                  orders.push(order);
+                });
+
+                updateView();
+
+                delayFetchTimer = setTimeout(fetchPart, 0);
+              } else {
+                clearTimeout(delayFetchTimer);
+                refreshTimeout = setTimeout(refresh, 5000);
+              }
+            })
+            .error(function () {
+              sendStatus('error');
+              delayFetchTimer = setTimeout(fetchPart, 6000);
+            });
+        })();
+      }, 500);
     }
 
-    function filterDeletedOrders(response) {
-      var parseResponse = JSON.parse(response);
-      var arrayWithOnlyNonDeletedOrders = {"orders": []};
-      for (var i = 0; i < parseResponse.orders.length; i++) {
-        if (parseResponse.orders[i].isDeleted == false && parseResponse.orders[i].paymentState == "PAID") {
-          arrayWithOnlyNonDeletedOrders.orders.push(parseResponse.orders[i]);
-        };
-      };
-      return JSON.stringify(arrayWithOnlyNonDeletedOrders);
+    function refresh() {
+      clearTimeout(refreshTimeout);
+
+      var fullUrl = url +
+        '&start_time=' + startTime +
+        '&end_time=' + endTime +
+        '&count=' + maxOrdersPreRequest +
+        '&offset=0';
+
+      xhr(fullUrl).success(function (response) {
+        var refreshedOrders = JSON.parse(response).orders;
+
+        var i = 0;
+        var ordersToPrepend = [];
+        while (refreshedOrders[i].id != orders[0].id && refreshedOrders[i].paymentState == 'PAID') {
+          ordersToPrepend.push(refreshedOrders[i]);
+          i++;
+        }
+
+        if (ordersToPrepend.length > 0) {
+          ordersToPrepend.reverse().forEach(function (order) {
+            orders.unshift(order);
+          });
+
+          updateView();
+        }
+      }).always(function () {
+        refreshTimeout = setTimeout(refresh, 5000);
+      });
+    }
+
+    function updateView() {
+      data = JSON.stringify({ orders: filterDeletedOrders(orders) });
+      update()
+    }
+
+    function filterDeletedOrders(orders) {
+      return orders.filter(function (order) {
+        return !order.isDeleted && order.paymentState == 'PAID';
+      });
     }
 
     function cancel() {
@@ -211,9 +264,9 @@ define(function(require) {
     // --------------- Process client message ----------------
 
     var handlerMethods = ['map', 'reduce', 'sort', 'process', 'filter', 'done'];
-    self.onmessage = function(e) {
+    self.onmessage = function (e) {
       var method = e.data.method,
-          data = e.data.data;
+        data = e.data.data;
       if (method === 'setTimeRange') {
         setTimeRange(data.startTime, data.endTime);
       } else if (handlerMethods.indexOf(method) > -1) {
