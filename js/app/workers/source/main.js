@@ -162,7 +162,7 @@ define(function (require) {
 
                 updateView();
 
-                delayFetchTimer = setTimeout(fetchPart, totalReturned == 0 ? 0 : 5000);
+                delayFetchTimer = setTimeout(fetchPart, totalReturned == 0 ? 5000 : 0);
               } else {
                 clearTimeout(delayFetchTimer);
                 refreshTimeout = setTimeout(refresh, 5000);
