@@ -16,6 +16,7 @@ define(function (require) {
       orders = [],
       offset = 0,
       maxOrdersPreRequest = 1000,
+      totalReturned = 0,
       refreshTimeout,
       url, lastFetch, fetchTimer, startTime, endTime, lastHash, delayFetchTimer;
 
@@ -151,9 +152,10 @@ define(function (require) {
               var numReturned = parsedResponse.orders.length;
 
               offset += numReturned;
+              totalReturned += numReturned;
               sendStatus('ready');
 
-              if (numReturned != 0) {
+              if (numReturned != 0 || totalReturned == 0) {
                 parsedResponse.orders.map(function (order) {
                   orders.push(order);
                 });
