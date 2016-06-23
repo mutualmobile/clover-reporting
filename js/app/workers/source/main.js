@@ -24,7 +24,6 @@ define(function (require) {
     function setURL(newURL) {
       url = newURL;
       fetch();
-
     }
 
     function setTimeRange(start, end) {
@@ -186,19 +185,21 @@ define(function (require) {
       xhr(fullUrl).success(function (response) {
         var refreshedOrders = JSON.parse(response).orders;
 
-        var i = 0;
-        var ordersToPrepend = [];
-        while (refreshedOrders[i].id != orders[0].id && refreshedOrders[i].paymentState == 'PAID') {
-          ordersToPrepend.push(refreshedOrders[i]);
-          i++;
-        }
+        if (refreshedOrders.length > 0) {
+          var i = 0;
+          var ordersToPrepend = [];
+          while (refreshedOrders[i].id != orders[0].id && refreshedOrders[i].paymentState == 'PAID') {
+            ordersToPrepend.push(refreshedOrders[i]);
+            i++;
+          }
 
-        if (ordersToPrepend.length > 0) {
-          ordersToPrepend.reverse().forEach(function (order) {
-            orders.unshift(order);
-          });
+          if (ordersToPrepend.length > 0) {
+            ordersToPrepend.reverse().forEach(function (order) {
+              orders.unshift(order);
+            });
 
-          updateView();
+            updateView();
+          }
         }
       }).always(function () {
         refreshTimeout = setTimeout(refresh, 5000);
