@@ -30,7 +30,8 @@ define(function (require) {
       if (start !== startTime || end !== endTime) {
         startTime = start;
         endTime = end;
-        data = '[]';
+        orders = [];
+        updateView();
         lastHash = null;
         sendStatus('loading');
         offset = 0;
