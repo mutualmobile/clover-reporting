@@ -61,7 +61,7 @@
 
       for (key in data) {
         if (typeof data[key] === 'string') {
-          data[key] = data.replace(/['"]'/g, '');
+          data[key] = data[key].replace(/['"]'/g, '');
         }
       }
 
