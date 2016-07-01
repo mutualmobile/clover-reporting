@@ -162,7 +162,7 @@ define(function (require) {
 
                 updateView();
 
-                delayFetchTimer = setTimeout(fetchPart, totalReturned == 0 ? 5000 : 0);
+                delayFetchTimer = setTimeout(fetchPart, totalReturned == 0 ? 60000 : 0);
               } else {
                 clearTimeout(delayFetchTimer);
                 refreshTimeout = setTimeout(refresh, 5000);
@@ -205,7 +205,7 @@ define(function (require) {
           }
         }
       }).always(function () {
-        refreshTimeout = setTimeout(refresh, 5000);
+        refreshTimeout = setTimeout(refresh, 60000);
       });
     }
 
