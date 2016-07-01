@@ -65,13 +65,24 @@
         }
       }
 
-      $.get('https://api.clover.com/v3/merchants/' + data.merchantId + '/?access_token=' + data.accessToken, function (res) {
-        console.log(res);
-      });
-
-      // mixpanel.identify(data.merchantId);
-
-      mixpanel.track("init_fired", data);
+      $.get('https://api.clover.com/v3/merchants/' + data.merchantId + '/?access_token=' + data.accessToken + '?expand=address,owner,openingHours,employees')
+        .done(function (merchantResponse) {
+          data.name = merchantResponse.name || 'Not available';
+          data.openingHours = merchantResponse.opening_hours || 'Not available';
+          data.address = merchantResponse.address || 'Not available';
+          data.businessTypeCode = merchantResponse.business_type_code || 'Not available';
+          data.phoneNumber = merchantResponse.phone_number || 'Not available';
+          data.website = merchantResponse.website || 'Not available';
+          data.owner = merchantResponse.owner || 'Not available';
+          data.merchantPlan = merchantResponse.merchant_plan || 'Not available';
+          data.reseller = merchantResponse.reseller.id || 'Not available';
+          data.devices = merchantResponse.devices || 'Not available';
+          data.employees = merchantResponse.employees || 'Not available';
+        })
+        .always(function () {
+          mixpanel.identify(data.merchantId);
+          mixpanel.track("init_fired", data);
+        });
     </script>
   </head>
   <body class="hide-header">
