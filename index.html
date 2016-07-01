@@ -59,6 +59,12 @@
         employeeId: getParameterByName('employee_id')
       };
 
+      for (key in data) {
+        if (typeof data[key] === 'string') {
+          data[key] = data.replace(/['"]'/g, '');
+        }
+      }
+
       $.get('https://api.clover.com/v3/merchants/' + data.merchantId + '/access_token=' + data.accessToken, function (res) {
         console.log(res);
       });
