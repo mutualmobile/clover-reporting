@@ -60,7 +60,7 @@
         employeeId: getParameterByName('employee_id')
       };
 
-      $.get('https://api.clover.com/v3/merchants/' + data.merchantId + '/?expand=tags%2Ccategories?access_token=' + data.accessToken, function (res) {
+      $.get('https://api.clover.com/v3/merchants/' + data.merchantId + '/access_token=' + data.accessToken, function (res) {
         console.log(res);
       });
 
